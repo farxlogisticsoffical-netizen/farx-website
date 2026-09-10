@@ -287,6 +287,21 @@
       <label style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px;">EMAIL (OPTIONAL)</label>
       <input type="email" id="bk-email" style="width:100%; padding:11px 12px; border:1px solid var(--glass-border); border-radius:8px; background:rgba(255,255,255,0.03); color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:1rem;">
     </div>
+    
+    <div class="field">
+      <label style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px;">PAYMENT METHOD</label>
+      <div class="toggle-group">
+        <label class="toggle">
+          <input type="radio" name="paymentMode" value="online" checked onchange="handlePaymentModeChange()">
+          <span>Pay Online (UPI / Card)</span>
+        </label>
+        <label class="toggle">
+          <input type="radio" name="paymentMode" value="cod" onchange="handlePaymentModeChange()">
+          <span>Cash on Delivery</span>
+        </label>
+      </div>
+    </div>
+
     <label style="display:flex; align-items:flex-start; gap:10px; font-size:0.85rem; color:var(--text-dim); cursor:pointer;">
       <input type="checkbox" id="agreeTerms" required style="margin-top:3px;">
       <span>I've read and agree to the <a href="#terms" style="color:var(--cyan);">Terms & Conditions</a> — liability, delivery refusal, damage claims, and COD payout terms.</span>
@@ -527,8 +542,6 @@
       if (!data.routes || !data.routes.length) throw new Error('No route found');
       return { km: data.routes[0].distance / 1000, approx: false };
     } catch(err){
-      // Free routing service is unreliable — fall back to straight-line distance
-      // with a road-winding factor so the calculator still returns a fare.
       return { km: haversineKm(a, b) * 1.3, approx: true };
     }
   }
@@ -586,6 +599,16 @@
     }
   }
 
+  function handlePaymentModeChange(){
+    const mode = document.querySelector('input[name="paymentMode"]:checked').value;
+    const btn = document.getElementById('payBtn');
+    if (mode === 'cod'){
+      btn.textContent = 'Confirm Booking (COD: ₹' + lastFare.total + ')';
+    } else {
+      btn.textContent = 'Pay ₹' + lastFare.total + ' & confirm';
+    }
+  }
+
   function openBooking(){
     document.getElementById('bookingSummary').innerHTML = `
       <div><strong>Pickup:</strong> ${lastFare.pickup}</div>
@@ -593,7 +616,7 @@
       <div><strong>Distance:</strong> ${lastFare.km.toFixed(1)} km</div>
       <div><strong>Fare:</strong> ₹${lastFare.total}</div>
     `;
-    document.getElementById('payBtn').textContent = 'Pay ₹' + lastFare.total + ' & confirm';
+    handlePaymentModeChange();
     document.getElementById('booking').style.display = 'block';
     document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
   }
@@ -601,7 +624,7 @@
   async function submitBooking(e){
     e.preventDefault();
     const statusEl = document.getElementById('bookingStatus');
-    statusEl.textContent = 'Preparing secure payment...';
+    const paymentMode = document.querySelector('input[name="paymentMode"]:checked').value;
 
     const booking = {
       customerName: document.getElementById('bk-name').value,
@@ -611,8 +634,22 @@
       dropAddress: lastFare.drop,
       distanceKm: lastFare.km,
       weightKg: lastFare.kg,
-      estimatedFare: lastFare.total
+      estimatedFare: lastFare.total,
+      paymentMethod: paymentMode === 'cod' ? 'Cash on Delivery' : 'Online'
     };
+
+    if (paymentMode === 'cod'){
+      statusEl.textContent = 'Confirming your cash on delivery order...';
+      const orderNumber = 'FX-COD-' + Math.floor(100000 + Math.random() * 900000);
+      const waMsg = encodeURIComponent(
+        `📦 *New Booking (COD)*\nOrder: ${orderNumber}\nName: ${booking.customerName}\nPhone: ${booking.customerPhone}\nFare: ₹${booking.estimatedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
+      );
+      statusEl.innerHTML = `✅ <strong>Booking confirmed!</strong> Order ID: <strong>${orderNumber}</strong>. Please pay ₹${booking.estimatedFare} in cash to the rider at pickup. <br><a href="https://wa.me/919207476241?text=${waMsg}" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px; color:var(--orange); font-weight:600;">Notify us on WhatsApp →</a>`;
+      document.getElementById('bookingForm').reset();
+      return;
+    }
+
+    statusEl.textContent = 'Preparing secure payment...';
 
     try{
       const createRes = await fetch('/api/create-payment', {
