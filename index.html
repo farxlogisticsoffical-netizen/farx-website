@@ -628,10 +628,10 @@
 
       statusEl.textContent = '';
       const rzp = new Razorpay({
-        key: orderData.keyId,
+        key: orderData.keyId || orderData.key || 'rzp_test_TaPdHBqCx8jewb',
         amount: orderData.amount,
-        currency: orderData.currency,
-        order_id: orderData.orderId,
+        currency: orderData.currency || 'INR',
+        order_id: orderData.orderId || orderData.id,
         name: 'FARX Logistics',
         description: 'Delivery: ' + lastFare.pickup.split(',')[0] + ' → ' + lastFare.drop.split(',')[0],
         prefill: {
