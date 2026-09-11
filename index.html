@@ -639,13 +639,52 @@
     };
 
     if (paymentMode === 'cod'){
-      statusEl.textContent = 'Confirming your cash on delivery order...';
+      statusEl.textContent = 'Submitting order to dispatch system...';
       const orderNumber = 'FX-COD-' + Math.floor(100000 + Math.random() * 900000);
-      const waMsg = encodeURIComponent(
-        `📦 *New Booking (COD)*\nOrder: ${orderNumber}\nName: ${booking.customerName}\nPhone: ${booking.customerPhone}\nFare: ₹${booking.estimatedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
-      );
-      statusEl.innerHTML = `✅ <strong>Booking confirmed!</strong> Order ID: <strong>${orderNumber}</strong>. Please pay ₹${booking.estimatedFare} in cash to the rider at pickup. <br><a href="https://wa.me/919207476241?text=${waMsg}" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px; color:var(--orange); font-weight:600;">Notify us on WhatsApp →</a>`;
-      document.getElementById('bookingForm').reset();
+
+      // Shipday Order payload structure
+      const shipdayPayload = {
+        orderNumber: orderNumber,
+        customerName: booking.customerName,
+        customerAddress: booking.dropAddress,
+        customerPhoneNumber: booking.customerPhone,
+        customerEmail: booking.customerEmail || '',
+        restaurantName: 'FARX Logistics Pickup',
+        restaurantAddress: booking.pickupAddress,
+        restaurantPhoneNumber: booking.customerPhone,
+        totalOrderCost: booking.estimatedFare,
+        deliveryFee: booking.estimatedFare,
+        paymentMethod: 'cash',
+        orderItem: [
+          {
+            name: `Courier Delivery (${booking.weightKg} kg, ${booking.distanceKm.toFixed(1)} km)`,
+            unitPrice: booking.estimatedFare,
+            quantity: 1
+          }
+        ]
+      };
+
+      try {
+        const bookRes = await fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(shipdayPayload)
+        });
+
+        const bookData = await bookRes.json();
+
+        if (bookRes.ok) {
+          const waMsg = encodeURIComponent(
+            `📦 *New Booking (COD)*\nOrder: ${orderNumber}\nName: ${booking.customerName}\nPhone: ${booking.customerPhone}\nFare: ₹${booking.estimatedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
+          );
+          statusEl.innerHTML = `✅ <strong>Booking confirmed & dispatched!</strong> Order ID: <strong>${orderNumber}</strong>. Please pay ₹${booking.estimatedFare} in cash to the rider at pickup. <br><a href="https://wa.me/919207476241?text=${waMsg}" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px; color:var(--orange); font-weight:600;">Notify us on WhatsApp →</a>`;
+          document.getElementById('bookingForm').reset();
+        } else {
+          statusEl.innerHTML = `Could not register order: ${bookData.error || 'Server error'}. Please WhatsApp us at 92074 76241.`;
+        }
+      } catch (err) {
+        statusEl.innerHTML = 'Could not reach the dispatch system. Please WhatsApp us at 92074 76241.';
+      }
       return;
     }
 
