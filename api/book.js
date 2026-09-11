@@ -4,18 +4,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const apiKey = process.env.SHIPDAY_API_KEY;
-    if (!apiKey) {
+    const rawKey = process.env.SHIPDAY_API_KEY;
+    if (!rawKey) {
       return res.status(500).json({ error: 'Shipday API key is missing in Vercel Environment Variables.' });
     }
 
+    const apiKey = rawKey.trim();
     const orderData = req.body;
+
+    const authHeader = apiKey.toLowerCase().startsWith('basic ') 
+      ? apiKey 
+      : `Basic ${apiKey}`;
 
     const response = await fetch('https://api.shipday.com/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `basic ${apiKey.trim()}`,
+        'Authorization': authHeader,
       },
       body: JSON.stringify(orderData),
     });
@@ -30,7 +35,7 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       return res.status(response.status).json({ 
-        error: data.message || data.raw || 'Shipday order dispatch failed' 
+        error: data.message || data.raw || `Shipday rejected with status ${response.status}` 
       });
     }
 
