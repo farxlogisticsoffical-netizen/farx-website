@@ -1,772 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FARX Logistics — Faster · Safer · Further</title>
-<link rel="icon" href="assets/logo-header.png">
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg: #05070C;
-    --bg-alt: #080B14;
-    --glass: rgba(255,255,255,0.045);
-    --glass-2: rgba(255,255,255,0.07);
-    --glass-border: rgba(255,255,255,0.10);
-    --orange: #FF6B2C;
-    --orange-soft: rgba(255,107,44,0.22);
-    --cyan: #4A78E0;
-    --cyan-soft: rgba(74,120,224,0.18);
-    --text: #EAF0FA;
-    --text-dim: #8FA0BE;
-    --radius: 12px;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0; color:var(--text); font-family:'IBM Plex Sans', sans-serif; line-height:1.5;
-    background-color:var(--bg);
-    background-image:
-      radial-gradient(circle at 12% -5%, rgba(255,107,44,0.16), transparent 42%),
-      radial-gradient(circle at 88% 8%, rgba(74,120,224,0.15), transparent 42%),
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 46px),
-      repeating-linear-gradient(90deg, rgba(255,255,255,0.028) 0 1px, transparent 1px 46px);
-    background-attachment:fixed;
-  }
-  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; margin:0; }
-  a{ color:inherit; }
-  img,svg{ display:block; max-width:100%; }
-  .grad-text{ background:linear-gradient(90deg, var(--orange), var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-
-  header{
-    position:sticky; top:0; z-index:20;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:14px 6vw;
-    background:rgba(5,7,12,0.72);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--glass-border);
-  }
-  .logo-chip{ background:#fff; border-radius:9px; padding:6px 10px; display:inline-flex; box-shadow:0 0 24px rgba(255,255,255,0.08); }
-  .logo-chip img{ height:32px; width:auto; }
-  nav.links{ display:flex; align-items:center; gap:26px; font-size:0.92rem; }
-  nav.links a{ text-decoration:none; color:var(--text-dim); border-bottom:1px solid transparent; padding-bottom:2px; transition:all .2s; }
-  nav.links a:hover{ color:var(--text); border-color:var(--orange); }
-  nav.links a.nav-cta{
-    background:linear-gradient(135deg, var(--orange), #ff8a52); color:#0A0700; font-weight:600;
-    padding:9px 18px; border-radius:100px; border-bottom:none; box-shadow:0 0 22px var(--orange-soft);
-  }
-  nav.links a.nav-cta:hover{ box-shadow:0 0 32px var(--orange-soft); }
-  @media (max-width:760px){ nav.links a:not(.nav-cta){ display:none; } }
-
-  .badge-pill{
-    display:inline-flex; align-items:center; gap:9px;
-    font-family:'IBM Plex Mono', monospace; font-size:0.76rem; color:var(--cyan);
-    background:var(--glass); border:1px solid var(--glass-border); backdrop-filter:blur(8px);
-    padding:7px 16px; border-radius:100px; margin-bottom:20px;
-  }
-  .badge-pill .dot{ width:7px; height:7px; border-radius:50%; background:var(--orange); box-shadow:0 0 0 0 var(--orange-soft); animation:pulse 2s infinite; }
-  @keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(255,107,44,0.55);} 70%{ box-shadow:0 0 0 9px rgba(255,107,44,0);} 100%{ box-shadow:0 0 0 0 rgba(255,107,44,0);} }
-
-  .hero{ display:grid; grid-template-columns:1.05fr 1fr; gap:44px; padding:64px 6vw 0; align-items:center; }
-  @media (max-width:900px){ .hero{ grid-template-columns:1fr; padding-top:40px; } }
-  .hero h1{ font-size:clamp(2.2rem, 4.7vw, 3.8rem); font-weight:700; line-height:1.06; max-width:13ch; }
-  .hero p.lede{ margin-top:20px; max-width:46ch; font-size:1.08rem; color:var(--text-dim); }
-  .hero .cta-row{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
-  .btn{ display:inline-block; padding:13px 26px; border-radius:100px; font-size:0.95rem; font-weight:600; text-decoration:none; cursor:pointer; transition:all .2s ease; border:1px solid transparent; }
-  .btn-solid{ background:linear-gradient(135deg, var(--orange), #ff8a52); color:#0A0700; box-shadow:0 0 26px var(--orange-soft); }
-  .btn-solid:hover{ box-shadow:0 0 38px var(--orange-soft); transform:translateY(-1px); }
-  .btn-ghost{ background:var(--glass); border-color:var(--glass-border); color:var(--text); }
-  .btn-ghost:hover{ border-color:var(--cyan); color:var(--cyan); }
-
-  .glass-card{ background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius); backdrop-filter:blur(10px); }
-  .route-card{ padding:26px; }
-  .route-card svg{ width:100%; height:auto; }
-  .route-line{ stroke-dasharray:900; stroke-dashoffset:900; animation:draw 2.2s ease-out forwards 0.3s; filter:drop-shadow(0 0 6px rgba(255,107,44,0.6)); }
-  @media (prefers-reduced-motion: reduce){ .route-line{ animation:none; stroke-dashoffset:0; } }
-  @keyframes draw{ to{ stroke-dashoffset:0; } }
-
-  .chip-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
-  .chip{ display:flex; align-items:center; gap:7px; background:var(--glass); border:1px solid var(--glass-border); border-radius:100px; padding:7px 13px; font-size:0.78rem; color:var(--text); }
-  .chip .dot{ width:6px; height:6px; border-radius:50%; }
-  .chip .dot.o{ background:var(--orange); }
-  .chip .dot.c{ background:var(--cyan); }
-
-  .trust-strip{
-    margin:48px 6vw 0; position:relative; z-index:2;
-    background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius); backdrop-filter:blur(10px);
-    display:grid; grid-template-columns:repeat(4,1fr); overflow:hidden;
-  }
-  .trust-strip::before{ content:''; display:block; grid-column:1/-1; height:2px; background:linear-gradient(90deg, var(--orange), var(--cyan)); }
-  @media (max-width:800px){ .trust-strip{ grid-template-columns:repeat(2,1fr); } }
-  .trust-item{ padding:24px 20px; border-right:1px solid var(--glass-border); }
-  .trust-item:nth-child(4){ border-right:none; }
-  @media (max-width:800px){ .trust-item:nth-child(2){ border-right:none; } .trust-item:nth-child(3){ border-right:1px solid var(--glass-border); } }
-  .trust-item .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--cyan); }
-  .trust-item .value{ font-family:'Space Grotesk', sans-serif; font-size:1.3rem; font-weight:700; margin-top:6px; }
-  .trust-item .desc{ font-size:0.82rem; color:var(--text-dim); margin-top:4px; }
-
-  section{ padding:60px 6vw; }
-  .section-label{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--cyan); margin-bottom:10px; }
-  .section-title{ font-size:1.75rem; font-weight:700; max-width:24ch; }
-
-  .why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:32px; }
-  @media (max-width:820px){ .why-grid{ grid-template-columns:1fr; } }
-  .why-card{ padding:26px; transition:all .2s ease; }
-  .why-card:hover{ border-color:var(--orange); box-shadow:0 0 30px rgba(255,107,44,0.12); transform:translateY(-3px); }
-  .why-icon{ width:46px; height:46px; border-radius:12px; background:linear-gradient(135deg, var(--orange-soft), var(--cyan-soft)); display:flex; align-items:center; justify-content:center; margin-bottom:16px; border:1px solid var(--glass-border); }
-  .why-card h3{ font-size:1.08rem; }
-  .why-card p{ margin-top:8px; font-size:0.92rem; color:var(--text-dim); }
-
-  .slots{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:32px; }
-  @media (max-width:700px){ .slots{ grid-template-columns:1fr; } }
-  .slot-card{ padding:26px 24px; }
-  .slot-card .time{ font-family:'IBM Plex Mono', monospace; color:var(--orange); font-size:0.85rem; }
-  .slot-card h3{ font-size:1.2rem; margin-top:8px; }
-  .slot-card p{ margin-top:10px; color:var(--text-dim); font-size:0.95rem; }
-
-  .calc-grid{ margin-top:34px; display:grid; grid-template-columns:1fr 1fr; border-radius:var(--radius); overflow:hidden; }
-  @media (max-width:820px){ .calc-grid{ grid-template-columns:1fr; } }
-  .waybill{ padding:32px; border-right:1px solid var(--glass-border); }
-  @media (max-width:820px){ .waybill{ border-right:none; border-bottom:1px solid var(--glass-border); } }
-  .waybill .field{ margin-bottom:20px; }
-  .waybill label{ display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px; }
-  .waybill input[type=number], .waybill input[type=text], .waybill input[type=tel], .waybill input[type=email]{
-    width:100%; padding:11px 12px; font-size:1rem; font-family:'IBM Plex Sans', sans-serif;
-    border:1px solid var(--glass-border); border-radius:8px; background:rgba(255,255,255,0.03); color:var(--text); transition:border-color .15s;
-  }
-  .waybill input::placeholder{ color:#5D6B85; }
-  .waybill input:focus{ outline:none; border-color:var(--orange); box-shadow:0 0 0 3px var(--orange-soft); }
-  .toggle-group{ display:flex; border:1px solid var(--glass-border); border-radius:8px; overflow:hidden; }
-  .toggle{ flex:1; position:relative; }
-  .toggle input{ position:absolute; opacity:0; inset:0; cursor:pointer; }
-  .toggle span{ display:block; text-align:center; padding:12px 8px; font-size:0.88rem; color:var(--text-dim); border-right:1px solid var(--glass-border); }
-  .toggle:last-child span{ border-right:none; }
-  .toggle input:checked + span{ background:linear-gradient(135deg, var(--orange), #ff8a52); color:#0A0700; font-weight:600; }
-  .calc-btn{ width:100%; margin-top:6px; padding:14px; background:linear-gradient(135deg, var(--orange), #ff8a52); color:#0A0700; border:none; border-radius:8px; font-size:0.98rem; font-weight:600; cursor:pointer; font-family:'IBM Plex Sans',sans-serif; box-shadow:0 0 22px var(--orange-soft); transition:box-shadow .15s; }
-  .calc-btn:hover{ box-shadow:0 0 32px var(--orange-soft); }
-  .calc-btn:disabled{ background:#3A3F49; box-shadow:none; cursor:wait; }
-  .route-info{ margin-top:12px; font-size:0.85rem; min-height:1.2em; color:var(--text-dim); }
-
-  .result{ padding:32px; display:flex; flex-direction:column; justify-content:center; }
-  .result .stamp-label{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--text-dim); }
-  .result .fare{ font-family:'Space Grotesk', sans-serif; font-size:3.1rem; font-weight:700; margin-top:6px; }
-  .breakdown{ margin-top:18px; font-family:'IBM Plex Mono', monospace; font-size:0.82rem; color:var(--text-dim); }
-  .breakdown div{ display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dotted var(--glass-border); }
-  .fine-print{ margin-top:18px; font-size:0.78rem; color:#5D6B85; max-width:36ch; }
-
-  .area-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-top:30px; align-items:center; }
-  @media (max-width:820px){ .area-grid{ grid-template-columns:1fr; } }
-  .map-card{ padding:20px; }
-  .zone-list{ display:flex; flex-direction:column; gap:10px; }
-  .zone-row{ display:flex; align-items:center; gap:10px; font-size:0.92rem; }
-  .zone-row .dot{ width:8px; height:8px; border-radius:50%; background:var(--orange); flex-shrink:0; box-shadow:0 0 8px var(--orange-soft); }
-
-  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:30px; }
-  @media (max-width:760px){ .contact-grid{ grid-template-columns:1fr; } }
-  .contact-item{ margin-bottom:16px; }
-  .contact-item .k{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--cyan); }
-  .contact-item .v{ font-size:1.05rem; margin-top:4px; }
-  .contact-item a{ text-decoration:none; border-bottom:1px solid var(--glass-border); }
-  .contact-item a:hover{ border-color:var(--orange); }
-
-  .booking-summary{ background:rgba(255,255,255,0.03); border:1px solid var(--glass-border); border-radius:8px; padding:16px 18px; font-size:0.92rem; margin-bottom:18px; }
-  .booking-summary div{ padding:3px 0; }
-  .form-section-header{ font-family:'Space Grotesk', sans-serif; font-size:0.98rem; font-weight:600; color:var(--text); margin-top:8px; padding-bottom:6px; border-bottom:1px solid var(--glass-border); }
-
-  footer{ background:var(--bg-alt); padding:48px 6vw 24px; border-top:1px solid var(--glass-border); position:relative; }
-  footer::before{ content:''; position:absolute; top:-1px; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--orange), var(--cyan)); }
-  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:32px; padding-bottom:32px; border-bottom:1px solid var(--glass-border); }
-  @media (max-width:700px){ .footer-grid{ grid-template-columns:1fr; } }
-  .footer-grid h4{ color:var(--text); font-family:'IBM Plex Mono', monospace; font-size:0.78rem; margin-bottom:14px; }
-  .footer-grid a{ display:block; text-decoration:none; color:var(--text-dim); font-size:0.9rem; margin-bottom:9px; }
-  .footer-grid a:hover{ color:var(--orange); }
-  .footer-logo-chip{ background:#fff; border-radius:9px; padding:9px 14px; display:inline-flex; margin-bottom:16px; }
-  .footer-logo-chip img{ height:40px; }
-  .footer-bottom{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-top:20px; font-size:0.8rem; color:#5D6B85; }
-
-  .whatsapp-float{
-    position:fixed; bottom:22px; right:22px; z-index:30;
-    width:56px; height:56px; border-radius:50%;
-    background:#25D366; display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 22px rgba(37,211,102,0.45); transition:transform .15s ease, box-shadow .15s ease;
-  }
-  .whatsapp-float:hover{ transform:translateY(-2px) scale(1.04); box-shadow:0 8px 28px rgba(37,211,102,0.6); }
-  .whatsapp-float svg{ width:28px; height:28px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FARX Logistics | On-Demand Courier & Transit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .brand-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+    .accent-btn { background-color: #ea580c; transition: all 0.2s; }
+    .accent-btn:hover { background-color: #c2410c; }
+    .modal-backdrop { background-color: rgba(15, 23, 42, 0.75); }
+  </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col justify-between">
 
-<a class="whatsapp-float" href="https://wa.me/919207476241?text=Hi%2C%20I%27d%20like%20to%20book%20a%20delivery" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.94-.31-1.62-.6-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.73-2.09.99-2.37c.26-.28.56-.35.75-.35.19 0 .38 0 .54.01.17.01.4-.07.63.48.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.29.29-.12.57.17.28.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.34 1.46.28.14.44.12.61-.07.17-.19.71-.83.9-1.11.19-.28.38-.24.63-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.13.07.71-.17 1.4z"/></svg>
-</a>
-
-<header>
-  <div class="logo-chip"><img src="assets/logo-header.png" alt="FARX Logistics"></div>
-  <nav class="links">
-    <a href="#how">How it works</a>
-    <a href="#area">Service area</a>
-    <a href="#contact">Contact</a>
-    <a href="#calculator" class="nav-cta">Get a rate</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <div>
-    <div class="badge-pill"><span class="dot"></span> EXPANDING FLEET NETWORK</div>
-    <h1>Two wheels.<br><span class="grad-text">Next day.</span><br>Every time.</h1>
-    <p class="lede">FARX Logistics runs high-efficiency, on-demand courier solutions. Book any time between 12:00 PM and 6:00 PM — our dedicated fleet picks up your parcel the next day and delivers it directly to the destination that same day.</p>
-    <div class="cta-row">
-      <a href="#calculator" class="btn btn-solid">Get a rate</a>
-      <a href="#how" class="btn btn-ghost">How booking works</a>
-    </div>
-  </div>
-  <div>
-    <div class="glass-card route-card">
-      <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="200" r="7" fill="#EAF0FA"/>
-        <text x="30" y="228" font-family="IBM Plex Mono" font-size="12" fill="#8FA0BE">PICKUP</text>
-        <circle cx="370" cy="60" r="7" fill="#FF6B2C" style="filter:drop-shadow(0 0 6px rgba(255,107,44,0.8))"/>
-        <text x="335" y="42" font-family="IBM Plex Mono" font-size="12" fill="#8FA0BE">DROP</text>
-        <path class="route-line" d="M50 200 C 140 200, 130 90, 200 110 S 320 190, 370 60" fill="none" stroke="#4A78E0" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="chip-row">
-      <div class="chip"><span class="dot o"></span>Up to 20 kg</div>
-      <div class="chip"><span class="dot c"></span>Dedicated Fleet</div>
-      <div class="chip"><span class="dot o"></span>Next-day delivery</div>
-    </div>
-  </div>
-</section>
-
-<section id="calculator">
-  <div class="section-label">// rate calculator</div>
-  <h2 class="section-title">What will your parcel cost?</h2>
-  <div class="glass-card calc-grid">
-    <div class="waybill">
-      <div class="field">
-        <label for="pickupAddr">PICKUP ADDRESS</label>
-        <input type="text" id="pickupAddr" placeholder="Enter pickup address or landmark">
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-orange-600 flex items-center justify-center text-white font-black text-xl shadow">
+          F
+        </div>
+        <div>
+          <span class="text-xl font-black tracking-tight text-slate-900">FARX <span class="text-orange-600">LOGISTICS</span></span>
+          <span class="text-xs block text-slate-500 font-medium">Fast Point-to-Point & Domestic Forwarding</span>
+        </div>
       </div>
-      <div class="field">
-        <label for="dropAddr">DROP ADDRESS</label>
-        <input type="text" id="dropAddr" placeholder="Enter drop address or landmark">
+      <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+        <a href="#calculator" class="hover:text-orange-600">Book Shipment</a>
+        <a href="#legal" class="hover:text-orange-600">Compliance & Policies</a>
       </div>
-      <div class="field">
-        <label for="kg">PARCEL WEIGHT (KG, MAX 20)</label>
-        <input type="number" id="kg" min="0" max="20" step="0.5" value="4">
+      <a href="tel:+91XXXXXXXXXX" class="text-sm font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 px-4 py-2 rounded-lg border border-slate-200 flex items-center gap-2">
+        <i class="fa-solid fa-phone text-orange-600"></i> Support Desk
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="brand-gradient text-white py-12 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-block bg-orange-500/20 text-orange-400 text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider mb-4 border border-orange-500/30">
+        Kozhikode Direct Fleet & Pan-India Hub Transit
+      </span>
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
+        Reliable Next-Day Courier & Freight Delivery
+      </h1>
+      <p class="text-slate-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+        Instant automated dispatch within Kozhikode district. Doorstep pickup and hub forwarding for long-distance and interstate parcels.
+      </p>
+    </div>
+  </section>
+
+  <!-- Booking System -->
+  <main class="max-w-4xl mx-auto px-4 -mt-6 mb-16 w-full z-10" id="calculator">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+      
+      <!-- Mode Tabs -->
+      <div class="grid grid-cols-2 text-center font-bold border-b border-slate-200">
+        <button id="tabIntra" onclick="setServiceMode('intra')" class="py-4 px-4 bg-white text-orange-600 border-b-2 border-orange-600 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-motorcycle"></i> Kozhikode Intra-District
+        </button>
+        <button id="tabInter" onclick="setServiceMode('inter')" class="py-4 px-4 bg-slate-50 text-slate-500 border-b-2 border-transparent hover:text-slate-800 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-truck-fast"></i> Interdistrict / Other States
+        </button>
       </div>
-      <button class="calc-btn" id="calcBtn" onclick="calcFare()">Calculate fare</button>
-      <div class="route-info" id="routeInfo"></div>
-    </div>
-    <div class="result">
-      <div class="stamp-label">ESTIMATED FARE</div>
-      <div class="fare grad-text" id="fareOut">₹—</div>
-      <div class="breakdown" id="breakdownOut"></div>
-      <p class="fine-print">Distance is calculated from live road data. Pricing is indicative — final fare is confirmed when you book.</p>
-      <button class="btn btn-solid" id="bookBtn" style="margin-top:14px; align-self:flex-start; display:none;" onclick="openBooking()">Book this delivery</button>
-    </div>
-  </div>
-</section>
 
-<section id="booking" style="display:none;">
-  <div class="section-label">// confirm booking</div>
-  <h2 class="section-title">Consignment & Contact Details</h2>
-  <form id="bookingForm" class="glass-card" style="margin-top:26px; max-width:540px; padding:28px; display:flex; flex-direction:column; gap:16px;" onsubmit="submitBooking(event)">
-    <div class="booking-summary" id="bookingSummary"></div>
-    
-    <div class="form-section-header">Sender Information (Pickup)</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-      <div class="field">
-        <label style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px;">SENDER NAME</label>
-        <input type="text" id="bk-name" required placeholder="Your name" style="width:100%; padding:11px 12px; border:1px solid var(--glass-border); border-radius:8px; background:rgba(255,255,255,0.03); color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:0.95rem;">
+      <form id="bookingForm" class="p-6 md:p-8 space-y-6" onsubmit="handleDispatchBooking(event)">
+        
+        <!-- Step 1: Pickup Details -->
+        <div>
+          <h3 class="text-xs uppercase font-extrabold tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-location-crosshairs text-orange-600"></i> Step 1: Pickup Location (Kozhikode)
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Sender Name *</label>
+              <input type="text" id="senderName" required placeholder="Your Name or Business" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Sender Mobile *</label>
+              <input type="tel" id="senderPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile number" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-bold text-slate-700 mb-1">Pickup Address (Kozhikode) *</label>
+              <input type="text" id="pickupAddress" required placeholder="Building, Street, Landmark, Kozhikode" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-slate-100" />
+
+        <!-- Step 2: Recipient Details -->
+        <div>
+          <h3 class="text-xs uppercase font-extrabold tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-location-dot text-slate-700"></i> Step 2: Delivery Details
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Recipient Name *</label>
+              <input type="text" id="receiverName" required placeholder="Recipient Name" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Recipient Mobile *</label>
+              <input type="tel" id="receiverPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile number" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none" />
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-bold text-slate-700 mb-1">Full Delivery Address & Destination *</label>
+              <textarea id="deliveryAddress" required rows="2" placeholder="Full address, City, State, PIN Code" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-slate-100" />
+
+        <!-- Step 3: Consignment Details -->
+        <div>
+          <h3 class="text-xs uppercase font-extrabold tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-box text-orange-600"></i> Step 3: Package & Transit
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">Package Weight</label>
+              <select id="parcelWeight" onchange="calculateFare()" class="w-full border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-orange-500 focus:outline-none bg-white">
+                <option value="1">Documents / Under 1 kg</option>
+                <option value="3">Small Parcel (1 - 3 kg)</option>
+                <option value="5">Medium Box (3 - 5 kg)</option>
+                <option value="10">Commercial Cargo (5 - 10 kg)</option>
+              </select>
+            </div>
+
+            <!-- Intra-district distance -->
+            <div id="distanceWrapper">
+              <label class="block text-xs font-bold text-slate-700 mb-1">Distance (Inside Kozhikode)</label>
+              <div class="flex items-center gap-2">
+                <input type="range" id="distanceRange" min="2" max="45" value="8" oninput="updateDistance(this.value)" class="w-full accent-orange-600" />
+                <span id="distanceVal" class="text-sm font-black text-slate-800 w-16 text-right">8 km</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Intra Price Calculation Display -->
+        <div id="intraPriceBox" class="bg-orange-50 border border-orange-200 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <span class="text-xs font-bold text-orange-800 uppercase tracking-wide">Intracity Fleet Delivery Fare</span>
+            <p class="text-xs text-orange-700">Direct courier transit across Kozhikode.</p>
+          </div>
+          <div class="flex items-baseline gap-1">
+            <span class="text-3xl font-black text-orange-600">₹<span id="totalFare">72</span></span>
+            <span class="text-xs text-slate-500 font-semibold">Total</span>
+          </div>
+        </div>
+
+        <!-- Inter Notice Display -->
+        <div id="interNoticeBox" class="hidden bg-blue-50 border border-blue-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <i class="fa-solid fa-circle-info text-blue-600 text-lg mt-0.5"></i>
+            <div>
+              <h4 class="text-sm font-bold text-blue-900">Interdistrict & Interstate Transit</h4>
+              <p class="text-xs text-blue-800 mt-1 leading-relaxed">
+                Our Kozhikode fleet will pick up the parcel from your location and bring it to our sorting point. Once weighed and registered, the final partner courier rate will be shared on your registered mobile number prior to dispatch.
+              </p>
+              <p class="text-xs text-blue-900 mt-2 font-bold">
+                Pickup & Docket Booking Fee: ₹40 (credited toward final shipping cost).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Mode -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-2">Freight Payment Mode *</label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <label class="border border-slate-200 rounded-lg p-3 flex items-center gap-3 cursor-pointer hover:bg-slate-50">
+              <input type="radio" name="paymentOption" value="prepaid" checked class="accent-orange-600" />
+              <div>
+                <span class="text-sm font-bold block text-slate-800">Prepaid Online</span>
+                <span class="text-xs text-slate-500">UPI, Cards, NetBanking via Razorpay</span>
+              </div>
+            </label>
+            <label class="border border-slate-200 rounded-lg p-3 flex items-center gap-3 cursor-pointer hover:bg-slate-50">
+              <input type="radio" name="paymentOption" value="fpad" class="accent-orange-600" />
+              <div>
+                <span class="text-sm font-bold block text-slate-800">Pay on Pickup / Delivery</span>
+                <span class="text-xs text-slate-500">Pay direct on parcel handover</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full accent-btn text-white font-extrabold py-3.5 rounded-xl shadow-lg hover:shadow-orange-500/20 text-center text-sm md:text-base tracking-wide flex items-center justify-center gap-2">
+          <i class="fa-solid fa-check-circle"></i> Confirm & Proceed
+        </button>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Razorpay Verification & Mandatory Policies -->
+  <footer class="bg-white border-t border-slate-200 py-10 px-4 mt-auto text-xs text-slate-600" id="legal">
+    <div class="max-w-6xl mx-auto space-y-6">
+      <div class="flex flex-wrap justify-between items-center gap-4 border-b border-slate-100 pb-6">
+        <div>
+          <span class="font-extrabold text-sm text-slate-900">FARX LOGISTICS</span>
+          <p class="text-slate-500 text-[11px] mt-0.5">Proprietary Courier & Parcel Services | Kozhikode, Kerala</p>
+        </div>
+        <div class="flex flex-wrap gap-4 font-semibold text-slate-700">
+          <button onclick="openModal('termsModal')" class="hover:text-orange-600 underline">Terms & Conditions</button>
+          <button onclick="openModal('refundModal')" class="hover:text-orange-600 underline">Refund & Cancellation</button>
+          <button onclick="openModal('privacyModal')" class="hover:text-orange-600 underline">Privacy Policy</button>
+          <button onclick="openModal('contactModal')" class="hover:text-orange-600 underline">Contact Us</button>
+        </div>
       </div>
-      <div class="field">
-        <label style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px;">SENDER PHONE</label>
-        <input type="tel" id="bk-phone" required placeholder="10-digit number" style="width:100%; padding:11px 12px; border:1px solid var(--glass-border); border-radius:8px; background:rgba(255,255,255,0.03); color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:0.95rem;">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-500 text-[11px] leading-relaxed">
+        <p>
+          <strong>Operational Clarification:</strong> FARX Logistics charges solely for package handling, local fleet pickup, and courier facilitation services. We do not sell retail items or provide escrow guarantees on merchandise value.
+        </p>
+        <p>
+          <strong>Proof of Delivery (POD):</strong> Intradistrict deliveries conclude upon physical drop-off and recipient OTP or signature confirmation.
+        </p>
       </div>
-    </div>
-    <div class="field">
-      <label style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px;">SENDER EMAIL (OPTIONAL)</label>
-      <input type="email" id="bk-email" placeholder="For receipts and updates" style="width:100%; padding:11px 12px; border:1px solid var(--glass-border); border-radius:8px; background:rgba(255,255,255,0.03); color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:0.95rem;">
-    </div>
 
-    <div class="form-section-header">Recipient Information (Drop)</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-      <div class="field">
-        <label style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px;">RECIPIENT NAME</label>
-        <input type="text" id="bk-receiver-name" required placeholder="Person receiving parcel" style="width:100%; padding:11px 12px; border:1px solid var(--glass-border); border-radius:8px; background:rgba(255,255,255,0.03); color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:0.95rem;">
-      </div>
-      <div class="field">
-        <label style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px;">RECIPIENT PHONE</label>
-        <input type="tel" id="bk-receiver-phone" required placeholder="Recipient phone" style="width:100%; padding:11px 12px; border:1px solid var(--glass-border); border-radius:8px; background:rgba(255,255,255,0.03); color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:0.95rem;">
-      </div>
-    </div>
-
-    <div class="field">
-      <label style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--text-dim); margin-bottom:6px;">FREIGHT PAYMENT METHOD</label>
-      <div class="toggle-group">
-        <label class="toggle">
-          <input type="radio" name="paymentMode" value="online" checked onchange="handlePaymentModeChange()">
-          <span>Pay Online (Prepaid)</span>
-        </label>
-        <label class="toggle">
-          <input type="radio" name="paymentMode" value="cod" onchange="handlePaymentModeChange()">
-          <span>Freight Payable at Delivery</span>
-        </label>
-      </div>
-    </div>
-
-    <label style="display:flex; align-items:flex-start; gap:10px; font-size:0.85rem; color:var(--text-dim); cursor:pointer;">
-      <input type="checkbox" id="agreeTerms" required style="margin-top:3px;">
-      <span>I've read and agree to the <a href="#terms" style="color:var(--cyan);">Terms of Service</a> — including POD delivery sign-off, non-collection of product price, and force majeure clauses.</span>
-    </label>
-    <button type="submit" id="payBtn" class="calc-btn" style="width:auto; padding:14px 28px;">Proceed to pay</button>
-    <p id="bookingStatus" style="font-size:0.88rem; color:var(--text-dim);"></p>
-  </form>
-</section>
-
-<div class="trust-strip">
-  <div class="trust-item">
-    <div class="eyebrow">CAPACITY</div>
-    <div class="value">Up to 20 kg</div>
-    <div class="desc">Per parcel, agile two-wheeler transit</div>
-  </div>
-  <div class="trust-item">
-    <div class="eyebrow">BOOKING WINDOW</div>
-    <div class="value">12–6 PM</div>
-    <div class="desc">Scheduled daily booking intake</div>
-  </div>
-  <div class="trust-item">
-    <div class="eyebrow">PROMISE</div>
-    <div class="value">Next day</div>
-    <div class="desc">Prompt pickup and direct delivery</div>
-  </div>
-  <div class="trust-item">
-    <div class="eyebrow">FLEET NETWORK</div>
-    <div class="value">Expanding</div>
-    <div class="desc">Scalable regional logistics hubs</div>
-  </div>
-</div>
-
-<section>
-  <div class="section-label">// why farx</div>
-  <h2 class="section-title">Engineered for speed, priced with clarity</h2>
-  <div class="why-grid">
-    <div class="glass-card why-card">
-      <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#FF6B2C"/></svg></div>
-      <h3>Agile Fleet</h3>
-      <p>Two-wheeler operations engineered to bypass traffic congestion, ensuring direct transit without mid-way holding delays.</p>
-    </div>
-    <div class="glass-card why-card">
-      <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#4A78E0" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h4" stroke="#4A78E0" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-      <h3>Transparent Fare Matrix</h3>
-      <p>Clear, real-time rate calculations based on active road distance and parcel load with no hidden overheads.</p>
-    </div>
-    <div class="glass-card why-card">
-      <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 5.5 4 10c0 6 8 12 8 12s8-6 8-12c0-4.5-3-8-8-8z" stroke="#FF6B2C" stroke-width="1.8"/><circle cx="12" cy="10" r="2.5" stroke="#FF6B2C" stroke-width="1.8"/></svg></div>
-      <h3>Integrated Dispatch</h3>
-      <p>Every consignment is processed directly through modern dispatch management for complete operational oversight.</p>
-    </div>
-  </div>
-</section>
-
-<section id="how">
-  <div class="section-label">// operational schedule</div>
-  <h2 class="section-title">Streamlined booking and transit cycle</h2>
-  <div class="slots">
-    <div class="glass-card slot-card">
-      <div class="time">EVERY DAY</div>
-      <h3>Intake Window: 12:00 PM – 6:00 PM</h3>
-      <p>Register your consignments seamlessly through our digital booking portal within our daily scheduling window.</p>
-    </div>
-    <div class="glass-card slot-card">
-      <div class="time">NEXT DAY</div>
-      <h3>Dedicated Route Fulfillment</h3>
-      <p>Our fleet rider executes dedicated pickup the following morning, fulfilling same-day destination delivery.</p>
-    </div>
-  </div>
-</section>
-
-<section id="area">
-  <div class="section-label">// network coverage</div>
-  <h2 class="section-title">Active Hubs & Regional Expansion</h2>
-  <div class="area-grid">
-    <div class="glass-card map-card">
-      <svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="10" width="340" height="240" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.12)"/>
-        <path d="M20 130 H340 M180 20 V240" stroke="rgba(255,255,255,0.12)" stroke-dasharray="4 6" stroke-width="1"/>
-        <circle cx="180" cy="130" r="9" fill="#FF6B2C" style="filter:drop-shadow(0 0 8px rgba(255,107,44,0.9))"/>
-        <circle cx="180" cy="130" r="9" fill="none" stroke="#FF6B2C" stroke-width="2" opacity="0.6">
-          <animate attributeName="r" values="9;34;9" dur="3s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <text x="192" y="126" font-family="IBM Plex Mono" font-size="11" fill="#EAF0FA">CENTRAL HUB</text>
-        <circle cx="100" cy="80" r="5" fill="#4A78E0"/>
-        <text x="45" y="68" font-family="IBM Plex Mono" font-size="10" fill="#8FA0BE">Hub North</text>
-        <circle cx="260" cy="70" r="5" fill="#4A78E0"/>
-        <text x="215" y="58" font-family="IBM Plex Mono" font-size="10" fill="#8FA0BE">Hub East</text>
-        <circle cx="90" cy="190" r="5" fill="#4A78E0"/>
-        <text x="15" y="210" font-family="IBM Plex Mono" font-size="10" fill="#8FA0BE">Hub West</text>
-        <circle cx="270" cy="195" r="5" fill="#4A78E0"/>
-        <text x="235" y="215" font-family="IBM Plex Mono" font-size="10" fill="#8FA0BE">Hub South</text>
-      </svg>
-    </div>
-    <div>
-      <p style="color:var(--text-dim); max-width:48ch; margin-bottom:20px;">Providing prompt, reliable logistics connectivity across key operational zones with active fleet scaling to support growing business and individual courier demands.</p>
-      <div class="zone-list">
-        <div class="zone-row"><span class="dot"></span>Central Commercial Corridor</div>
-        <div class="zone-row"><span class="dot"></span>Northern Transit Zones</div>
-        <div class="zone-row"><span class="dot"></span>Southern Connectivity Hubs</div>
-        <div class="zone-row"><span class="dot"></span>Eastern Regional Clusters</div>
-        <div class="zone-row"><span class="dot"></span>Western Express Links</div>
-        <div class="zone-row"><span class="dot"></span>Continuous Network Expansion</div>
+      <div class="text-center text-slate-400 text-[11px] pt-4">
+        &copy; 2026 FARX Logistics. All Rights Reserved.
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-<section id="contact">
-  <div class="section-label">// get in touch</div>
-  <h2 class="section-title">Book a pickup or ask a question</h2>
-  <div class="contact-grid">
-    <div>
-      <div class="contact-item">
-        <div class="k">WHATSAPP</div>
-        <div class="v"><a href="https://wa.me/919207476241?text=Hi%2C%20I%27d%20like%20to%20book%20a%20delivery" target="_blank" rel="noopener">Chat: 92074 76241</a></div>
+  <!-- Modals -->
+  <div id="termsModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full max-h-[80vh] overflow-y-auto p-6 space-y-4 text-xs text-slate-700">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-sm text-slate-900">Terms and Conditions</h3>
+        <button onclick="closeModal('termsModal')" class="text-slate-400 hover:text-slate-800 text-lg font-bold">&times;</button>
       </div>
-      <div class="contact-item">
-        <div class="k">CALL</div>
-        <div class="v"><a href="tel:9207476241">92074 76241</a></div>
-      </div>
-      <div class="contact-item">
-        <div class="k">EMAIL</div>
-        <div class="v"><a href="mailto:farxlogisticsoffical@gmail.com">farxlogisticsoffical@gmail.com</a></div>
-      </div>
-    </div>
-    <div>
-      <div class="contact-item">
-        <div class="k">INSTAGRAM</div>
-        <div class="v"><a href="https://instagram.com/Farxlogistics" target="_blank" rel="noopener">@Farxlogistics</a></div>
-      </div>
-      <div class="contact-item">
-        <div class="k">FACEBOOK</div>
-        <div class="v"><a href="https://facebook.com/Farxlogistics" target="_blank" rel="noopener">Farxlogistics</a></div>
-      </div>
+      <p>1. <strong>Scope of Service:</strong> FARX Logistics handles local point-to-point courier transit within Kozhikode and provides first-mile pickup integration for national courier services.</p>
+      <p>2. <strong>Restricted Goods:</strong> Dangerous materials, inflammable liquids, currency, gold, and prohibited contraband will not be accepted for transit.</p>
+      <p>3. <strong>Tariff:</strong> Intracity pricing is mileage and weight-dependent. Interstate transit is billed per commercial carrier tariff charts after verification at the dispatch hub.</p>
     </div>
   </div>
-</section>
 
-<section id="terms">
-  <div class="section-label">// terms & conditions</div>
-  <h2 class="section-title">Standard Terms of Service</h2>
-  <div class="glass-card" style="padding:28px; margin-top:24px; display:flex; flex-direction:column; gap:20px;">
-    <div>
-      <h3 style="font-size:1rem;">Freight Scope & Non-Collection of Product Value</h3>
-      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">FARX Logistics provides pure freight transit services. Where "Freight Payable at Delivery" is selected, our personnel only collect courier freight charges upon drop-off. FARX does not act as a merchant escrow, does not collect product purchase prices, and accepts zero liability regarding underlying merchant-buyer sale transactions.</p>
-    </div>
-    <div>
-      <h3 style="font-size:1rem;">Proof of Delivery (POD) & Discharge of Transit</h3>
-      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">A signed physical Proof of Delivery (POD), OTP verification, or verified recipient sign-off upon handover serves as conclusive, final evidence of complete and sound fulfillment. Post-handover transit claims will not be entertained once POD is completed.</p>
-    </div>
-    <div>
-      <h3 style="font-size:1rem;">Delivery Refusal & Return Freight Terms</h3>
-      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">If a shipment cannot be delivered due to recipient refusal, incorrect destination information, or unreachability after two scheduled attempts, the consignment is returned to the origin sender. Return reverse transit is billed as a separate freight charge to the sender, regardless of commodity value.</p>
-    </div>
-    <div>
-      <h3 style="font-size:1rem;">Packaging Integrity & Inspection Reporting</h3>
-      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">Consignors must pack items safely for motorcycle courier movement. Any external damage identifiable at drop-off must be reported within 24 hours of delivery, supported by photographic documentation taken at handover.</p>
-    </div>
-    <div>
-      <h3 style="font-size:1rem;">Force Majeure & Unforeseen Disruptions</h3>
-      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">FARX Logistics is excused from performance delays resulting from events beyond reasonable operational control, including severe monsoon weather, local waterlogging, flooding, regional strikes, hartals, bandhs, roadblocks, government transit directives, or civil disruptions. Dispatched parcels during such events will be held securely and routed during the earliest safe dispatch run.</p>
+  <div id="refundModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full max-h-[80vh] overflow-y-auto p-6 space-y-4 text-xs text-slate-700">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-sm text-slate-900">Refund and Cancellation Policy</h3>
+        <button onclick="closeModal('refundModal')" class="text-slate-400 hover:text-slate-800 text-lg font-bold">&times;</button>
+      </div>
+      <p>1. <strong>Cancellation:</strong> Bookings cancelled prior to rider dispatch will receive a 100% refund, settled back to the original payment method in 3–5 working days.</p>
+      <p>2. <strong>Trip Attempt Fee:</strong> If cancellation occurs after the rider arrives at the sender pickup address, an attempt charge of ₹30 is deducted.</p>
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="footer-grid">
-    <div>
-      <div class="footer-logo-chip"><img src="assets/logo.png" alt="FARX Logistics"></div>
-      <p style="font-size:0.88rem; max-width:38ch; color:var(--text-dim);">Next-generation intracity logistics powered by an agile, tech-dispatched two-wheeler fleet — built for reliable, prompt transit across expanding hubs.</p>
-    </div>
-    <div>
-      <h4>QUICK LINKS</h4>
-      <a href="#how">How it works</a>
-      <a href="#calculator">Rate calculator</a>
-      <a href="#area">Service area</a>
-      <a href="#terms">Terms & Conditions</a>
-    </div>
-    <div>
-      <h4>CONTACT</h4>
-      <a href="https://wa.me/919207476241?text=Hi%2C%20I%27d%20like%20to%20book%20a%20delivery" target="_blank" rel="noopener">WhatsApp: 92074 76241</a>
-      <a href="tel:9207476241">Call: 92074 76241</a>
-      <a href="mailto:farxlogisticsoffical@gmail.com">farxlogisticsoffical@gmail.com</a>
-      <a href="https://instagram.com/Farxlogistics" target="_blank" rel="noopener">@Farxlogistics</a>
+  <div id="privacyModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full max-h-[80vh] overflow-y-auto p-6 space-y-4 text-xs text-slate-700">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-sm text-slate-900">Privacy Policy</h3>
+        <button onclick="closeModal('privacyModal')" class="text-slate-400 hover:text-slate-800 text-lg font-bold">&times;</button>
+      </div>
+      <p>Sender and recipient address information and mobile numbers are utilized exclusively for shipping dispatch, rider routing, and delivery tracking. Payment card and UPI details are securely tokenized and handled entirely by Razorpay (PCI-DSS Level 1 compliant).</p>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 FARX Logistics. All rights reserved.</span>
-    <span>Rapid intracity courier network & fleet dispatch</span>
+
+  <div id="contactModal" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 text-xs text-slate-700">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-sm text-slate-900">Contact Us</h3>
+        <button onclick="closeModal('contactModal')" class="text-slate-400 hover:text-slate-800 text-lg font-bold">&times;</button>
+      </div>
+      <p><strong>FARX Logistics</strong></p>
+      <p>Kozhikode, Kerala - 673001</p>
+      <p><strong>Mobile / WhatsApp:</strong> +91 XXXXXXXXXX</p>
+      <p><strong>Email:</strong> support@farxlogistics.com</p>
+      <p><strong>Operating Hours:</strong> 8:00 AM – 8:00 PM (Monday to Saturday)</p>
+    </div>
   </div>
-</footer>
 
-<script>
-  function calculateRate(distanceKm, weightKg){
-    const BASE_FARE = 40, BASE_KM = 2, BASE_KG = 5, PER_KM = 9;
-    let distanceCharge = distanceKm > BASE_KM ? Math.round((distanceKm - BASE_KM) * PER_KM) : 0;
-    let weightCharge = 0, weightLabel = "Included (up to 5 kg)";
-    if (weightKg > BASE_KG){
-      if (weightKg <= 10){ weightCharge = 20; weightLabel = "5–10 kg slab"; }
-      else if (weightKg <= 15){ weightCharge = 40; weightLabel = "10–15 kg slab"; }
-      else { weightCharge = 60; weightLabel = "15–20 kg slab"; }
-    }
-    const total = BASE_FARE + distanceCharge + weightCharge;
-    return { base: BASE_FARE, distanceCharge, weightCharge, weightLabel, total };
-  }
+  <!-- Scripts -->
+  <script>
+    let activeMode = 'intra';
 
-  function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+    function setServiceMode(mode) {
+      activeMode = mode;
+      const tabIntra = document.getElementById('tabIntra');
+      const tabInter = document.getElementById('tabInter');
+      const intraBox = document.getElementById('intraPriceBox');
+      const interBox = document.getElementById('interNoticeBox');
+      const distWrap = document.getElementById('distanceWrapper');
 
-  function haversineKm(a, b){
-    const R = 6371;
-    const toRad = d => d * Math.PI / 180;
-    const dLat = toRad(b.lat - a.lat);
-    const dLon = toRad(b.lon - a.lon);
-    const lat1 = toRad(a.lat), lat2 = toRad(b.lat);
-    const h = Math.sin(dLat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
-    return 2 * R * Math.asin(Math.sqrt(h));
-  }
-
-  async function geocodeAddress(address){
-    const query = encodeURIComponent(address);
-    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${query}`;
-    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-    if (!res.ok) throw new Error('Geocoding service unavailable (status ' + res.status + ')');
-    const data = await res.json();
-    if (!data.length) throw new Error('Address not found');
-    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), display: data[0].display_name };
-  }
-
-  async function getRoadDistanceKm(a, b){
-    try{
-      const url = `https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=false`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Routing service returned ' + res.status);
-      const data = await res.json();
-      if (!data.routes || !data.routes.length) throw new Error('No route found');
-      return { km: data.routes[0].distance / 1000, approx: false };
-    } catch(err){
-      return { km: haversineKm(a, b) * 1.3, approx: true };
-    }
-  }
-
-  let lastFare = { total: 0, km: 0, kg: 0, pickup: '', drop: '' };
-
-  async function calcFare(){
-    const btn = document.getElementById('calcBtn');
-    const routeInfo = document.getElementById('routeInfo');
-    const pickup = document.getElementById('pickupAddr').value.trim();
-    const drop = document.getElementById('dropAddr').value.trim();
-    let kg = parseFloat(document.getElementById('kg').value) || 0;
-    if (kg > 20) kg = 20;
-
-    if (!pickup || !drop){
-      routeInfo.style.color = '#FF6B2C';
-      routeInfo.textContent = 'Enter both pickup and drop addresses.';
-      return;
-    }
-
-    btn.disabled = true;
-    routeInfo.style.color = 'var(--text-dim)';
-    document.getElementById('bookBtn').style.display = 'none';
-
-    try{
-      btn.textContent = 'Locating pickup...';
-      const pickupGeo = await geocodeAddress(pickup);
-      await sleep(1100);
-      btn.textContent = 'Locating drop...';
-      const dropGeo = await geocodeAddress(drop);
-      btn.textContent = 'Calculating route...';
-      const dist = await getRoadDistanceKm(pickupGeo, dropGeo);
-      const km = dist.km;
-
-      const r = calculateRate(km, kg);
-      lastFare = { total: r.total, km, kg, pickup: pickupGeo.display, drop: dropGeo.display };
-
-      document.getElementById('fareOut').textContent = '₹' + r.total;
-      let rows = '';
-      rows += `<div><span>Road distance${dist.approx ? ' (approx.)' : ''}</span><span>${km.toFixed(1)} km</span></div>`;
-      rows += `<div><span>Base fare (up to 2 km, 5 kg)</span><span>₹${r.base}</span></div>`;
-      rows += `<div><span>Distance beyond base</span><span>₹${r.distanceCharge}</span></div>`;
-      rows += `<div><span>Weight — ${r.weightLabel}</span><span>₹${r.weightCharge}</span></div>`;
-      document.getElementById('breakdownOut').innerHTML = rows;
-
-      routeInfo.style.color = 'var(--text-dim)';
-      routeInfo.textContent = 'Matched: ' + pickupGeo.display.split(',').slice(0,2).join(',') + ' → ' + dropGeo.display.split(',').slice(0,2).join(',');
-      document.getElementById('bookBtn').style.display = 'inline-block';
-    } catch(err){
-      routeInfo.style.color = '#FF6B2C';
-      routeInfo.textContent = "Couldn't locate one of those addresses. Try adding more detail (landmark, area).";
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Calculate fare';
-    }
-  }
-
-  function handlePaymentModeChange(){
-    const mode = document.querySelector('input[name="paymentMode"]:checked').value;
-    const btn = document.getElementById('payBtn');
-    if (mode === 'cod'){
-      btn.textContent = 'Confirm Booking (Freight Payable at Delivery: ₹' + lastFare.total + ')';
-    } else {
-      btn.textContent = 'Pay ₹' + lastFare.total + ' & confirm';
-    }
-  }
-
-  function openBooking(){
-    document.getElementById('bookingSummary').innerHTML = `
-      <div><strong>Pickup Location:</strong> ${lastFare.pickup}</div>
-      <div><strong>Drop Location:</strong> ${lastFare.drop}</div>
-      <div><strong>Estimated Distance:</strong> ${lastFare.km.toFixed(1)} km</div>
-      <div><strong>Delivery Freight:</strong> ₹${lastFare.total}</div>
-    `;
-    handlePaymentModeChange();
-    document.getElementById('booking').style.display = 'block';
-    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  async function submitBooking(e){
-    e.preventDefault();
-    const statusEl = document.getElementById('bookingStatus');
-    const paymentMode = document.querySelector('input[name="paymentMode"]:checked').value;
-
-    const booking = {
-      senderName: document.getElementById('bk-name').value,
-      senderPhone: document.getElementById('bk-phone').value,
-      senderEmail: document.getElementById('bk-email').value,
-      receiverName: document.getElementById('bk-receiver-name').value,
-      receiverPhone: document.getElementById('bk-receiver-phone').value,
-      pickupAddress: lastFare.pickup,
-      dropAddress: lastFare.drop,
-      distanceKm: lastFare.km,
-      weightKg: lastFare.kg,
-      estimatedFare: lastFare.total,
-      paymentMethod: paymentMode === 'cod' ? 'Freight Payable at Delivery' : 'Online Prepaid'
-    };
-
-    if (paymentMode === 'cod'){
-      statusEl.textContent = 'Submitting order to dispatch system...';
-      const orderNumber = 'FX-FOD-' + Math.floor(100000 + Math.random() * 900000);
-
-      const shipdayPayload = {
-        orderNumber: orderNumber,
-        customerName: booking.receiverName,
-        customerAddress: booking.dropAddress,
-        customerPhoneNumber: booking.receiverPhone,
-        customerEmail: booking.senderEmail || '',
-        restaurantName: booking.senderName + ' (Pickup)',
-        restaurantAddress: booking.pickupAddress,
-        restaurantPhoneNumber: booking.senderPhone,
-        totalOrderCost: booking.estimatedFare,
-        deliveryFee: booking.estimatedFare,
-        paymentMethod: 'cash',
-        orderItem: [
-          {
-            name: `Courier Freight (${booking.weightKg} kg, ${booking.distanceKm.toFixed(1)} km) - Sender: ${booking.senderName} (${booking.senderPhone})`,
-            unitPrice: booking.estimatedFare,
-            quantity: 1
-          }
-        ]
-      };
-
-      try {
-        const bookRes = await fetch('/api/book', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(shipdayPayload)
-        });
-
-        const bookData = await bookRes.json();
-
-        if (bookRes.ok) {
-          const waMsg = encodeURIComponent(
-            `📦 *New Booking (Freight Payable at Delivery)*\nOrder: ${orderNumber}\nSender: ${booking.senderName} (${booking.senderPhone})\nRecipient: ${booking.receiverName} (${booking.receiverPhone})\nFreight: ₹${booking.estimatedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
-          );
-          statusEl.innerHTML = `✅ <strong>Booking confirmed & dispatched!</strong> Order ID: <strong>${orderNumber}</strong>. Freight amount ₹${booking.estimatedFare} will be collected from recipient upon delivery. <br><a href="https://wa.me/919207476241?text=${waMsg}" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px; color:var(--orange); font-weight:600;">Notify us on WhatsApp →</a>`;
-          document.getElementById('bookingForm').reset();
-        } else {
-          statusEl.innerHTML = `Could not register order: ${bookData.error || 'Server error'}. Please WhatsApp us at 92074 76241.`;
-        }
-      } catch (err) {
-        statusEl.innerHTML = 'Could not reach the dispatch system. Please WhatsApp us at 92074 76241.';
+      if (mode === 'intra') {
+        tabIntra.className = "py-4 px-4 bg-white text-orange-600 border-b-2 border-orange-600 flex items-center justify-center gap-2";
+        tabInter.className = "py-4 px-4 bg-slate-50 text-slate-500 border-b-2 border-transparent hover:text-slate-800 flex items-center justify-center gap-2";
+        intraBox.classList.remove('hidden');
+        distWrap.classList.remove('hidden');
+        interBox.classList.add('hidden');
+        calculateFare();
+      } else {
+        tabInter.className = "py-4 px-4 bg-white text-orange-600 border-b-2 border-orange-600 flex items-center justify-center gap-2";
+        tabIntra.className = "py-4 px-4 bg-slate-50 text-slate-500 border-b-2 border-transparent hover:text-slate-800 flex items-center justify-center gap-2";
+        intraBox.classList.add('hidden');
+        distWrap.classList.add('hidden');
+        interBox.classList.remove('hidden');
       }
-      return;
     }
 
-    statusEl.textContent = 'Preparing secure payment...';
+    function updateDistance(val) {
+      document.getElementById('distanceVal').innerText = val + ' km';
+      calculateFare();
+    }
 
-    try{
-      const createRes = await fetch('/api/create-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: lastFare.total })
-      });
-      const orderData = await createRes.json();
-      if (!createRes.ok){
-        statusEl.innerHTML = 'Could not start payment. Please <a href="https://wa.me/919207476241" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp us at 92074 76241</a> instead.';
+    function calculateFare() {
+      if (activeMode !== 'intra') return;
+      const dist = parseInt(document.getElementById('distanceRange').value, 10);
+      const weightMultiplier = parseFloat(document.getElementById('parcelWeight').value);
+
+      let base = 40;
+      if (dist > 4) {
+        base += (dist - 4) * 8;
+      }
+      if (weightMultiplier > 5) {
+        base += (weightMultiplier - 5) * 5;
+      }
+      document.getElementById('totalFare').innerText = Math.round(base);
+    }
+
+    function handleDispatchBooking(e) {
+      e.preventDefault();
+
+      const payMode = document.querySelector('input[name="paymentOption"]:checked').value;
+      const amount = activeMode === 'intra' ? parseInt(document.getElementById('totalFare').innerText, 10) : 40;
+      const senderPhone = document.getElementById('senderPhone').value;
+      const senderName = document.getElementById('senderName').value;
+
+      if (payMode === 'fpad') {
+        alert("Booking confirmed! Rider dispatched under Pay on Delivery/Pickup. Total to collect: ₹" + amount);
         return;
       }
 
-      statusEl.textContent = '';
-      const rzp = new Razorpay({
-        key: orderData.keyId || orderData.key || 'rzp_test_TaPdHBqCx8jewb',
-        amount: orderData.amount,
-        currency: orderData.currency || 'INR',
-        order_id: orderData.orderId || orderData.id,
-        name: 'FARX Logistics',
-        description: 'Freight: ' + lastFare.pickup.split(',')[0] + ' → ' + lastFare.drop.split(',')[0],
-        prefill: {
-          name: booking.senderName,
-          contact: booking.senderPhone,
-          email: booking.senderEmail || ''
-        },
-        theme: { color: '#FF6B2C' },
-        handler: async function(response){
-          statusEl.textContent = 'Verifying payment...';
-          try{
-            const verifyRes = await fetch('/api/verify-payment', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                booking
-              })
-            });
-            const verifyData = await verifyRes.json();
-            if (verifyRes.ok && verifyData.success){
-              statusEl.textContent = 'Payment successful! Booking ' + verifyData.orderNumber + ' confirmed — rider dispatch assigned.';
-              document.getElementById('bookingForm').reset();
-            } else {
-              statusEl.innerHTML = 'Payment received, but booking confirmation failed. Please <a href="https://wa.me/919207476241?text=' + encodeURIComponent('Payment ID: ' + response.razorpay_payment_id) + '" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp 92074 76241</a> with payment ID: ' + response.razorpay_payment_id;
-            }
-          } catch(err){
-            statusEl.innerHTML = 'Payment received, but we could not confirm the booking. Please <a href="https://wa.me/919207476241?text=' + encodeURIComponent('Payment ID: ' + response.razorpay_payment_id) + '" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp 92074 76241</a> with payment ID: ' + response.razorpay_payment_id;
-          }
-        },
-        modal: {
-          ondismiss: function(){ statusEl.textContent = 'Payment window closed. You can try again anytime.'; }
-        }
-      });
-      rzp.open();
-    } catch(err){
-      statusEl.innerHTML = 'Could not reach our booking system. Please <a href="https://wa.me/919207476241" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp us at 92074 76241</a> instead.';
-    }
-  }
-</script>
+      const liveKey = "rzp_live_TbDA22L7xZwzpF";
 
+      const options = {
+        key: liveKey,
+        amount: amount * 100,
+        currency: "INR",
+        name: "FARX Logistics",
+        description: activeMode === 'intra' ? "Kozhikode Intra Delivery" : "Interdistrict Pickup & Booking",
+        image: "https://via.placeholder.com/150/ea580c/ffffff?text=FARX",
+        handler: function (response) {
+          alert("Payment verified! Payment ID: " + response.razorpay_payment_id + ". Order dispatched.");
+        },
+        prefill: {
+          name: senderName,
+          contact: senderPhone
+        },
+        theme: {
+          color: "#ea580c"
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    calculateFare();
+  </script>
 </body>
 </html>
