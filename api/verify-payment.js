@@ -27,47 +27,62 @@ export default async function handler(req, res) {
       return res.status(400).json({ success: false, message: 'Invalid signature' });
     }
 
-    // Payment signature is valid! Generate an order ID
+    // Payment signature confirmed
     const orderNumber = 'FX-ONL-' + Math.floor(100000 + Math.random() * 900000);
 
-    // Push the order directly to Shipday if booking details are provided
-    if (booking && process.env.SHIPDAY_API_KEY) {
-      try {
-        const shipdayPayload = {
-          orderNumber: orderNumber,
-          customerName: booking.receiverName,
-          customerAddress: booking.dropAddress,
-          customerPhoneNumber: booking.receiverPhone,
-          customerEmail: booking.senderEmail || '',
-          restaurantName: booking.senderName + ' (Pickup)',
-          restaurantAddress: booking.pickupAddress,
-          restaurantPhoneNumber: booking.senderPhone,
-          totalOrderCost: booking.estimatedFare,
-          deliveryFee: booking.estimatedFare,
-          paymentMethod: 'credit_card',
-          orderItem: [
-            {
-              name: `Prepaid Courier (${booking.weightKg || 4} kg) - Paid via Razorpay (${razorpay_payment_id})`,
-              unitPrice: booking.estimatedFare,
-              quantity: 1
-            }
-          ]
-        };
+    // Calculate Next-Day Delivery Date (YYYY-MM-DD)
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const expectedDate = tomorrow.toISOString().split('T')[0];
 
-        await fetch('https://api.shipday.com/orders', {
+    // Push order to Shipday
+    if (booking && process.env.SHIPDAY_API_KEY) {
+      const apiKey = process.env.SHIPDAY_API_KEY.trim();
+      
+      const shipdayPayload = {
+        orderNumber: orderNumber,
+        customerName: booking.receiverName || 'Recipient',
+        customerAddress: booking.dropAddress || 'Address Not Provided',
+        customerPhoneNumber: booking.receiverPhone || '',
+        customerEmail: booking.senderEmail || '',
+        restaurantName: (booking.senderName || 'Sender') + ' (Pickup)',
+        restaurantAddress: booking.pickupAddress || 'Address Not Provided',
+        restaurantPhoneNumber: booking.senderPhone || '',
+        expectedDeliveryDate: expectedDate,
+        expectedDeliveryTime: '18:00:00',
+        totalOrderCost: Number(booking.estimatedFare) || 0,
+        deliveryFee: Number(booking.estimatedFare) || 0,
+        paymentMethod: 'credit_card',
+        orderItem: [
+          {
+            name: `Courier Freight (${booking.weightKg || 4} kg) - Paid via Razorpay (${razorpay_payment_id})`,
+            unitPrice: Number(booking.estimatedFare) || 0,
+            quantity: 1
+          }
+        ]
+      };
+
+      try {
+        const shipResponse = await fetch('https://api.shipday.com/orders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `basic ${process.env.SHIPDAY_API_KEY}`
+            'Authorization': `Basic ${apiKey}`
           },
           body: JSON.stringify(shipdayPayload)
         });
+
+        const shipData = await shipResponse.json();
+        console.log('Shipday response status:', shipResponse.status, shipData);
+
+        if (!shipResponse.ok) {
+          console.error('Shipday rejection:', shipData);
+        }
       } catch (shipErr) {
-        console.error('Shipday forward failed:', shipErr);
+        console.error('Shipday request network error:', shipErr);
       }
     }
 
-    // Return success: true and orderNumber so the frontend confirms the booking!
     return res.status(200).json({
       success: true,
       orderNumber: orderNumber,
@@ -75,6 +90,7 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
+    console.error('Verification handler crashed:', err);
     return res.status(500).json({ success: false, error: err.message || 'Verification error' });
   }
 }
