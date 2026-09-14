@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="google-site-verification" content="SPf22sqmBqVxlHGbxifQjyLf-1-jEOzcAAAbIEAbE8o" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FARX Logistics — Faster · Safer · Further</title>
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
@@ -543,12 +544,32 @@
   }
 
   async function geocodeAddress(address){
-    const query = encodeURIComponent(address);
-    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${query}`;
-    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-    if (!res.ok) throw new Error('Geocoding service unavailable (status ' + res.status + ')');
+    let queryText = address.trim();
+    if (!queryText.toLowerCase().includes('kozhikode') && !queryText.toLowerCase().includes('calicut')) {
+      queryText += ', Kozhikode, Kerala';
+    }
+
+    const query = encodeURIComponent(queryText);
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=5&countrycodes=in&q=${query}`;
+    
+    const res = await fetch(url, { 
+      headers: { 
+        'Accept': 'application/json',
+        'Accept-Language': 'en'
+      } 
+    });
+    
+    if (!res.ok) throw new Error('Geocoding service unavailable');
     const data = await res.json();
-    if (!data.length) throw new Error('Address not found');
+    
+    if (!data.length) {
+      const fallbackUrl = `https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=in&q=${encodeURIComponent(address)}`;
+      const fbRes = await fetch(fallbackUrl);
+      const fbData = await fbRes.json();
+      if (!fbData.length) throw new Error('Address not found');
+      return { lat: parseFloat(fbData[0].lat), lon: parseFloat(fbData[0].lon), display: fbData[0].display_name };
+    }
+    
     return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), display: data[0].display_name };
   }
 
