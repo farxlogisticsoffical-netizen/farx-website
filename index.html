@@ -77,8 +77,8 @@
 
   .hero{ display:grid; grid-template-columns:1.05fr 1fr; gap:44px; padding:64px 6vw 0; align-items:center; }
   @media (max-width:900px){ .hero{ grid-template-columns:1fr; padding-top:40px; } }
-  .hero h1{ font-size:clamp(2.2rem, 4.7vw, 3.8rem); font-weight:700; line-height:1.06; max-width:13ch; }
-  .hero p.lede{ margin-top:20px; max-width:46ch; font-size:1.08rem; color:var(--text-dim); }
+  .hero h1{ font-size:clamp(2.2rem, 4.7vw, 3.8rem); font-weight:700; line-height:1.06; max-width:15ch; }
+  .hero p.lede{ margin-top:20px; max-width:48ch; font-size:1.08rem; color:var(--text-dim); }
   .hero .cta-row{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
   .btn{ display:inline-block; padding:13px 26px; border-radius:100px; font-size:0.95rem; font-weight:600; text-decoration:none; cursor:pointer; transition:all .2s ease; border:1px solid transparent; }
   .btn-solid{ background:linear-gradient(135deg, var(--orange), #ff8a52); color:#0A0700; box-shadow:0 0 26px var(--orange-soft); }
@@ -104,7 +104,13 @@
     background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius); backdrop-filter:blur(10px);
     display:grid; grid-template-columns:repeat(4,1fr); overflow:hidden;
   }
-  .trust-strip::before{ content:''; display:block; grid-column:1/-1; height:2px; background:linear-gradient(90deg, var(--orange), var(--cyan)); }
+  .trust-strip::before{
+    content:''; display:block; grid-column:1/-1; height:2px;
+    background:linear-gradient(90deg, var(--orange), var(--cyan), var(--orange)); background-size:200% 100%;
+    animation:shimmer 7s linear infinite;
+  }
+  @keyframes shimmer{ 0%{ background-position:0% 0; } 100%{ background-position:200% 0; } }
+  @media (prefers-reduced-motion: reduce){ .trust-strip::before{ animation:none; } }
   @media (max-width:800px){ .trust-strip{ grid-template-columns:repeat(2,1fr); } }
   .trust-item{ padding:24px 20px; border-right:1px solid var(--glass-border); }
   .trust-item:nth-child(4){ border-right:none; }
@@ -114,8 +120,41 @@
   .trust-item .desc{ font-size:0.82rem; color:var(--text-dim); margin-top:4px; }
 
   section{ padding:60px 6vw; }
-  .section-label{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--cyan); margin-bottom:10px; }
+  .section-label{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--cyan); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.08em; }
   .section-title{ font-size:1.75rem; font-weight:700; max-width:24ch; }
+
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.16,.84,.44,1), transform .7s cubic-bezier(.16,.84,.44,1); }
+    .reveal.visible{ opacity:1; transform:none; }
+  }
+  .hero{ position:relative; }
+  .hero::before{
+    content:''; position:absolute; top:-140px; right:-100px; width:480px; height:480px;
+    background:radial-gradient(circle, rgba(255,107,44,0.16), transparent 65%);
+    filter:blur(6px); z-index:-1; pointer-events:none; animation:float 11s ease-in-out infinite;
+  }
+  .hero::after{
+    content:''; position:absolute; bottom:-160px; left:-120px; width:420px; height:420px;
+    background:radial-gradient(circle, rgba(74,120,224,0.13), transparent 65%);
+    filter:blur(6px); z-index:-1; pointer-events:none; animation:float 13s ease-in-out infinite reverse;
+  }
+  @keyframes float{ 0%,100%{ transform:translateY(0) translateX(0);} 50%{ transform:translateY(26px) translateX(-10px);} }
+  @media (prefers-reduced-motion: reduce){ .hero::before, .hero::after{ animation:none; } }
+
+  .service-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:32px; }
+  @media (max-width:820px){ .service-grid{ grid-template-columns:1fr; } }
+  .service-card{ padding:30px; position:relative; overflow:hidden; }
+  .service-card .tag{ font-family:'IBM Plex Mono', monospace; font-size:0.76rem; letter-spacing:0.03em; }
+  .service-card.intra .tag{ color:var(--orange); }
+  .service-card.inter .tag{ color:var(--cyan); }
+  .service-card h3{ font-size:1.35rem; margin-top:10px; }
+  .service-card p{ margin-top:12px; color:var(--text-dim); font-size:0.95rem; }
+  .service-card ul{ margin:16px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .service-card li{ font-size:0.88rem; color:var(--text); display:flex; align-items:flex-start; gap:8px; }
+  .service-card li::before{ content:'—'; color:var(--text-dim); flex-shrink:0; }
+  .service-card{ transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .service-card:hover{ border-color:var(--orange); box-shadow:0 0 34px rgba(255,107,44,0.12); transform:translateY(-4px); }
+  .service-card.inter:hover{ border-color:var(--cyan); box-shadow:0 0 34px rgba(74,120,224,0.14); }
 
   .why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:32px; }
   @media (max-width:820px){ .why-grid{ grid-template-columns:1fr; } }
@@ -161,6 +200,8 @@
   .breakdown{ margin-top:18px; font-family:'IBM Plex Mono', monospace; font-size:0.82rem; color:var(--text-dim); }
   .breakdown div{ display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dotted var(--glass-border); }
   .fine-print{ margin-top:18px; font-size:0.78rem; color:#5D6B85; max-width:36ch; }
+  .quote-cta{ padding:20px; border-radius:8px; background:rgba(74,120,224,0.08); border:1px solid var(--glass-border); }
+  .quote-cta p{ font-size:0.9rem; color:var(--text-dim); margin:0 0 12px; }
 
   .area-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-top:30px; align-items:center; }
   @media (max-width:820px){ .area-grid{ grid-template-columns:1fr; } }
@@ -211,6 +252,7 @@
 <header>
   <div class="logo-chip"><img src="assets/logo-header.png" alt="FARX Logistics"></div>
   <nav class="links">
+    <a href="#services">Services</a>
     <a href="#how">How it works</a>
     <a href="#area">Service area</a>
     <a href="#contact">Contact</a>
@@ -220,12 +262,12 @@
 
 <section class="hero">
   <div>
-    <div class="badge-pill"><span class="dot"></span> EXPANDING FLEET NETWORK</div>
-    <h1>Two wheels.<br><span class="grad-text">Next day.</span><br>Every time.</h1>
-    <p class="lede">FARX Logistics runs high-efficiency, on-demand courier solutions. Book any time between 12:00 PM and 6:00 PM — our dedicated fleet picks up your parcel the next day and delivers it directly to the destination that same day.</p>
+    <div class="badge-pill"><span class="dot"></span> INTRA-DISTRICT + INTER-DISTRICT NETWORK</div>
+    <h1>Kozhikode today.<br><span class="grad-text">Anywhere, next.</span></h1>
+    <p class="lede">FARX Logistics runs two dedicated courier services: next-day pickup &amp; drop within Kozhikode district, and reliable inter-district delivery for D2C and B2B shipments across state lines. Book any time between 12:00 PM and 6:00 PM.</p>
     <div class="cta-row">
       <a href="#calculator" class="btn btn-solid">Get a rate</a>
-      <a href="#how" class="btn btn-ghost">How booking works</a>
+      <a href="#services" class="btn btn-ghost">Our services</a>
     </div>
   </div>
   <div>
@@ -241,15 +283,83 @@
     <div class="chip-row">
       <div class="chip"><span class="dot o"></span>Up to 20 kg</div>
       <div class="chip"><span class="dot c"></span>Dedicated Fleet</div>
-      <div class="chip"><span class="dot o"></span>Next-day delivery</div>
+      <div class="chip"><span class="dot o"></span>Intra &amp; Inter-District</div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="trust-item">
+    <div class="eyebrow">CAPACITY</div>
+    <div class="value">Up to 20 kg</div>
+    <div class="desc">Per parcel, agile two-wheeler transit</div>
+  </div>
+  <div class="trust-item">
+    <div class="eyebrow">BOOKING WINDOW</div>
+    <div class="value">12–6 PM</div>
+    <div class="desc">Scheduled daily booking intake</div>
+  </div>
+  <div class="trust-item">
+    <div class="eyebrow">SERVICES</div>
+    <div class="value">Intra + Inter-District</div>
+    <div class="desc">Local next-day, plus D2C &amp; B2B freight</div>
+  </div>
+  <div class="trust-item">
+    <div class="eyebrow">FLEET NETWORK</div>
+    <div class="value">Expanding</div>
+    <div class="desc">Scalable regional logistics hubs</div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="section-label">// our services</div>
+  <h2 class="section-title">Two services, one dependable network</h2>
+  <div class="service-grid">
+    <div class="glass-card service-card intra">
+      <div class="tag">01 · INTRA-DISTRICT (KOZHIKODE)</div>
+      <h3>Next-Day Pickup &amp; Drop</h3>
+      <p>Built for local businesses and individuals sending parcels within Kozhikode district.</p>
+      <ul>
+        <li>Request pickup any day between 12:00 PM – 6:00 PM</li>
+        <li>Our rider collects the parcel the next day</li>
+        <li>Delivered directly to the destination the same day it's picked up</li>
+        <li>Up to 20 kg per parcel, fully tracked dispatch</li>
+      </ul>
+    </div>
+    <div class="glass-card service-card inter">
+      <div class="tag">02 · INTER-DISTRICT (D2C &amp; B2B)</div>
+      <h3>Beyond Kozhikode, Covered</h3>
+      <p>Shipping outside the district? We handle both direct-to-consumer parcels and business-to-business freight — no need for a separate courier partner.</p>
+      <ul>
+        <li>Direct-to-Consumer (D2C) deliveries for online sellers &amp; brands</li>
+        <li>Business-to-Business (B2B) freight between partners and warehouses</li>
+        <li>Coverage across districts, with rates confirmed per route</li>
+        <li>One point of contact for local and outstation shipping</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <section id="calculator">
-  <div class="section-label">// rate calculator</div>
-  <h2 class="section-title">What will your parcel cost?</h2>
-  <div class="glass-card calc-grid">
+  <div class="section-label">// get started</div>
+  <h2 class="section-title" id="calcHeading">What will your parcel cost?</h2>
+
+  <div class="field" style="max-width:460px; margin-top:28px;">
+    <label for="serviceType">SERVICE TYPE</label>
+    <div class="toggle-group">
+      <label class="toggle">
+        <input type="radio" name="serviceType" id="svc-intra" value="intra" checked onchange="handleServiceTypeChange()">
+        <span>Intra-District</span>
+      </label>
+      <label class="toggle">
+        <input type="radio" name="serviceType" id="svc-inter" value="inter" onchange="handleServiceTypeChange()">
+        <span>Inter-District (D2C/B2B)</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- INTRA-DISTRICT: live fare calculator -->
+  <div class="glass-card calc-grid" id="intraPanel" style="margin-top:22px;">
     <div class="waybill">
       <div class="field">
         <label for="pickupAddr">PICKUP ADDRESS</label>
@@ -272,6 +382,55 @@
       <div class="breakdown" id="breakdownOut"></div>
       <p class="fine-print">Distance is calculated from live road data. Pricing is indicative — final fare is confirmed when you book.</p>
       <button class="btn btn-solid" id="bookBtn" style="margin-top:14px; align-self:flex-start; display:none;" onclick="openBooking()">Book this delivery</button>
+    </div>
+  </div>
+
+  <!-- INTER-DISTRICT: route enquiry, no on-site pricing -->
+  <div class="glass-card calc-grid" id="interPanel" style="margin-top:22px; display:none;">
+    <div class="waybill">
+      <div class="field">
+        <label for="enqPickup">PICKUP LOCATION</label>
+        <input type="text" id="enqPickup" placeholder="e.g. Kozhikode">
+      </div>
+      <div class="field">
+        <label for="enqDrop">DROP LOCATION</label>
+        <input type="text" id="enqDrop" placeholder="Destination city / area">
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div class="field">
+          <label for="enqKg">APPROX. WEIGHT (KG)</label>
+          <input type="number" id="enqKg" min="0" step="0.5" placeholder="e.g. 5">
+        </div>
+        <div class="field">
+          <label for="enqPhone">YOUR PHONE</label>
+          <input type="tel" id="enqPhone" placeholder="10-digit number">
+        </div>
+      </div>
+      <div class="field">
+        <label for="enqType">SHIPMENT TYPE</label>
+        <div class="toggle-group">
+          <label class="toggle">
+            <input type="radio" name="enqType" id="enq-d2c" value="d2c" checked>
+            <span>D2C</span>
+          </label>
+          <label class="toggle">
+            <input type="radio" name="enqType" id="enq-b2b" value="b2b">
+            <span>B2B</span>
+          </label>
+        </div>
+      </div>
+      <button class="calc-btn" id="enquiryBtn" onclick="sendEnquiry()">Send enquiry on WhatsApp</button>
+      <div class="route-info" id="enquiryInfo"></div>
+    </div>
+    <div class="result">
+      <div class="stamp-label">HOW THIS WORKS</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:1.4rem; font-weight:700; margin-top:6px; line-height:1.2;">Route confirmed, <span class="grad-text">quote follows</span></div>
+      <ul style="margin:18px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>Share pickup, drop &amp; approx. weight</li>
+        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>We check the best available route through our courier partner network</li>
+        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>You get a confirmed rate before anything is booked</li>
+      </ul>
+      <p class="fine-print">Inter-district freight is priced per route — no fixed online rate is shown, and nothing is charged until you confirm.</p>
     </div>
   </div>
 </section>
@@ -333,29 +492,6 @@
   </form>
 </section>
 
-<div class="trust-strip">
-  <div class="trust-item">
-    <div class="eyebrow">CAPACITY</div>
-    <div class="value">Up to 20 kg</div>
-    <div class="desc">Per parcel, agile two-wheeler transit</div>
-  </div>
-  <div class="trust-item">
-    <div class="eyebrow">BOOKING WINDOW</div>
-    <div class="value">12–6 PM</div>
-    <div class="desc">Scheduled daily booking intake</div>
-  </div>
-  <div class="trust-item">
-    <div class="eyebrow">PROMISE</div>
-    <div class="value">Next day</div>
-    <div class="desc">Prompt pickup and direct delivery</div>
-  </div>
-  <div class="trust-item">
-    <div class="eyebrow">FLEET NETWORK</div>
-    <div class="value">Expanding</div>
-    <div class="desc">Scalable regional logistics hubs</div>
-  </div>
-</div>
-
 <section>
   <div class="section-label">// why farx</div>
   <h2 class="section-title">Engineered for speed, priced with clarity</h2>
@@ -383,14 +519,14 @@
   <h2 class="section-title">Streamlined booking and transit cycle</h2>
   <div class="slots">
     <div class="glass-card slot-card">
-      <div class="time">EVERY DAY</div>
+      <div class="time">INTRA-DISTRICT · EVERY DAY</div>
       <h3>Intake Window: 12:00 PM – 6:00 PM</h3>
-      <p>Register your consignments seamlessly through our digital booking portal within our daily scheduling window.</p>
+      <p>Register your consignment through our digital booking portal within the daily scheduling window. Pickup happens the next day, with delivery the same day inside Kozhikode.</p>
     </div>
     <div class="glass-card slot-card">
-      <div class="time">NEXT DAY</div>
-      <h3>Dedicated Route Fulfillment</h3>
-      <p>Our fleet rider executes dedicated pickup the following morning, fulfilling same-day destination delivery.</p>
+      <div class="time">INTER-DISTRICT · D2C &amp; B2B</div>
+      <h3>Outstation Freight Handling</h3>
+      <p>Share your pickup and destination details and we route it through our inter-district network — covering online seller parcels and business-to-business freight alike.</p>
     </div>
   </div>
 </section>
@@ -420,14 +556,14 @@
       </svg>
     </div>
     <div>
-      <p style="color:var(--text-dim); max-width:48ch; margin-bottom:20px;">Providing prompt, reliable logistics connectivity across key operational zones with active fleet scaling to support growing business and individual courier demands.</p>
+      <p style="color:var(--text-dim); max-width:48ch; margin-bottom:20px;">Prompt, reliable logistics connectivity across Kozhikode's operational zones, backed by an inter-district network for D2C and B2B shipments beyond the district.</p>
       <div class="zone-list">
         <div class="zone-row"><span class="dot"></span>Central Commercial Corridor</div>
         <div class="zone-row"><span class="dot"></span>Northern Transit Zones</div>
         <div class="zone-row"><span class="dot"></span>Southern Connectivity Hubs</div>
         <div class="zone-row"><span class="dot"></span>Eastern Regional Clusters</div>
         <div class="zone-row"><span class="dot"></span>Western Express Links</div>
-        <div class="zone-row"><span class="dot"></span>Continuous Network Expansion</div>
+        <div class="zone-row"><span class="dot"></span>Inter-District Freight Corridors</div>
       </div>
     </div>
   </div>
@@ -450,6 +586,10 @@
         <div class="k">EMAIL</div>
         <div class="v"><a href="mailto:farxlogisticsoffical@gmail.com">farxlogisticsoffical@gmail.com</a></div>
       </div>
+      <div class="contact-item">
+        <div class="k">WEBSITE</div>
+        <div class="v"><a href="https://www.farxlogistics.com" target="_blank" rel="noopener">www.farxlogistics.com</a></div>
+      </div>
     </div>
     <div>
       <div class="contact-item">
@@ -470,7 +610,7 @@
   <div class="glass-card" style="padding:28px; margin-top:24px; display:flex; flex-direction:column; gap:20px;">
     <div>
       <h3 style="font-size:1rem;">Freight Scope & Non-Collection of Product Value</h3>
-      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">FARX Logistics provides pure freight transit services. Where "Cash on Delivery (COD)" is selected, our personnel only collect courier freight charges upon drop-off. FARX does not act as a merchant escrow, does not collect product purchase prices, and accepts zero liability regarding underlying merchant-buyer sale transactions.</p>
+      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">FARX Logistics provides pure freight transit services across both intra-district and inter-district routes. Where "Cash on Delivery (COD)" is selected, our personnel only collect courier freight charges upon drop-off. FARX does not act as a merchant escrow, does not collect product purchase prices, and accepts zero liability regarding underlying merchant-buyer sale transactions.</p>
     </div>
     <div>
       <h3 style="font-size:1rem;">Proof of Delivery (POD) & Discharge of Transit</h3>
@@ -482,7 +622,7 @@
     </div>
     <div>
       <h3 style="font-size:1rem;">Packaging Integrity & Inspection Reporting</h3>
-      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">Consignors must pack items safely for motorcycle courier movement. Any external damage identifiable at drop-off must be reported within 24 hours of delivery, supported by photographic documentation taken at handover.</p>
+      <p style="margin-top:6px; font-size:0.92rem; color:var(--text-dim);">Consignors must pack items safely for courier movement. Any external damage identifiable at drop-off must be reported within 24 hours of delivery, supported by photographic documentation taken at handover.</p>
     </div>
     <div>
       <h3 style="font-size:1rem;">Force Majeure & Unforeseen Disruptions</h3>
@@ -495,10 +635,11 @@
   <div class="footer-grid">
     <div>
       <div class="footer-logo-chip"><img src="assets/logo.png" alt="FARX Logistics"></div>
-      <p style="font-size:0.88rem; max-width:38ch; color:var(--text-dim);">Next-generation intracity logistics powered by an agile, tech-dispatched two-wheeler fleet — built for reliable, prompt transit across expanding hubs.</p>
+      <p style="font-size:0.88rem; max-width:38ch; color:var(--text-dim);">Next-generation logistics powered by an agile, tech-dispatched fleet — next-day intra-district transit across Kozhikode, plus inter-district D2C &amp; B2B delivery beyond it.</p>
     </div>
     <div>
       <h4>QUICK LINKS</h4>
+      <a href="#services">Services</a>
       <a href="#how">How it works</a>
       <a href="#calculator">Rate calculator</a>
       <a href="#area">Service area</a>
@@ -509,12 +650,13 @@
       <a href="https://wa.me/919207476241?text=Hi%2C%20I%27d%20like%20to%20book%20a%20delivery" target="_blank" rel="noopener">WhatsApp: 92074 76241</a>
       <a href="tel:9207476241">Call: 92074 76241</a>
       <a href="mailto:farxlogisticsoffical@gmail.com">farxlogisticsoffical@gmail.com</a>
+      <a href="https://www.farxlogistics.com" target="_blank" rel="noopener">www.farxlogistics.com</a>
       <a href="https://instagram.com/Farxlogistics" target="_blank" rel="noopener">@Farxlogistics</a>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 FARX Logistics. All rights reserved.</span>
-    <span>Rapid intracity courier network & fleet dispatch</span>
+    <span>Intra-district & inter-district courier network — D2C & B2B</span>
   </div>
 </footer>
 
@@ -542,6 +684,20 @@
     const lat1 = toRad(a.lat), lat2 = toRad(b.lat);
     const h = Math.sin(dLat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
     return 2 * R * Math.asin(Math.sqrt(h));
+  }
+
+  function handleServiceTypeChange(){
+    const isInter = document.getElementById('svc-inter').checked;
+    const intraPanel = document.getElementById('intraPanel');
+    const interPanel = document.getElementById('interPanel');
+    intraPanel.style.display = isInter ? 'none' : 'grid';
+    interPanel.style.display = isInter ? 'grid' : 'none';
+    // panels toggled by JS may never fire the scroll-reveal observer, so force them visible directly
+    intraPanel.classList.add('visible');
+    interPanel.classList.add('visible');
+    document.getElementById('calcHeading').textContent = isInter
+      ? 'Send us the route — we\'ll quote it'
+      : 'What will your parcel cost?';
   }
 
   async function geocodeAddress(address){
@@ -640,6 +796,28 @@
     }
   }
 
+  function sendEnquiry(){
+    const info = document.getElementById('enquiryInfo');
+    const pickup = document.getElementById('enqPickup').value.trim();
+    const drop = document.getElementById('enqDrop').value.trim();
+    const kg = document.getElementById('enqKg').value.trim();
+    const phone = document.getElementById('enqPhone').value.trim();
+    const type = document.getElementById('enq-b2b').checked ? 'B2B' : 'D2C';
+
+    if (!pickup || !drop || !phone){
+      info.style.color = '#FF6B2C';
+      info.textContent = 'Please fill in pickup, drop and your phone number.';
+      return;
+    }
+
+    const waMsg = encodeURIComponent(
+      `📦 *Inter-District Enquiry (${type})*\nPickup: ${pickup}\nDrop: ${drop}\nApprox weight: ${kg || 'not specified'} kg\nContact: ${phone}`
+    );
+    info.style.color = 'var(--text-dim)';
+    info.textContent = 'Opening WhatsApp with your route details...';
+    window.open('https://wa.me/919207476241?text=' + waMsg, '_blank', 'noopener');
+  }
+
   function handlePaymentModeChange(){
     const mode = document.querySelector('input[name="paymentMode"]:checked').value;
     const btn = document.getElementById('payBtn');
@@ -652,6 +830,7 @@
 
   function openBooking(){
     document.getElementById('bookingSummary').innerHTML = `
+      <div><strong>Service:</strong> Intra-District (Kozhikode)</div>
       <div><strong>Pickup Location:</strong> ${lastFare.pickup}</div>
       <div><strong>Drop Location:</strong> ${lastFare.drop}</div>
       <div><strong>Estimated Distance:</strong> ${lastFare.km.toFixed(1)} km</div>
@@ -668,6 +847,7 @@
     const paymentMode = document.querySelector('input[name="paymentMode"]:checked').value;
 
     const booking = {
+      serviceType: 'intra',
       senderName: document.getElementById('bk-name').value,
       senderPhone: document.getElementById('bk-phone').value,
       senderEmail: document.getElementById('bk-email').value,
@@ -699,7 +879,7 @@
         paymentMethod: 'cash',
         orderItem: [
           {
-            name: `Courier Freight (${booking.weightKg} kg, ${booking.distanceKm.toFixed(1)} km) - Sender: ${booking.senderName} (${booking.senderPhone})`,
+            name: `${booking.serviceType === 'inter' ? 'Inter-District' : 'Intra-District'} Courier Freight (${booking.weightKg} kg, ${booking.distanceKm.toFixed(1)} km) - Sender: ${booking.senderName} (${booking.senderPhone})`,
             unitPrice: booking.estimatedFare,
             quantity: 1
           }
@@ -717,7 +897,7 @@
 
         if (bookRes.ok) {
           const waMsg = encodeURIComponent(
-            `📦 *New Booking (COD)*\nOrder: ${orderNumber}\nSender: ${booking.senderName} (${booking.senderPhone})\nRecipient: ${booking.receiverName} (${booking.receiverPhone})\nFreight: ₹${booking.estimatedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
+            `📦 *New Booking (COD)*\nOrder: ${orderNumber}\nService: ${booking.serviceType === 'inter' ? 'Inter-District' : 'Intra-District'}\nSender: ${booking.senderName} (${booking.senderPhone})\nRecipient: ${booking.receiverName} (${booking.receiverPhone})\nFreight: ₹${booking.estimatedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
           );
           statusEl.innerHTML = `✅ <strong>Booking confirmed & dispatched!</strong> Order ID: <strong>${orderNumber}</strong>. Amount ₹${booking.estimatedFare} will be collected from recipient as Cash on Delivery (COD). <br><a href="https://wa.me/919207476241?text=${waMsg}" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px; color:var(--orange); font-weight:600;">Notify us on WhatsApp →</a>`;
           document.getElementById('bookingForm').reset();
@@ -791,6 +971,27 @@
       statusEl.innerHTML = 'Could not reach our booking system. Please <a href="https://wa.me/919207476241" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp us at 92074 76241</a> instead.';
     }
   }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var revealTargets = document.querySelectorAll(
+      '.service-card, .why-card, .slot-card, .trust-item, .map-card, #calculator .calc-grid, #contact .contact-item, #terms .glass-card'
+    );
+    revealTargets.forEach(function(el){ el.classList.add('reveal'); });
+
+    if ('IntersectionObserver' in window){
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting){
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      revealTargets.forEach(function(el){ observer.observe(el); });
+    } else {
+      revealTargets.forEach(function(el){ el.classList.add('visible'); });
+    }
+  });
 </script>
 
 </body>
