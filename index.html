@@ -11,6 +11,7 @@
 <link rel="apple-touch-icon" href="/favicon.png">
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUcd6NTjOoHbr8JeD70m5eHSEF_Hrjs9o&libraries=places&callback=initFarxAutocomplete" async defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -185,7 +186,7 @@
   .waybill input:focus{ outline:none; border-color:var(--orange); box-shadow:0 0 0 3px var(--orange-soft); }
   .toggle-group{ display:flex; border:1px solid var(--glass-border); border-radius:8px; overflow:hidden; }
   .toggle{ flex:1; position:relative; }
-  .toggle input{ position:absolute; opacity:0; inset:0; cursor:pointer; }
+  .toggle input{ position:absolute; opacity:0; cursor:pointer; inset:0; }
   .toggle span{ display:block; text-align:center; padding:12px 8px; font-size:0.88rem; color:var(--text-dim); border-right:1px solid var(--glass-border); }
   .toggle:last-child span{ border-right:none; }
   .toggle input:checked + span{ background:linear-gradient(135deg, var(--orange), #ff8a52); color:#0A0700; font-weight:600; }
@@ -241,6 +242,33 @@
   }
   .whatsapp-float:hover{ transform:translateY(-2px) scale(1.04); box-shadow:0 8px 28px rgba(37,211,102,0.6); }
   .whatsapp-float svg{ width:28px; height:28px; }
+
+  /* Google Autocomplete styling overrides to match dark theme */
+  .pac-container {
+    background-color: #080B14;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    z-index: 10000;
+  }
+  .pac-item {
+    padding: 8px 12px;
+    color: #EAF0FA;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+  }
+  .pac-item:hover, .pac-item-selected {
+    background-color: rgba(255,107,44,0.12);
+  }
+  .pac-item-query {
+    color: #FF6B2C;
+    font-size: 0.95rem;
+  }
+  .pac-matched {
+    color: #fff;
+    font-weight: 700;
+  }
 </style>
 </head>
 <body>
@@ -345,7 +373,7 @@
   <h2 class="section-title" id="calcHeading">What will your parcel cost?</h2>
 
   <div class="field" style="max-width:460px; margin-top:28px;">
-    <label for="serviceType">SERVICE TYPE</label>
+    <label for="svc-intra">SERVICE TYPE</label>
     <div class="toggle-group">
       <label class="toggle">
         <input type="radio" name="serviceType" id="svc-intra" value="intra" checked onchange="handleServiceTypeChange()">
@@ -407,7 +435,7 @@
         </div>
       </div>
       <div class="field">
-        <label for="enqType">SHIPMENT TYPE</label>
+        <label for="enq-d2c">SHIPMENT TYPE</label>
         <div class="toggle-group">
           <label class="toggle">
             <input type="radio" name="enqType" id="enq-d2c" value="d2c" checked>
@@ -692,12 +720,34 @@
     const interPanel = document.getElementById('interPanel');
     intraPanel.style.display = isInter ? 'none' : 'grid';
     interPanel.style.display = isInter ? 'grid' : 'none';
-    // panels toggled by JS may never fire the scroll-reveal observer, so force them visible directly
     intraPanel.classList.add('visible');
     interPanel.classList.add('visible');
     document.getElementById('calcHeading').textContent = isInter
       ? 'Send us the route — we\'ll quote it'
       : 'What will your parcel cost?';
+  }
+
+  /* Google Places Autocomplete initializer */
+  function initFarxAutocomplete() {
+    if (!window.google || !google.maps || !google.maps.places) return;
+
+    const options = {
+      componentRestrictions: { country: "in" },
+      fields: ["formatted_address", "geometry", "name"]
+    };
+
+    const inputs = [
+      document.getElementById('pickupAddr'),
+      document.getElementById('dropAddr'),
+      document.getElementById('enqPickup'),
+      document.getElementById('enqDrop')
+    ];
+
+    inputs.forEach(input => {
+      if (input) {
+        new google.maps.places.Autocomplete(input, options);
+      }
+    });
   }
 
   async function geocodeAddress(address){
