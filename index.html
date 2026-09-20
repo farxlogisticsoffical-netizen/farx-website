@@ -243,7 +243,6 @@
   .whatsapp-float:hover{ transform:translateY(-2px) scale(1.04); box-shadow:0 8px 28px rgba(37,211,102,0.6); }
   .whatsapp-float svg{ width:28px; height:28px; }
 
-  /* Google Autocomplete styling overrides to match dark theme */
   .pac-container {
     background-color: #080B14;
     border: 1px solid rgba(255,255,255,0.15);
@@ -280,22 +279,23 @@
 <header>
   <div class="logo-chip"><img src="assets/logo-header.png" alt="FARX Logistics"></div>
   <nav class="links">
+    <a href="#tracking">Track shipment</a>
     <a href="#services">Services</a>
     <a href="#how">How it works</a>
     <a href="#area">Service area</a>
     <a href="#contact">Contact</a>
-    <a href="#calculator" class="nav-cta">Get a rate</a>
+    <a href="#calculator" class="nav-cta">Get instant fare</a>
   </nav>
 </header>
 
 <section class="hero">
   <div>
-    <div class="badge-pill"><span class="dot"></span> INTRA-DISTRICT + INTER-DISTRICT NETWORK</div>
-    <h1>Kozhikode today.<br><span class="grad-text">Anywhere, next.</span></h1>
-    <p class="lede">FARX Logistics runs two dedicated courier services: next-day pickup &amp; drop within Kozhikode district, and reliable inter-district delivery for D2C and B2B shipments across state lines. Book any time between 12:00 PM and 6:00 PM.</p>
+    <div class="badge-pill"><span class="dot"></span> REAL RIDERS · ZERO BOT RUNAROUNDS</div>
+    <h1>Stop fighting algorithms.<br><span class="grad-text">Ship with humans.</span></h1>
+    <p class="lede">Algorithms don't move parcels — riders do. Skip the bot loops and hidden weight fines with guaranteed doorstep pickup and direct WhatsApp dispatch across Kozhikode and beyond.</p>
     <div class="cta-row">
-      <a href="#calculator" class="btn btn-solid">Get a rate</a>
-      <a href="#services" class="btn btn-ghost">Our services</a>
+      <a href="#calculator" class="btn btn-solid">Calculate delivery rate</a>
+      <a href="#tracking" class="btn btn-ghost">Track shipment</a>
     </div>
   </div>
   <div>
@@ -311,77 +311,91 @@
     <div class="chip-row">
       <div class="chip"><span class="dot o"></span>Up to 20 kg</div>
       <div class="chip"><span class="dot c"></span>Dedicated Fleet</div>
-      <div class="chip"><span class="dot o"></span>Intra &amp; Inter-District</div>
+      <div class="chip"><span class="dot o"></span>Direct WhatsApp Desk</div>
     </div>
   </div>
 </section>
 
 <div class="trust-strip">
   <div class="trust-item">
-    <div class="eyebrow">CAPACITY</div>
+    <div class="eyebrow">DOORSTEP CAPACITY</div>
     <div class="value">Up to 20 kg</div>
-    <div class="desc">Per parcel, agile two-wheeler transit</div>
+    <div class="desc">Agile fleet bypasses city gridlock</div>
   </div>
   <div class="trust-item">
-    <div class="eyebrow">BOOKING WINDOW</div>
-    <div class="value">12–6 PM</div>
-    <div class="desc">Scheduled daily booking intake</div>
+    <div class="eyebrow">DAILY DISPATCH</div>
+    <div class="value">Next-Day Drop</div>
+    <div class="desc">Book by 6 PM, delivered tomorrow</div>
   </div>
   <div class="trust-item">
-    <div class="eyebrow">SERVICES</div>
-    <div class="value">Intra + Inter-District</div>
-    <div class="desc">Local next-day, plus D2C &amp; B2B freight</div>
+    <div class="eyebrow">HUMAN ACCOUNTABILITY</div>
+    <div class="value">Zero Bot Support</div>
+    <div class="desc">Talk to local dispatchers instantly</div>
   </div>
   <div class="trust-item">
-    <div class="eyebrow">FLEET NETWORK</div>
-    <div class="value">Expanding</div>
-    <div class="desc">Scalable regional logistics hubs</div>
+    <div class="eyebrow">BILLING HONESTY</div>
+    <div class="value">Exact Road Fares</div>
+    <div class="desc">Transparent slabs, no surprise debits</div>
   </div>
 </div>
 
+<!-- TRACKING SECTION -->
+<section id="tracking" style="padding-top:40px; padding-bottom:20px;">
+  <div class="section-label">// live shipment status</div>
+  <h2 class="section-title">Know where your parcel is right now</h2>
+  <div class="glass-card" style="max-width:560px; padding:28px; margin-top:24px;">
+    <div class="field">
+      <label for="trackInput" style="display:block; font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px;">ENTER YOUR CONSIGNMENT / ORDER NO.</label>
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="trackInput" placeholder="e.g. FX-ONL-468884 or FX-COD-123456" style="flex:1; padding:12px 14px; font-size:1rem; border:1px solid var(--glass-border); border-radius:8px; background:rgba(255,255,255,0.03); color:var(--text);">
+        <button class="calc-btn" style="width:auto; margin-top:0; padding:12px 24px;" onclick="trackOrder()">Track</button>
+      </div>
+    </div>
+    <div id="trackResult" style="margin-top:14px; font-size:0.9rem; min-height:1.2em;"></div>
+  </div>
+</section>
+
 <section id="services">
-  <div class="section-label">// our services</div>
-  <h2 class="section-title">Two services, one dependable network</h2>
+  <div class="section-label">// predictable fulfillment</div>
+  <h2 class="section-title">One reliable partner for local and outstation</h2>
   <div class="service-grid">
     <div class="glass-card service-card intra">
       <div class="tag">01 · INTRA-DISTRICT (KOZHIKODE)</div>
-      <h3>Next-Day Pickup &amp; Drop</h3>
-      <p>Built for local businesses and individuals sending parcels within Kozhikode district.</p>
+      <h3>Local Next-Day Delivery</h3>
+      <p>Keep your customers ordering with predictable doorstep pickups and same-day city fulfillment.</p>
       <ul>
-        <li>Request pickup any day between 12:00 PM – 6:00 PM</li>
-        <li>Our rider collects the parcel the next day</li>
-        <li>Delivered directly to the destination the same day it's picked up</li>
-        <li>Up to 20 kg per parcel, fully tracked dispatch</li>
+        <li>Book online between 12:00 PM – 6:00 PM</li>
+        <li>Rider collects from your doorstep next morning</li>
+        <li>Direct same-day drop inside Kozhikode district</li>
       </ul>
     </div>
     <div class="glass-card service-card inter">
       <div class="tag">02 · INTER-DISTRICT (D2C &amp; B2B)</div>
-      <h3>Beyond Kozhikode, Covered</h3>
-      <p>Shipping outside the district? We handle both direct-to-consumer parcels and business-to-business freight — no need for a separate courier partner.</p>
+      <h3>Outstation Express Routes</h3>
+      <p>Reach buyers across Kerala without signing multi-year lock-ins or enduring automated portal delays.</p>
       <ul>
-        <li>Direct-to-Consumer (D2C) deliveries for online sellers &amp; brands</li>
-        <li>Business-to-Business (B2B) freight between partners and warehouses</li>
-        <li>Coverage across districts, with rates confirmed per route</li>
-        <li>One point of contact for local and outstation shipping</li>
+        <li>D2C consumer parcels &amp; commercial B2B freight</li>
+        <li>First-mile pickup handled directly by FARX riders</li>
+        <li>One human contact point for every outstation route</li>
       </ul>
     </div>
   </div>
 </section>
 
 <section id="calculator">
-  <div class="section-label">// get started</div>
-  <h2 class="section-title" id="calcHeading">What will your parcel cost?</h2>
+  <div class="section-label">// fare transparency</div>
+  <h2 class="section-title" id="calcHeading">Calculate your delivery fare</h2>
 
   <div class="field" style="max-width:460px; margin-top:28px;">
     <label for="svc-intra">SERVICE TYPE</label>
     <div class="toggle-group">
       <label class="toggle">
         <input type="radio" name="serviceType" id="svc-intra" value="intra" checked onchange="handleServiceTypeChange()">
-        <span>Intra-District</span>
+        <span>Intra-District (Kozhikode)</span>
       </label>
       <label class="toggle">
         <input type="radio" name="serviceType" id="svc-inter" value="inter" onchange="handleServiceTypeChange()">
-        <span>Inter-District (D2C/B2B)</span>
+        <span>Inter-District (D2C / B2B)</span>
       </label>
     </div>
   </div>
@@ -391,38 +405,38 @@
     <div class="waybill">
       <div class="field">
         <label for="pickupAddr">PICKUP ADDRESS</label>
-        <input type="text" id="pickupAddr" placeholder="Enter pickup address or landmark">
+        <input type="text" id="pickupAddr" placeholder="Enter pickup shop, landmark, or street">
       </div>
       <div class="field">
         <label for="dropAddr">DROP ADDRESS</label>
-        <input type="text" id="dropAddr" placeholder="Enter drop address or landmark">
+        <input type="text" id="dropAddr" placeholder="Enter delivery location">
       </div>
       <div class="field">
         <label for="kg">PARCEL WEIGHT (KG, MAX 20)</label>
         <input type="number" id="kg" min="0" max="20" step="0.5" value="4">
       </div>
-      <button class="calc-btn" id="calcBtn" onclick="calcFare()">Calculate fare</button>
+      <button class="calc-btn" id="calcBtn" onclick="calcFare()">Calculate exact fare</button>
       <div class="route-info" id="routeInfo"></div>
     </div>
     <div class="result">
       <div class="stamp-label">ESTIMATED FARE</div>
       <div class="fare grad-text" id="fareOut">₹—</div>
       <div class="breakdown" id="breakdownOut"></div>
-      <p class="fine-print">Distance is calculated from live road data. Pricing is indicative — final fare is confirmed when you book.</p>
-      <button class="btn btn-solid" id="bookBtn" style="margin-top:14px; align-self:flex-start; display:none;" onclick="openBooking()">Book this delivery</button>
+      <p class="fine-print">Transparent road distance pricing. No hidden fees or automated weight penalties after pickup.</p>
+      <button class="btn btn-solid" id="bookBtn" style="margin-top:14px; align-self:flex-start; display:none;" onclick="openBooking()">Confirm this shipment</button>
     </div>
   </div>
 
-  <!-- INTER-DISTRICT: route enquiry, no on-site pricing -->
+  <!-- INTER-DISTRICT: route enquiry -->
   <div class="glass-card calc-grid" id="interPanel" style="margin-top:22px; display:none;">
     <div class="waybill">
       <div class="field">
         <label for="enqPickup">PICKUP LOCATION</label>
-        <input type="text" id="enqPickup" placeholder="e.g. Kozhikode">
+        <input type="text" id="enqPickup" placeholder="e.g. Kozhikode Central">
       </div>
       <div class="field">
-        <label for="enqDrop">DROP LOCATION</label>
-        <input type="text" id="enqDrop" placeholder="Destination city / area">
+        <label for="enqDrop">DESTINATION DISTRICT / CITY</label>
+        <input type="text" id="enqDrop" placeholder="e.g. Ernakulam, Bangalore">
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
         <div class="field">
@@ -430,8 +444,8 @@
           <input type="number" id="enqKg" min="0" step="0.5" placeholder="e.g. 5">
         </div>
         <div class="field">
-          <label for="enqPhone">YOUR PHONE</label>
-          <input type="tel" id="enqPhone" placeholder="10-digit number">
+          <label for="enqPhone">YOUR WHATSAPP NUMBER</label>
+          <input type="tel" id="enqPhone" placeholder="10-digit mobile">
         </div>
       </div>
       <div class="field">
@@ -439,35 +453,41 @@
         <div class="toggle-group">
           <label class="toggle">
             <input type="radio" name="enqType" id="enq-d2c" value="d2c" checked>
-            <span>D2C</span>
+            <span>D2C Parcel</span>
           </label>
           <label class="toggle">
             <input type="radio" name="enqType" id="enq-b2b" value="b2b">
-            <span>B2B</span>
+            <span>B2B Freight</span>
           </label>
         </div>
       </div>
-      <button class="calc-btn" id="enquiryBtn" onclick="sendEnquiry()">Send enquiry on WhatsApp</button>
+      <button class="calc-btn" id="enquiryBtn" onclick="sendEnquiry()">Get confirmed quote on WhatsApp</button>
       <div class="route-info" id="enquiryInfo"></div>
     </div>
     <div class="result">
-      <div class="stamp-label">HOW THIS WORKS</div>
-      <div style="font-family:'Space Grotesk',sans-serif; font-size:1.4rem; font-weight:700; margin-top:6px; line-height:1.2;">Route confirmed, <span class="grad-text">quote follows</span></div>
+      <div class="stamp-label">ROUTE CONFIRMATION</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:1.4rem; font-weight:700; margin-top:6px; line-height:1.2;">Direct quote, <span class="grad-text">zero guesswork</span></div>
       <ul style="margin:18px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
-        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>Share pickup, drop &amp; approx. weight</li>
-        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>We check the best available route through our courier partner network</li>
-        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>You get a confirmed rate before anything is booked</li>
+        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>Submit pickup, destination, and parcel load</li>
+        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>We assign the optimal carrier route across our network</li>
+        <li style="font-size:0.9rem; color:var(--text-dim); display:flex; gap:8px;"><span style="color:var(--cyan); flex-shrink:0;">—</span>You approve the rate before anything is charged</li>
       </ul>
-      <p class="fine-print">Inter-district freight is priced per route — no fixed online rate is shown, and nothing is charged until you confirm.</p>
+      <p class="fine-print">Outstation freight is custom-routed. Nothing is booked until you approve the rate.</p>
     </div>
   </div>
 </section>
 
 <section id="booking" style="display:none;">
-  <div class="section-label">// confirm booking</div>
+  <div class="section-label">// finalize shipment</div>
   <h2 class="section-title">Consignment & Contact Details</h2>
   <form id="bookingForm" class="glass-card" style="margin-top:26px; max-width:540px; padding:28px; display:flex; flex-direction:column; gap:16px;" onsubmit="submitBooking(event)">
     <div class="booking-summary" id="bookingSummary"></div>
+
+    <!-- Honeypot: invisible to real people, bots tend to fill it in. Do not remove or rename. -->
+    <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+      <label for="bk-website">Leave this field empty</label>
+      <input type="text" id="bk-website" name="website" tabindex="-1" autocomplete="off">
+    </div>
     
     <div class="form-section-header">Sender Information (Pickup)</div>
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
@@ -521,47 +541,47 @@
 </section>
 
 <section>
-  <div class="section-label">// why farx</div>
-  <h2 class="section-title">Engineered for speed, priced with clarity</h2>
+  <div class="section-label">// accountability</div>
+  <h2 class="section-title">Built for merchants who need certainty</h2>
   <div class="why-grid">
     <div class="glass-card why-card">
       <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill="#FF6B2C"/></svg></div>
-      <h3>Agile Fleet</h3>
-      <p>Two-wheeler operations engineered to bypass traffic congestion, ensuring direct transit without mid-way holding delays.</p>
+      <h3>Fast Agile Transit</h3>
+      <p>Two-wheeler fleet maneuvers traffic swiftly — no holding hubs, no dead hours.</p>
     </div>
     <div class="glass-card why-card">
       <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#4A78E0" stroke-width="1.8"/><path d="M8 8h8M8 12h8M8 16h4" stroke="#4A78E0" stroke-width="1.8" stroke-linecap="round"/></svg></div>
-      <h3>Transparent Fare Matrix</h3>
-      <p>Clear, real-time rate calculations based on active road distance and parcel load with no hidden overheads.</p>
+      <h3>Predictable Rates</h3>
+      <p>Calculated strictly on actual road distance — zero unexpected weight deductions.</p>
     </div>
     <div class="glass-card why-card">
       <div class="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 4 5.5 4 10c0 6 8 12 8 12s8-6 8-12c0-4.5-3-8-8-8z" stroke="#FF6B2C" stroke-width="1.8"/><circle cx="12" cy="10" r="2.5" stroke="#FF6B2C" stroke-width="1.8"/></svg></div>
-      <h3>Integrated Dispatch</h3>
-      <p>Every consignment is processed directly through modern dispatch management for complete operational oversight.</p>
+      <h3>Human Accountability</h3>
+      <p>Direct WhatsApp desk with local dispatchers who know your name and route.</p>
     </div>
   </div>
 </section>
 
 <section id="how">
-  <div class="section-label">// operational schedule</div>
-  <h2 class="section-title">Streamlined booking and transit cycle</h2>
+  <div class="section-label">// daily transit cycle</div>
+  <h2 class="section-title">Daily intake and delivery cycle</h2>
   <div class="slots">
     <div class="glass-card slot-card">
-      <div class="time">INTRA-DISTRICT · EVERY DAY</div>
+      <div class="time">INTRA-DISTRICT · KOZHIKODE</div>
       <h3>Intake Window: 12:00 PM – 6:00 PM</h3>
-      <p>Register your consignment through our digital booking portal within the daily scheduling window. Pickup happens the next day, with delivery the same day inside Kozhikode.</p>
+      <p>Book online by 6:00 PM. Your parcel is collected next morning and handed to the recipient before sundown.</p>
     </div>
     <div class="glass-card slot-card">
-      <div class="time">INTER-DISTRICT · D2C &amp; B2B</div>
-      <h3>Outstation Freight Handling</h3>
-      <p>Share your pickup and destination details and we route it through our inter-district network — covering online seller parcels and business-to-business freight alike.</p>
+      <div class="time">INTER-DISTRICT · REGIONAL CONNECTIVITY</div>
+      <h3>Outstation Express Routes</h3>
+      <p>Ship D2C parcels and B2B stock across districts with verified regional carrier partners.</p>
     </div>
   </div>
 </section>
 
 <section id="area">
-  <div class="section-label">// network coverage</div>
-  <h2 class="section-title">Active Hubs & Regional Expansion</h2>
+  <div class="section-label">// coverage</div>
+  <h2 class="section-title">Active delivery corridors</h2>
   <div class="area-grid">
     <div class="glass-card map-card">
       <svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg">
@@ -584,7 +604,7 @@
       </svg>
     </div>
     <div>
-      <p style="color:var(--text-dim); max-width:48ch; margin-bottom:20px;">Prompt, reliable logistics connectivity across Kozhikode's operational zones, backed by an inter-district network for D2C and B2B shipments beyond the district.</p>
+      <p style="color:var(--text-dim); max-width:48ch; margin-bottom:20px;">Dependable fleet coverage across Kozhikode commercial zones, backed by integrated line-haul links across Kerala and South India.</p>
       <div class="zone-list">
         <div class="zone-row"><span class="dot"></span>Central Commercial Corridor</div>
         <div class="zone-row"><span class="dot"></span>Northern Transit Zones</div>
@@ -599,15 +619,15 @@
 
 <section id="contact">
   <div class="section-label">// get in touch</div>
-  <h2 class="section-title">Book a pickup or ask a question</h2>
+  <h2 class="section-title">Talk to human dispatch</h2>
   <div class="contact-grid">
     <div>
       <div class="contact-item">
-        <div class="k">WHATSAPP</div>
+        <div class="k">WHATSAPP DESK</div>
         <div class="v"><a href="https://wa.me/919207476241?text=Hi%2C%20I%27d%20like%20to%20book%20a%20delivery" target="_blank" rel="noopener">Chat: 92074 76241</a></div>
       </div>
       <div class="contact-item">
-        <div class="k">CALL</div>
+        <div class="k">CALL DIRECTLY</div>
         <div class="v"><a href="tel:9207476241">92074 76241</a></div>
       </div>
       <div class="contact-item">
@@ -634,7 +654,7 @@
 
 <section id="terms">
   <div class="section-label">// terms & conditions</div>
-  <h2 class="section-title">Standard Terms of Service</h2>
+  <h2 class="section-title">Clear service terms</h2>
   <div class="glass-card" style="padding:28px; margin-top:24px; display:flex; flex-direction:column; gap:20px;">
     <div>
       <h3 style="font-size:1rem;">Freight Scope & Non-Collection of Product Value</h3>
@@ -663,13 +683,13 @@
   <div class="footer-grid">
     <div>
       <div class="footer-logo-chip"><img src="assets/logo.png" alt="FARX Logistics"></div>
-      <p style="font-size:0.88rem; max-width:38ch; color:var(--text-dim);">Next-generation logistics powered by an agile, tech-dispatched fleet — next-day intra-district transit across Kozhikode, plus inter-district D2C &amp; B2B delivery beyond it.</p>
+      <p style="font-size:0.88rem; max-width:38ch; color:var(--text-dim);">Human-managed courier and freight dispatch — next-day intra-district transit across Kozhikode, plus dependable inter-district delivery across Kerala and beyond.</p>
     </div>
     <div>
       <h4>QUICK LINKS</h4>
+      <a href="#tracking">Track shipment</a>
       <a href="#services">Services</a>
-      <a href="#how">How it works</a>
-      <a href="#calculator">Rate calculator</a>
+      <a href="#calculator">Fare calculator</a>
       <a href="#area">Service area</a>
       <a href="#terms">Terms & Conditions</a>
     </div>
@@ -689,6 +709,15 @@
 </footer>
 
 <script>
+  // Escape any dynamic value before it is inserted as HTML, so third-party
+  // API responses (geocoder results, payment gateway IDs, backend replies)
+  // can never inject markup/scripts into the page.
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, function(ch){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch];
+    });
+  }
+
   function calculateRate(distanceKm, weightKg){
     const BASE_FARE = 40, BASE_KM = 2, BASE_KG = 5, PER_KM = 9;
     let distanceCharge = distanceKm > BASE_KM ? Math.round((distanceKm - BASE_KM) * PER_KM) : 0;
@@ -723,11 +752,10 @@
     intraPanel.classList.add('visible');
     interPanel.classList.add('visible');
     document.getElementById('calcHeading').textContent = isInter
-      ? 'Send us the route — we\'ll quote it'
-      : 'What will your parcel cost?';
+      ? 'Get an outstation route quote'
+      : 'Calculate your delivery fare';
   }
 
-  /* Google Places Autocomplete initializer */
   function initFarxAutocomplete() {
     if (!window.google || !google.maps || !google.maps.places) return;
 
@@ -748,6 +776,64 @@
         new google.maps.places.Autocomplete(input, options);
       }
     });
+  }
+
+  async function trackOrder() {
+    const input = document.getElementById('trackInput').value.trim();
+    const resultEl = document.getElementById('trackResult');
+
+    if (!input) {
+      resultEl.innerHTML = '<span style="color:var(--orange);">Please enter an order or consignment number.</span>';
+      return;
+    }
+
+    resultEl.innerHTML = '<span style="color:var(--text-dim);">Locating consignment...</span>';
+
+    try {
+      const res = await fetch(`/api/track?orderNumber=${encodeURIComponent(input)}`);
+      const data = await res.json();
+
+      if (res.ok && data.trackingLink) {
+        resultEl.innerHTML = `
+          <div style="padding:16px; border-radius:8px; background:rgba(74,120,224,0.12); border:1px solid var(--glass-border);">
+            <div style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--cyan);">CONSIGNMENT FOUND</div>
+            <div style="font-size:1.1rem; font-weight:700; margin-top:4px;">Status: ${escapeHtml(data.orderState || 'In Transit')}</div>
+            <div style="margin-top:12px;">
+              <a href="${encodeURI(data.trackingLink)}" target="_blank" rel="noopener"
+                 class="btn btn-solid" style="display:inline-block; text-decoration:none; padding:10px 20px; font-size:0.9rem;">
+                Open Live GPS Tracking Map ➔
+              </a>
+            </div>
+          </div>
+        `;
+      } else {
+        const waMsg = encodeURIComponent(`Hi, checking status for consignment: ${input}`);
+        resultEl.innerHTML = `
+          <div style="padding:14px; border-radius:8px; background:rgba(255,107,44,0.08); border:1px solid var(--glass-border);">
+            <div>Order <strong>${escapeHtml(input)}</strong> registered. Live GPS link is syncing with rider.</div>
+            <div style="margin-top:8px;">
+              <a href="https://wa.me/919207476241?text=${waMsg}" 
+                 target="_blank" rel="noopener" style="color:var(--orange); font-weight:600; text-decoration:none;">
+                Chat on WhatsApp for Live Dispatch Update →
+              </a>
+            </div>
+          </div>
+        `;
+      }
+    } catch (err) {
+      const waMsg = encodeURIComponent(`Hi, checking status for consignment: ${input}`);
+      resultEl.innerHTML = `
+        <div style="padding:14px; border-radius:8px; background:rgba(255,107,44,0.08); border:1px solid var(--glass-border);">
+          <div>Consignment: <strong>${escapeHtml(input)}</strong></div>
+          <div style="margin-top:8px;">
+            <a href="https://wa.me/919207476241?text=${waMsg}" 
+               target="_blank" rel="noopener" style="color:var(--orange); font-weight:600; text-decoration:none;">
+              Verify Live Status with Dispatch Desk →
+            </a>
+          </div>
+        </div>
+      `;
+    }
   }
 
   async function geocodeAddress(address){
@@ -794,6 +880,7 @@
   }
 
   let lastFare = { total: 0, km: 0, kg: 0, pickup: '', drop: '' };
+  let bookingFormOpenedAt = 0;
 
   async function calcFare(){
     const btn = document.getElementById('calcBtn');
@@ -805,7 +892,7 @@
 
     if (!pickup || !drop){
       routeInfo.style.color = '#FF6B2C';
-      routeInfo.textContent = 'Enter both pickup and drop addresses.';
+      routeInfo.textContent = 'Enter both pickup and drop locations.';
       return;
     }
 
@@ -831,7 +918,7 @@
       rows += `<div><span>Road distance${dist.approx ? ' (approx.)' : ''}</span><span>${km.toFixed(1)} km</span></div>`;
       rows += `<div><span>Base fare (up to 2 km, 5 kg)</span><span>₹${r.base}</span></div>`;
       rows += `<div><span>Distance beyond base</span><span>₹${r.distanceCharge}</span></div>`;
-      rows += `<div><span>Weight — ${r.weightLabel}</span><span>₹${r.weightCharge}</span></div>`;
+      rows += `<div><span>Weight — ${escapeHtml(r.weightLabel)}</span><span>₹${r.weightCharge}</span></div>`;
       document.getElementById('breakdownOut').innerHTML = rows;
 
       routeInfo.style.color = 'var(--text-dim)';
@@ -839,10 +926,10 @@
       document.getElementById('bookBtn').style.display = 'inline-block';
     } catch(err){
       routeInfo.style.color = '#FF6B2C';
-      routeInfo.textContent = "Couldn't locate one of those addresses. Try adding more detail (landmark, area).";
+      routeInfo.textContent = "Couldn't locate one of those addresses. Add a nearby landmark or street name.";
     } finally {
       btn.disabled = false;
-      btn.textContent = 'Calculate fare';
+      btn.textContent = 'Calculate exact fare';
     }
   }
 
@@ -856,15 +943,15 @@
 
     if (!pickup || !drop || !phone){
       info.style.color = '#FF6B2C';
-      info.textContent = 'Please fill in pickup, drop and your phone number.';
+      info.textContent = 'Please provide pickup, destination, and your WhatsApp number.';
       return;
     }
 
     const waMsg = encodeURIComponent(
-      `📦 *Inter-District Enquiry (${type})*\nPickup: ${pickup}\nDrop: ${drop}\nApprox weight: ${kg || 'not specified'} kg\nContact: ${phone}`
+      `📦 *Inter-District Rate Enquiry (${type})*\nPickup: ${pickup}\nDestination: ${drop}\nApprox Weight: ${kg || 'not specified'} kg\nContact: ${phone}`
     );
     info.style.color = 'var(--text-dim)';
-    info.textContent = 'Opening WhatsApp with your route details...';
+    info.textContent = 'Connecting to human dispatch desk...';
     window.open('https://wa.me/919207476241?text=' + waMsg, '_blank', 'noopener');
   }
 
@@ -881,12 +968,13 @@
   function openBooking(){
     document.getElementById('bookingSummary').innerHTML = `
       <div><strong>Service:</strong> Intra-District (Kozhikode)</div>
-      <div><strong>Pickup Location:</strong> ${lastFare.pickup}</div>
-      <div><strong>Drop Location:</strong> ${lastFare.drop}</div>
+      <div><strong>Pickup Location:</strong> ${escapeHtml(lastFare.pickup)}</div>
+      <div><strong>Drop Location:</strong> ${escapeHtml(lastFare.drop)}</div>
       <div><strong>Estimated Distance:</strong> ${lastFare.km.toFixed(1)} km</div>
       <div><strong>Delivery Freight:</strong> ₹${lastFare.total}</div>
     `;
     handlePaymentModeChange();
+    bookingFormOpenedAt = Date.now();
     document.getElementById('booking').style.display = 'block';
     document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
   }
@@ -916,6 +1004,8 @@
       const orderNumber = 'FX-COD-' + Math.floor(100000 + Math.random() * 900000);
 
       const shipdayPayload = {
+        hp: document.getElementById('bk-website').value,
+        ts: bookingFormOpenedAt,
         orderNumber: orderNumber,
         customerName: booking.receiverName,
         customerAddress: booking.dropAddress,
@@ -949,10 +1039,10 @@
           const waMsg = encodeURIComponent(
             `📦 *New Booking (COD)*\nOrder: ${orderNumber}\nService: ${booking.serviceType === 'inter' ? 'Inter-District' : 'Intra-District'}\nSender: ${booking.senderName} (${booking.senderPhone})\nRecipient: ${booking.receiverName} (${booking.receiverPhone})\nFreight: ₹${booking.estimatedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
           );
-          statusEl.innerHTML = `✅ <strong>Booking confirmed & dispatched!</strong> Order ID: <strong>${orderNumber}</strong>. Amount ₹${booking.estimatedFare} will be collected from recipient as Cash on Delivery (COD). <br><a href="https://wa.me/919207476241?text=${waMsg}" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px; color:var(--orange); font-weight:600;">Notify us on WhatsApp →</a>`;
+          statusEl.innerHTML = `✅ <strong>Shipment confirmed!</strong> Order ID: <strong>${escapeHtml(orderNumber)}</strong>. Amount ₹${booking.estimatedFare} will be collected upon drop-off (COD). <br><a href="https://wa.me/919207476241?text=${waMsg}" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px; color:var(--orange); font-weight:600;">Notify Dispatch Desk on WhatsApp →</a>`;
           document.getElementById('bookingForm').reset();
         } else {
-          statusEl.innerHTML = `Could not register order: ${bookData.error || 'Server error'}. Please WhatsApp us at 92074 76241.`;
+          statusEl.innerHTML = `Could not register order: ${escapeHtml(bookData.error || 'Server error')}. Please WhatsApp us at 92074 76241.`;
         }
       } catch (err) {
         statusEl.innerHTML = 'Could not reach the dispatch system. Please WhatsApp us at 92074 76241.';
@@ -966,7 +1056,11 @@
       const createRes = await fetch('/api/create-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: lastFare.total })
+        body: JSON.stringify({
+          amount: lastFare.total,
+          hp: document.getElementById('bk-website').value,
+          ts: bookingFormOpenedAt
+        })
       });
       const orderData = await createRes.json();
       if (!createRes.ok){
@@ -974,9 +1068,19 @@
         return;
       }
 
+      // The Razorpay key_id must come from the backend on every load — never
+      // hardcode a fallback key_id here. A stale/hardcoded key silently
+      // masks backend misconfiguration and can point checkout at the wrong
+      // account. If the backend hasn't supplied one, stop and tell the user.
+      const razorpayKeyId = orderData.keyId || orderData.key;
+      if (!razorpayKeyId){
+        statusEl.innerHTML = 'Payment could not be initialized. Please <a href="https://wa.me/919207476241" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp us at 92074 76241</a> instead.';
+        return;
+      }
+
       statusEl.textContent = '';
       const rzp = new Razorpay({
-        key: orderData.keyId || orderData.key || 'rzp_live_TbDA22L7xZwzpF',
+        key: razorpayKeyId,
         amount: orderData.amount,
         currency: orderData.currency || 'INR',
         order_id: orderData.orderId || orderData.id,
@@ -1006,10 +1110,10 @@
               statusEl.textContent = 'Payment successful! Booking ' + verifyData.orderNumber + ' confirmed — rider dispatch assigned.';
               document.getElementById('bookingForm').reset();
             } else {
-              statusEl.innerHTML = 'Payment received, but booking confirmation failed. Please <a href="https://wa.me/919207476241?text=' + encodeURIComponent('Payment ID: ' + response.razorpay_payment_id) + '" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp 92074 76241</a> with payment ID: ' + response.razorpay_payment_id;
+              statusEl.innerHTML = 'Payment received, but booking confirmation failed. Please <a href="https://wa.me/919207476241?text=' + encodeURIComponent('Payment ID: ' + response.razorpay_payment_id) + '" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp 92074 76241</a> with payment ID: ' + escapeHtml(response.razorpay_payment_id);
             }
           } catch(err){
-            statusEl.innerHTML = 'Payment received, but we could not confirm the booking. Please <a href="https://wa.me/919207476241?text=' + encodeURIComponent('Payment ID: ' + response.razorpay_payment_id) + '" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp 92074 76241</a> with payment ID: ' + response.razorpay_payment_id;
+            statusEl.innerHTML = 'Payment received, but we could not confirm the booking. Please <a href="https://wa.me/919207476241?text=' + encodeURIComponent('Payment ID: ' + response.razorpay_payment_id) + '" target="_blank" rel="noopener" style="color:var(--orange);">WhatsApp 92074 76241</a> with payment ID: ' + escapeHtml(response.razorpay_payment_id);
           }
         },
         modal: {
@@ -1024,7 +1128,7 @@
 
   document.addEventListener('DOMContentLoaded', function(){
     var revealTargets = document.querySelectorAll(
-      '.service-card, .why-card, .slot-card, .trust-item, .map-card, #calculator .calc-grid, #contact .contact-item, #terms .glass-card'
+      '.service-card, .why-card, .slot-card, .trust-item, .map-card, #calculator .calc-grid, #contact .contact-item, #terms .glass-card, #tracking .glass-card'
     );
     revealTargets.forEach(function(el){ el.classList.add('reveal'); });
 
