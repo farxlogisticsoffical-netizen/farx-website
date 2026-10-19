@@ -12,11 +12,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Leaflet CSS & JS for Live Interactive Pin-Drop Map (Zero Watermark) -->
+    <!-- Leaflet CSS & JS for Live Interactive Pin-Drop Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-    <!-- Official Razorpay Checkout SDK -->
+    <!-- Official Payment Checkout SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <!-- Tailwind CSS -->
@@ -173,10 +173,10 @@
             </button>
         </div>
 
-        <!-- Mobile Slide-Down Navigation Drawer -->
+        <!-- Mobile Slide-Down Navigation Drawer (ZERO internal tool names) -->
         <div id="mobileMenuDrawer" class="hidden lg:hidden bg-white border-b border-slate-200 px-6 py-6 space-y-4 shadow-xl">
             <div class="flex flex-col space-y-3 font-bold text-navy text-base">
-                <a href="#booking-engine" onclick="switchBookingTab('local'); toggleMobileMenu();" class="py-2 border-b border-slate-100 hover:text-orange">🛵 Book Local Delivery (Razorpay + Shipday)</a>
+                <a href="#booking-engine" onclick="switchBookingTab('local'); toggleMobileMenu();" class="py-2 border-b border-slate-100 hover:text-orange">🛵 Book Local Delivery (Kozhikode)</a>
                 <a href="#booking-engine" onclick="switchBookingTab('outstation'); toggleMobileMenu();" class="py-2 border-b border-slate-100 hover:text-orange">📦 Book Outstation Shipment</a>
                 <a href="#services" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">🛡️ Our Courier Services</a>
                 <a href="#why-farx" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">⭐ Why Choose FARX</a>
@@ -193,8 +193,8 @@
 
     <!-- ==========================================
          3. PREMIUM WHITE HERO & DUAL BOOKING ENGINE
-         - Tab 1: Local Express (Sender + Receiver + Map + Razorpay + Shipday)
-         - Tab 2: Outstation Courier (Sender + Receiver + Direct to WhatsApp)
+         - Tab 1: Local Express (Kozhikode District)
+         - Tab 2: Outstation Courier (All-Kerala & Pan-India)
     =========================================== -->
     <section class="relative bg-white pt-8 pb-20 lg:py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-100">
         <div class="absolute inset-0 pointer-events-none opacity-35 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:24px_24px]"></div>
@@ -215,10 +215,10 @@
                 </h1>
 
                 <p class="text-slate-600 text-base font-medium leading-relaxed">
-                    Book online in seconds. For <strong class="text-navy font-bold">Kozhikode Local Deliveries</strong>, pin your pickup &amp; drop on the live map, enter Sender &amp; Receiver details, pay securely via Razorpay, and our automated Shipday dispatch assigns your order. For <strong class="text-navy font-bold">Outstation Shipments</strong> across Kerala &amp; India, switch to the Outstation tab for priority doorstep collection.
+                    Skip the courier counter queues. For <strong class="text-navy font-bold">Kozhikode Local Deliveries</strong>, pin your pickup &amp; drop on the live map, enter Sender &amp; Receiver details, and book online in seconds. For <strong class="text-navy font-bold">Outstation Shipments</strong> across Kerala &amp; India, switch to the Outstation tab for priority doorstep collection.
                 </p>
 
-                <!-- Key Trust Badges -->
+                <!-- Key Trust Badges (Zero internal software names shown to customers) -->
                 <div class="grid grid-cols-3 gap-3 pt-1">
                     <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl">
                         <div class="text-orange font-display font-black text-base">DOORSTEP</div>
@@ -229,8 +229,8 @@
                         <div class="text-[11px] font-bold text-slate-600 uppercase mt-0.5">Live Map Verified</div>
                     </div>
                     <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl">
-                        <div class="text-orange font-display font-black text-base">SHIPDAY</div>
-                        <div class="text-[11px] font-bold text-navy uppercase mt-0.5">Automated Dispatch</div>
+                        <div class="text-orange font-display font-black text-base">100% SAFE</div>
+                        <div class="text-[11px] font-bold text-navy uppercase mt-0.5">Zero Crushed Boxes</div>
                     </div>
                 </div>
 
@@ -261,16 +261,16 @@
                 </div>
 
                 <!-- =========================================================
-                     TAB 1: LOCAL DELIVERY FORM (RAZORPAY + SHIPDAY BACKEND)
+                     TAB 1: LOCAL DELIVERY FORM
                 ========================================================== -->
-                <form id="localBookingForm" onsubmit="handleLocalPaymentAndShipday(event)" class="p-6 sm:p-8 space-y-6">
+                <form id="localBookingForm" onsubmit="handleLocalPaymentAndDispatch(event)" class="p-6 sm:p-8 space-y-6">
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
                         <div>
                             <span class="text-[11px] font-extrabold uppercase tracking-widest text-orange">Intra-District Express (Kozhikode)</span>
                             <h2 class="text-xl sm:text-2xl font-display font-black text-navy">Local Doorstep Pickup &amp; Drop</h2>
                         </div>
-                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-extrabold px-3 py-1 rounded-full">
-                            Razorpay + Shipday Automated
+                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-extrabold px-3.5 py-1 rounded-full">
+                            Verified Doorstep Express
                         </span>
                     </div>
 
@@ -288,7 +288,7 @@
                         </div>
 
                         <!-- Map Trigger Field -->
-                        <div onclick="openLocationPicker('pickup', false)" class="cursor-pointer bg-white border-2 border-slate-200 hover:border-navy rounded-xl px-4 py-3 flex items-center justify-between transition">
+                        <div id="pickupMapBox" onclick="openLocationPicker('pickup', false)" class="cursor-pointer bg-white border-2 border-slate-200 hover:border-navy rounded-xl px-4 py-3 flex items-center justify-between transition">
                             <div class="truncate pr-2">
                                 <div id="pickupDisplayTitle" class="text-sm font-extrabold text-navy truncate">Where is your PickUp ?</div>
                                 <div id="pickupDisplaySub" class="text-xs text-slate-500 truncate">Tap to search area or drop pin on live map</div>
@@ -296,21 +296,21 @@
                             <span class="text-xs font-extrabold text-orange shrink-0">Pin Map &rarr;</span>
                         </div>
 
-                        <!-- Sender Name & Sender Phone (Mandatory Both Parties) -->
+                        <!-- Sender Name & Validated 10-Digit Indian Mobile Number -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Name *</label>
-                                <input type="text" id="localSenderName" required placeholder="Enter sender full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="text" id="localSenderName" required minlength="2" placeholder="Enter sender full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Mobile Number *</label>
-                                <input type="tel" id="localSenderPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="tel" id="localSenderPhone" required inputmode="numeric" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" placeholder="10-digit mobile (6-9...)" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Pickup House / Building / Shop Name &amp; Landmark *</label>
-                            <input type="text" id="localPickupBuilding" required placeholder="e.g., Shop No. 4, 1st Floor, Near Mananchira Square" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
+                            <input type="text" id="localPickupBuilding" required minlength="3" placeholder="e.g., Shop No. 4, 1st Floor, Near Mananchira Square" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
                         </div>
                     </div>
 
@@ -328,7 +328,7 @@
                         </div>
 
                         <!-- Map Trigger Field -->
-                        <div onclick="openLocationPicker('drop', false)" class="cursor-pointer bg-white border-2 border-slate-200 hover:border-orange rounded-xl px-4 py-3 flex items-center justify-between transition">
+                        <div id="dropMapBox" onclick="openLocationPicker('drop', false)" class="cursor-pointer bg-white border-2 border-slate-200 hover:border-orange rounded-xl px-4 py-3 flex items-center justify-between transition">
                             <div class="truncate pr-2">
                                 <div id="dropDisplayTitle" class="text-sm font-extrabold text-navy truncate">Where is your Drop ?</div>
                                 <div id="dropDisplaySub" class="text-xs text-slate-500 truncate">Tap to search destination or drop pin on live map</div>
@@ -336,38 +336,38 @@
                             <span class="text-xs font-extrabold text-orange shrink-0">Pin Map &rarr;</span>
                         </div>
 
-                        <!-- Receiver Name & Receiver Phone (Mandatory Both Parties) -->
+                        <!-- Receiver Name & Validated 10-Digit Indian Mobile Number -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Receiver Name *</label>
-                                <input type="text" id="localReceiverName" required placeholder="Enter receiver full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="text" id="localReceiverName" required minlength="2" placeholder="Enter receiver full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Receiver Mobile Number *</label>
-                                <input type="tel" id="localReceiverPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="tel" id="localReceiverPhone" required inputmode="numeric" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" placeholder="10-digit mobile (6-9...)" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Drop House / Building / Shop Name &amp; Landmark *</label>
-                            <input type="text" id="localDropBuilding" required placeholder="e.g., Flat 2B, Skyline Apt, Thondayad Bypass" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
+                            <input type="text" id="localDropBuilding" required minlength="3" placeholder="e.g., Flat 2B, Skyline Apt, Thondayad Bypass" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
                         </div>
                     </div>
 
-                    <!-- SECTION C: PARCEL WEIGHT, ITEM CONTENTS & VERIFIED DISTANCE (NO SLIDERS) -->
+                    <!-- SECTION C: NORMAL PARCEL WEIGHT (STEP="ANY" -> ZERO DECIMAL STEP ERRORS!), CONTENTS & DISTANCE -->
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-start">
                         <div class="sm:col-span-5">
                             <label for="parcelWeightInput" class="block text-xs font-extrabold text-navy uppercase tracking-wider mb-1.5">Parcel Weight (KG) *</label>
                             <div class="relative">
-                                <input type="number" id="parcelWeightInput" value="1.0" min="0.1" max="50" step="0.5" required oninput="recalculateFare()" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-navy focus:bg-white rounded-xl px-4 py-2.5 text-base font-extrabold text-navy focus:outline-none" />
+                                <input type="number" id="parcelWeightInput" value="1" min="0.5" max="50" step="any" required oninput="recalculateFare()" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-navy focus:bg-white rounded-xl px-4 py-2.5 text-base font-extrabold text-navy focus:outline-none" />
                                 <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-extrabold text-slate-400">KG</span>
                             </div>
-                            <div class="flex flex-wrap gap-1 mt-1.5">
-                                <button type="button" onclick="setWeight(0.5)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">0.5kg</button>
-                                <button type="button" onclick="setWeight(1)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">1kg</button>
-                                <button type="button" onclick="setWeight(2)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">2kg</button>
-                                <button type="button" onclick="setWeight(5)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">5kg</button>
-                                <button type="button" onclick="setWeight(10)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">10kg</button>
+                            <div class="flex flex-wrap gap-1.5 mt-2">
+                                <button type="button" onclick="setWeight(1)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">1 kg</button>
+                                <button type="button" onclick="setWeight(2)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">2 kg</button>
+                                <button type="button" onclick="setWeight(3)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">3 kg</button>
+                                <button type="button" onclick="setWeight(5)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">5 kg</button>
+                                <button type="button" onclick="setWeight(10)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">10 kg</button>
                             </div>
                         </div>
 
@@ -384,6 +384,9 @@
                         </div>
                     </div>
 
+                    <!-- Inline Validation Error Banner (Replaces ugly browser alerts) -->
+                    <div id="localValidationAlert" class="hidden bg-red-50 border border-red-300 text-red-700 text-xs font-bold px-4 py-3 rounded-xl"></div>
+
                     <!-- MANDATORY TERMS & CONDITIONS CHECKBOX -->
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex items-start gap-3">
                         <input type="checkbox" id="localTermsCheck" required class="mt-1 w-4 h-4 accent-orange rounded cursor-pointer shrink-0" />
@@ -393,34 +396,32 @@
                         </label>
                     </div>
 
-                    <!-- PAYMENT & SHIPDAY DISPATCH BAR -->
+                    <!-- CLEAN CUSTOMER CHECKOUT BAR (Zero internal tool names) -->
                     <div class="bg-navy text-white p-5 sm:p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div>
                             <div class="text-[11px] font-extrabold uppercase tracking-widest text-orange">Total Doorstep Delivery Fare</div>
                             <div class="flex items-baseline gap-2 mt-0.5">
                                 <span id="fareDisplayAmount" class="font-display text-3xl sm:text-4xl font-black text-white">₹60</span>
-                                <span id="fareBreakdownSub" class="text-xs font-semibold text-slate-300">(Select map pins to lock fare)</span>
+                                <span id="fareBreakdownSub" class="text-xs font-semibold text-slate-300">(Pin pickup &amp; drop on map)</span>
                             </div>
-                            <div class="text-[11px] text-slate-300 mt-1">Server-verified KM &amp; KG slab • Instant Shipday Rider Dispatch</div>
+                            <div class="text-[11px] text-slate-300 mt-1">Includes scheduled doorstep pickup &amp; verified weight slab</div>
                         </div>
 
                         <button type="submit" id="localPayBtn" class="w-full sm:w-auto bg-orange hover:bg-orange-hover text-white font-extrabold text-sm px-7 py-4 rounded-xl shadow-orange-glow transition flex items-center justify-center gap-2 shrink-0">
-                            <span>Pay &amp; Book Now</span>
+                            <span>Pay &amp; Book Pickup</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </button>
                     </div>
 
                     <!-- Live Booking Confirmation Alert -->
                     <div id="localBookingSuccessBox" class="hidden bg-emerald-50 border-2 border-emerald-500 text-emerald-900 rounded-2xl p-5 space-y-2">
-                        <div class="font-display font-black text-lg text-emerald-800">✅ Payment Verified &amp; Dispatched to Shipday!</div>
+                        <div class="font-display font-black text-lg text-emerald-800">✅ Booking Confirmed!</div>
                         <p id="localBookingOrderDetails" class="text-xs font-bold text-emerald-700"></p>
                     </div>
                 </form>
 
                 <!-- =========================================================
                      TAB 2: OUTSTATION SHIPMENT FORM (ALL-KERALA & PAN-INDIA)
-                     - Captures Pickup Details (Sender + Phone) & Drop Details (Receiver + Phone + PIN)
-                     - Sends Directly to WhatsApp Desk (+91 92074 76242)
                 ========================================================== -->
                 <form id="outstationBookingForm" onsubmit="handleOutstationWhatsAppBooking(event)" class="hidden p-6 sm:p-8 space-y-6">
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
@@ -448,17 +449,17 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Name *</label>
-                                <input type="text" id="outSenderName" required placeholder="Sender full name or business" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="text" id="outSenderName" required minlength="2" placeholder="Sender full name or business" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Mobile Number *</label>
-                                <input type="tel" id="outSenderPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="tel" id="outSenderPhone" required inputmode="numeric" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" placeholder="10-digit mobile (6-9...)" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Full Pickup Address in Kozhikode *</label>
-                            <input type="text" id="outPickupAddress" required placeholder="Building/Shop Name, Street, Area, Kozhikode (or click Select on map)" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
+                            <input type="text" id="outPickupAddress" required minlength="4" placeholder="Building/Shop Name, Street, Area, Kozhikode (or click Select on map)" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
                         </div>
                     </div>
 
@@ -472,17 +473,17 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Receiver Name *</label>
-                                <input type="text" id="outReceiverName" required placeholder="Receiver full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="text" id="outReceiverName" required minlength="2" placeholder="Receiver full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Receiver Mobile Number *</label>
-                                <input type="tel" id="outReceiverPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="tel" id="outReceiverPhone" required inputmode="numeric" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" placeholder="10-digit mobile (6-9...)" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Full Delivery Address (House / Building / Street) *</label>
-                            <input type="text" id="outDropAddress" required placeholder="Complete door address of recipient" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
+                            <input type="text" id="outDropAddress" required minlength="4" placeholder="Complete door address of recipient" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -492,14 +493,16 @@
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Destination PIN Code *</label>
-                                <input type="text" id="outDropPincode" required pattern="[0-9]{6}" maxlength="6" placeholder="6-digit PIN Code" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                                <input type="text" id="outDropPincode" required inputmode="numeric" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)" placeholder="6-digit PIN Code" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Approx Weight (KG) *</label>
-                                <input type="number" id="outParcelWeight" required value="1.0" min="0.1" max="100" step="0.5" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-navy focus:outline-none" />
+                                <input type="number" id="outParcelWeight" required value="1" min="0.5" max="100" step="any" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-navy focus:outline-none" />
                             </div>
                         </div>
                     </div>
+
+                    <div id="outValidationAlert" class="hidden bg-red-50 border border-red-300 text-red-700 text-xs font-bold px-4 py-3 rounded-xl"></div>
 
                     <!-- MANDATORY TERMS & CONDITIONS CHECKBOX -->
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex items-start gap-3">
@@ -530,7 +533,7 @@
 
     <!-- ==========================================
          4. CORE SERVICES SECTION
-         - No 45-90 mins promise
+         - Zero internal software names
          - Surface Express + Air/Sea Marked Coming Soon
     =========================================== -->
     <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/70 border-b border-slate-200/70">
@@ -567,7 +570,7 @@
                         </li>
                         <li class="flex items-center gap-2.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-orange shrink-0"></span>
-                            Automated Shipday Dispatch &amp; Tracking
+                            Live Dispatch Updates &amp; Order Tracking
                         </li>
                     </ul>
                 </div>
@@ -651,7 +654,7 @@
                         Why Kozhikode's Leading Brands Trust <span class="text-orange">FARX</span>.
                     </h2>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-                        We built FARX Logistics to eliminate unclear courier rates, damaged boxes, and counter delays. You drop a pin on the map, see the exact kilometer and weight slab price, pay securely online, and our dispatch system handles the rest.
+                        We built FARX Logistics to eliminate unclear courier rates, damaged boxes, and counter delays. You drop a pin on the map, see the exact kilometer and weight slab price, book securely online, and our fleet handles the rest.
                     </p>
                     <div class="pt-2 flex flex-wrap gap-3">
                         <a href="#booking-engine" onclick="switchBookingTab('local')" class="inline-flex items-center gap-2 bg-navy hover:bg-navy-light text-white font-extrabold text-sm px-6 py-3.5 rounded-xl transition">
@@ -673,8 +676,8 @@
                         <p class="text-slate-600 text-sm font-medium">No arbitrary hidden zone charges. Every fare is computed transparently from actual road distance and parcel weight.</p>
                     </div>
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
-                        <div class="text-navy font-display font-black text-xl mb-2">03. Automated Shipday Dispatch</div>
-                        <p class="text-slate-600 text-sm font-medium">Local orders verified through Razorpay are automatically pushed to our Shipday dispatch platform for seamless rider assignment.</p>
+                        <div class="text-navy font-display font-black text-xl mb-2">03. Scheduled Same/Next-Day</div>
+                        <p class="text-slate-600 text-sm font-medium">Reliable, well-planned daily pickup and delivery runs across Kozhikode district with real-time order updates.</p>
                     </div>
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
                         <div class="text-orange font-display font-black text-xl mb-2">04. Direct Human Support</div>
@@ -693,7 +696,7 @@
             <div class="text-center max-w-xl mx-auto mb-8">
                 <span class="text-xs font-extrabold uppercase tracking-widest text-orange">Real-Time Dispatch Status</span>
                 <h2 class="font-display text-2xl sm:text-3xl font-black text-navy mt-1">Track Your FARX Shipment</h2>
-                <p class="text-slate-600 text-sm font-medium mt-2">Enter your FARX Order ID or AWB Number to fetch real-time status from our server.</p>
+                <p class="text-slate-600 text-sm font-medium mt-2">Enter your FARX Order ID or AWB Number to check your live delivery status.</p>
             </div>
 
             <form onsubmit="handleTrackShipment(event)" class="flex flex-col sm:flex-row gap-3">
@@ -797,7 +800,7 @@
             </div>
             <div class="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
                 <div>
-                    <h4 class="font-extrabold text-navy uppercase text-xs mb-1">1. Distance &amp; Weight Slab Server Verification</h4>
+                    <h4 class="font-extrabold text-navy uppercase text-xs mb-1">1. Distance &amp; Weight Slab Verification</h4>
                     <p>All local delivery fares are calculated strictly on actual road distance (kilometers) and parcel weight (kilograms). Server-side validation locks coordinates and weight slabs. If actual physical or volumetric weight exceeds the declared weight at pickup, the differential slab charge must be settled prior to dispatch.</p>
                 </div>
                 <div>
@@ -827,7 +830,6 @@
 
     <!-- =========================================================================
          9. FULL-SCREEN LOCATION SEARCH & LIVE PIN-DROP MAP MODAL
-         - Uses Clean OpenStreetMap Tiles (ZERO Carto API Key Watermark!)
     ========================================================================== -->
     <div id="locationModal" class="fixed inset-0 z-50 bg-white hidden flex-col">
         
@@ -901,10 +903,9 @@
 
     <!-- ==========================================
          10. COMPLETE APPLICATION JAVASCRIPT
-         - Zero Missing Functions
-         - Local Booking -> Razorpay + Shipday Backend (/api/create-payment, /api/verify-payment, /api/book)
-         - Outstation Booking -> Formatted WhatsApp Dispatch (+91 92074 76242)
-         - Live Tracking -> /api/track
+         - Includes DOM Sanitization (`escapeHtml`)
+         - Strict Indian Mobile Number Validation (blocks 0000000000 / fake digits)
+         - Compatible Backend Payload for /api/create-payment, /api/verify-payment, /api/book
     =========================================== -->
     <script>
         const CONFIG = {
@@ -912,10 +913,26 @@
             ENDPOINTS: {
                 CREATE_PAYMENT: '/api/create-payment',
                 VERIFY_PAYMENT: '/api/verify-payment',
-                BOOK_SHIPDAY: '/api/book',
+                BOOK_ORDER: '/api/book',
                 TRACK_ORDER: '/api/track'
             }
         };
+
+        // DOM Sanitization Helper (XSS Protection)
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+            });
+        }
+
+        // Strict Indian 10-Digit Mobile Validator (Blocks 0000000000, 0000066060, 1234567890, etc.)
+        function isValidIndianMobile(phone) {
+            const cleaned = String(phone || '').replace(/\D/g, '');
+            if (!/^[6-9]\d{9}$/.test(cleaned)) return false;
+            // Block 7+ identical repeating digits like 9999999999 or 6666666666
+            if (/(\d)\1{6,}/.test(cleaned)) return false;
+            return true;
+        }
 
         let activeMode = 'pickup'; // 'pickup' | 'drop' | 'outstation_pickup'
         let leafletMap = null;
@@ -959,7 +976,19 @@
             { title: 'Ramanattukara', address: 'Ramanattukara, Kozhikode, Kerala 673633', lat: 11.1778, lng: 75.8655 }
         ];
 
-        // Switch Between Local Delivery (Razorpay + Shipday) and Outstation (WhatsApp)
+        function showValidationError(elementId, message) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            el.innerText = message;
+            el.classList.remove('hidden');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function hideValidationError(elementId) {
+            const el = document.getElementById(elementId);
+            if (el) el.classList.add('hidden');
+        }
+
         function switchBookingTab(tab) {
             const localForm = document.getElementById('localBookingForm');
             const outForm = document.getElementById('outstationBookingForm');
@@ -979,7 +1008,6 @@
             }
         }
 
-        // Terms & Conditions Modal
         function openTermsModal() {
             const modal = document.getElementById('termsModal');
             modal.classList.remove('hidden');
@@ -991,7 +1019,6 @@
             modal.classList.remove('flex');
         }
 
-        // Mobile Menu Toggle
         function toggleMobileMenu() {
             const drawer = document.getElementById('mobileMenuDrawer');
             const openIcon = document.getElementById('menuIconOpen');
@@ -1001,7 +1028,6 @@
             closeIcon.classList.toggle('hidden');
         }
 
-        // Open Map / Search Modal
         function openLocationPicker(mode, jumpStraightToMap = false) {
             activeMode = mode;
             const modal = document.getElementById('locationModal');
@@ -1080,7 +1106,6 @@
             initOrUpdateLeafletMap(targetCoords.lat, targetCoords.lng);
         }
 
-        // Clean OpenStreetMap Street Tiles (Zero Watermark, Zero API Key)
         function initOrUpdateLeafletMap(lat, lng) {
             const container = document.getElementById('interactiveMapContainer');
 
@@ -1203,8 +1228,8 @@
                 btn.innerHTML = `
                     <span class="w-8 h-8 rounded-xl bg-slate-100 text-navy flex items-center justify-center shrink-0 mt-0.5">📍</span>
                     <div class="overflow-hidden">
-                        <div class="font-bold text-navy text-sm truncate">${item.title}</div>
-                        <div class="text-xs text-slate-500 truncate">${item.address}</div>
+                        <div class="font-bold text-navy text-sm truncate">${escapeHtml(item.title)}</div>
+                        <div class="text-xs text-slate-500 truncate">${escapeHtml(item.address)}</div>
                     </div>
                 `;
                 btn.onclick = () => {
@@ -1232,11 +1257,14 @@
             if (activeMode === 'pickup') {
                 document.getElementById('pickupDisplayTitle').innerText = state.pickup.title;
                 document.getElementById('pickupDisplaySub').innerText = state.pickup.address;
+                document.getElementById('pickupMapBox').classList.add('border-emerald-500');
             } else {
                 document.getElementById('dropDisplayTitle').innerText = state.drop.title;
                 document.getElementById('dropDisplaySub').innerText = state.drop.address;
+                document.getElementById('dropMapBox').classList.add('border-orange');
             }
 
+            hideValidationError('localValidationAlert');
             closeLocationPicker();
             await computeVerifiedRoadDistance();
         }
@@ -1278,9 +1306,10 @@
             recalculateFare();
         }
 
+        // Standard Weight & Distance Slab Calculation
         function recalculateFare() {
-            const weightInput = parseFloat(document.getElementById('parcelWeightInput').value);
-            state.weightKg = isNaN(weightInput) || weightInput <= 0 ? 0.5 : weightInput;
+            const rawWeight = parseFloat(document.getElementById('parcelWeightInput').value);
+            state.weightKg = isNaN(rawWeight) || rawWeight <= 0 ? 1 : rawWeight;
             const km = state.distanceKm || 5.0;
 
             const extraKm = Math.max(0, km - 3);
@@ -1293,10 +1322,11 @@
         }
 
         // =========================================================================
-        // 1. LOCAL DELIVERY FLOW: RAZORPAY PAYMENT + SHIPDAY DISPATCH (/api/...)
+        // 1. LOCAL DELIVERY FLOW (STRICT VALIDATION + MULTI-ENDPOINT COMPATIBILITY)
         // =========================================================================
-        async function handleLocalPaymentAndShipday(e) {
+        async function handleLocalPaymentAndDispatch(e) {
             e.preventDefault();
+            hideValidationError('localValidationAlert');
 
             const payBtn = document.getElementById('localPayBtn');
             const senderName = document.getElementById('localSenderName').value.trim();
@@ -1308,45 +1338,114 @@
             const dropBuilding = document.getElementById('localDropBuilding').value.trim();
             const contents = document.getElementById('localParcelContents').value.trim();
 
+            // 1. Validate both map pins were actually selected & are not identical
+            if (!state.pickup.confirmed || !state.drop.confirmed) {
+                showValidationError('localValidationAlert', 'Please select both Pickup and Drop locations on the map first.');
+                return;
+            }
+            const sameCoords = Math.abs(state.pickup.lat - state.drop.lat) < 0.0005 && Math.abs(state.pickup.lng - state.drop.lng) < 0.0005;
+            if (sameCoords) {
+                showValidationError('localValidationAlert', 'Pickup and Drop locations cannot be the exact same spot on the map.');
+                return;
+            }
+
+            // 2. Validate real 10-digit Indian mobile numbers (Blocks 0000000000 / 0000066060)
+            if (!isValidIndianMobile(senderPhone)) {
+                showValidationError('localValidationAlert', 'Please enter a valid 10-digit Indian mobile number for the Sender (starting with 6, 7, 8, or 9).');
+                document.getElementById('localSenderPhone').focus();
+                return;
+            }
+            if (!isValidIndianMobile(receiverPhone)) {
+                showValidationError('localValidationAlert', 'Please enter a valid 10-digit Indian mobile number for the Receiver (starting with 6, 7, 8, or 9).');
+                document.getElementById('localReceiverPhone').focus();
+                return;
+            }
+
+            // 3. Validate Weight
+            if (isNaN(state.weightKg) || state.weightKg < 0.1 || state.weightKg > 50) {
+                showValidationError('localValidationAlert', 'Please enter a valid parcel weight between 0.5 kg and 50 kg.');
+                return;
+            }
+
+            const fullPickupAddress = `${pickupBuilding}, ${state.pickup.title},${state.pickup.address}`;
+            const fullDropAddress = `${dropBuilding}, ${state.drop.title},${state.drop.address}`;
+
+            // Unified payload containing all field aliases so your backend /api/create-payment or /api/book never rejects a field name
             const bookingPayload = {
                 serviceType: 'LOCAL_EXPRESS',
-                senderName,
-                senderPhone,
-                pickupAddress: `${pickupBuilding}, ${state.pickup.title},${state.pickup.address}`,
+                type: 'local',
+                senderName: senderName,
+                senderPhone: senderPhone,
+                customerName: senderName,
+                customerPhone: senderPhone,
+                pickupAddress: fullPickupAddress,
+                pickup: fullPickupAddress,
                 pickupLat: state.pickup.lat,
                 pickupLng: state.pickup.lng,
-                receiverName,
-                receiverPhone,
-                dropAddress: `${dropBuilding}, ${state.drop.title},${state.drop.address}`,
+                pickupCoords: { lat: state.pickup.lat, lng: state.pickup.lng },
+                receiverName: receiverName,
+                receiverPhone: receiverPhone,
+                recipientName: receiverName,
+                recipientPhone: receiverPhone,
+                dropAddress: fullDropAddress,
+                drop: fullDropAddress,
+                deliveryAddress: fullDropAddress,
                 dropLat: state.drop.lat,
                 dropLng: state.drop.lng,
+                dropCoords: { lat: state.drop.lat, lng: state.drop.lng },
                 distanceKm: state.distanceKm,
+                distance: state.distanceKm,
                 weightKg: state.weightKg,
+                weight: state.weightKg,
                 packageContents: contents,
-                amount: state.calculatedFare
+                notes: contents,
+                amount: state.calculatedFare,
+                fare: state.calculatedFare,
+                price: state.calculatedFare
             };
 
             const originalBtnText = payBtn.innerHTML;
             payBtn.disabled = true;
-            payBtn.innerHTML = '<span>Initializing Razorpay...</span>';
+            payBtn.innerHTML = '<span>Processing Booking...</span>';
 
             try {
-                // Step 1: Create Server-Verified Razorpay Order via /api/create-payment
-                const orderRes = await fetch(CONFIG.ENDPOINTS.CREATE_PAYMENT, {
+                // Try /api/create-payment first; if your backend uses /api/book to create the order, fallback seamlessly
+                let orderRes = await fetch(CONFIG.ENDPOINTS.CREATE_PAYMENT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(bookingPayload)
                 });
 
                 if (!orderRes.ok) {
-                    throw new Error('Backend payment endpoint returned an error');
+                    orderRes = await fetch(CONFIG.ENDPOINTS.BOOK_ORDER, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(bookingPayload)
+                    });
+                }
+
+                if (!orderRes.ok) {
+                    const errJson = await orderRes.json().catch(() => ({}));
+                    throw new Error(errJson.error || errJson.message || 'Server error');
                 }
 
                 const orderData = await orderRes.json();
 
-                // Step 2: Open Official Razorpay Checkout Window
+                // If /api/book directly completed the booking without requiring a separate popup
+                if (orderData.success && !orderData.orderId && !orderData.id && !orderData.keyId && !orderData.key) {
+                    const directRef = orderData.trackingId || orderData.orderNumber || 'CONFIRMED';
+                    const successBox = document.getElementById('localBookingSuccessBox');
+                    document.getElementById('localBookingOrderDetails').innerText =
+                        `Order Reference: ${directRef} | Pickup: ${senderName} (${senderPhone}) → Drop: ${receiverName} (${receiverPhone}). Your doorstep pickup is scheduled!`;
+                    successBox.classList.remove('hidden');
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = originalBtnText;
+                    return;
+                }
+
+                // Open Official Payment Checkout Window
                 const options = {
-                    key: orderData.keyId || orderData.key,
+                    key: orderData.keyId || orderData.key || orderData.razorpayKey,
                     amount: orderData.amount || (state.calculatedFare * 100),
                     currency: orderData.currency || 'INR',
                     name: 'FARX Logistics',
@@ -1358,33 +1457,32 @@
                     },
                     theme: { color: '#0A2246' },
                     handler: async function (response) {
-                        payBtn.innerHTML = '<span>Dispatching to Shipday...</span>';
+                        payBtn.innerHTML = '<span>Confirming Order...</span>';
 
-                        // Step 3: Verify Payment & Push Order to Shipday (/api/verify-payment or /api/book)
-                        const verifyRes = await fetch(CONFIG.ENDPOINTS.VERIFY_PAYMENT, {
+                        const verificationBody = {
+                            ...bookingPayload,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature,
+                            orderId: response.razorpay_order_id,
+                            paymentId: response.razorpay_payment_id,
+                            signature: response.razorpay_signature
+                        };
+
+                        let verifyRes = await fetch(CONFIG.ENDPOINTS.VERIFY_PAYMENT, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                ...bookingPayload,
-                                razorpay_order_id: response.razorpay_order_id,
-                                razorpay_payment_id: response.razorpay_payment_id,
-                                razorpay_signature: response.razorpay_signature
-                            })
+                            body: JSON.stringify(verificationBody)
                         });
 
                         let finalResult = {};
                         if (verifyRes.ok) {
                             finalResult = await verifyRes.json();
                         } else {
-                            const bookRes = await fetch(CONFIG.ENDPOINTS.BOOK_SHIPDAY, {
+                            const bookRes = await fetch(CONFIG.ENDPOINTS.BOOK_ORDER, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    ...bookingPayload,
-                                    razorpay_order_id: response.razorpay_order_id,
-                                    razorpay_payment_id: response.razorpay_payment_id,
-                                    razorpay_signature: response.razorpay_signature
-                                })
+                                body: JSON.stringify(verificationBody)
                             });
                             if (bookRes.ok) finalResult = await bookRes.json();
                         }
@@ -1392,7 +1490,7 @@
                         const orderIdText = finalResult.orderId || finalResult.trackingId || response.razorpay_payment_id;
                         const successBox = document.getElementById('localBookingSuccessBox');
                         document.getElementById('localBookingOrderDetails').innerText =
-                            `Order Reference: ${orderIdText} | Sender: ${senderName} (${senderPhone}) → Receiver: ${receiverName} (${receiverPhone}). Dispatched to Shipday!`;
+                            `Order Reference: ${orderIdText} | Sender: ${senderName} (${senderPhone}) → Receiver: ${receiverName} (${receiverPhone}). Your doorstep pickup is confirmed!`;
                         successBox.classList.remove('hidden');
                         payBtn.disabled = false;
                         payBtn.innerHTML = originalBtnText;
@@ -1401,15 +1499,15 @@
 
                 const rzp = new Razorpay(options);
                 rzp.on('payment.failed', function (resp) {
-                    alert('Payment failed: ' + (resp.error && resp.error.description ? resp.error.description : 'Please try again.'));
+                    showValidationError('localValidationAlert', 'Payment was not completed: ' + (resp.error && resp.error.description ? resp.error.description : 'Please try again.'));
                     payBtn.disabled = false;
                     payBtn.innerHTML = originalBtnText;
                 });
                 rzp.open();
 
             } catch (err) {
-                console.error('Payment/Backend Error:', err);
-                alert('Could not connect to the payment server. Please try again or call +91 92074 76242.');
+                console.error('Booking Error:', err);
+                showValidationError('localValidationAlert', `Unable to initialize online payment (${err.message || 'Check connection'}). Please try again or call +91 92074 76242.`);
             } finally {
                 payBtn.disabled = false;
                 payBtn.innerHTML = originalBtnText;
@@ -1417,10 +1515,11 @@
         }
 
         // =========================================================================
-        // 2. OUTSTATION SHIPMENT FLOW: DIRECT TO WHATSAPP (+91 92074 76242)
+        // 2. OUTSTATION SHIPMENT FLOW: VALIDATED & DIRECT TO WHATSAPP (+91 92074 76242)
         // =========================================================================
         function handleOutstationWhatsAppBooking(e) {
             e.preventDefault();
+            hideValidationError('outValidationAlert');
 
             const senderName = document.getElementById('outSenderName').value.trim();
             const senderPhone = document.getElementById('outSenderPhone').value.trim();
@@ -1432,6 +1531,22 @@
             const dropCity = document.getElementById('outDropCity').value.trim();
             const dropPin = document.getElementById('outDropPincode').value.trim();
             const weight = document.getElementById('outParcelWeight').value.trim();
+
+            if (!isValidIndianMobile(senderPhone)) {
+                showValidationError('outValidationAlert', 'Please enter a valid 10-digit Indian mobile number for the Sender (starting with 6-9).');
+                document.getElementById('outSenderPhone').focus();
+                return;
+            }
+            if (!isValidIndianMobile(receiverPhone)) {
+                showValidationError('outValidationAlert', 'Please enter a valid 10-digit Indian mobile number for the Receiver (starting with 6-9).');
+                document.getElementById('outReceiverPhone').focus();
+                return;
+            }
+            if (!/^[1-9][0-9]{5}$/.test(dropPin)) {
+                showValidationError('outValidationAlert', 'Please enter a valid 6-digit Indian destination PIN code.');
+                document.getElementById('outDropPincode').focus();
+                return;
+            }
 
             const message = [
                 `*📦 NEW OUTSTATION SHIPMENT — FARX LOGISTICS*`,
@@ -1457,7 +1572,7 @@
         }
 
         // =========================================================================
-        // 3. LIVE ORDER TRACKING (/api/track)
+        // 3. LIVE ORDER TRACKING (/api/track) WITH DOM SANITIZATION
         // =========================================================================
         async function handleTrackShipment(e) {
             e.preventDefault();
@@ -1479,15 +1594,15 @@
 
                 badge.innerText = data.status || 'IN TRANSIT';
                 body.innerHTML = `
-                    <div><strong>Current Status:</strong> ${data.status || 'Active in Shipday Network'}</div>
-                    ${data.riderName ? `<div><strong>Assigned Rider:</strong> ${data.riderName} (${data.riderPhone || ''})</div>` : ''}
-                    ${data.eta ? `<div><strong>Estimated Delivery:</strong> ${data.eta}</div>` : ''}
+                    <div><strong>Current Status:</strong> ${escapeHtml(data.status || 'In Transit')}</div>
+                    ${data.riderName ? `<div><strong>Assigned Executive:</strong> ${escapeHtml(data.riderName)} (${escapeHtml(data.riderPhone || '')})</div>` : ''}
+                    ${data.eta ? `<div><strong>Estimated Delivery:</strong> ${escapeHtml(data.eta)}</div>` : ''}
                 `;
             } catch (err) {
                 badge.innerText = 'Dispatch Desk Verification';
                 const waUrl = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi FARX Logistics, please share live tracking status for Order ID: ' + code)}`;
                 body.innerHTML = `
-                    <p>For instant live GPS rider tracking or outstation AWB status on order <strong>${code}</strong>, tap below:</p>
+                    <p>For instant live tracking or outstation AWB status on order <strong>${escapeHtml(code)}</strong>, tap below:</p>
                     <a href="${waUrl}" target="_blank" class="inline-block mt-2 bg-orange text-white font-extrabold text-xs px-5 py-2.5 rounded-xl">Check Status with Dispatch Desk &rarr;</a>
                 `;
             }
