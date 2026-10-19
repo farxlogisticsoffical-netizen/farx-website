@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>FARX Logistics | Hassle-Free Next-Day Delivery & Express Courier — Kozhikode</title>
-    <meta name="description" content="FARX Logistics provides hassle-free same-day and next-day doorstep pickup and delivery across Kozhikode, All-Kerala, and Pan-India surface courier networks.">
+    <meta name="description" content="FARX Logistics provides hassle-free same-day and next-day doorstep pickup and delivery across Kozhikode, All-Kerala, and Pan-India courier networks.">
     <meta name="theme-color" content="#FFFFFF">
 
     <!-- Google Fonts: Plus Jakarta Sans & Montserrat -->
@@ -12,9 +12,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Leaflet CSS & JS for Live Interactive Pin-Drop Map (Works alongside or with Google Maps) -->
+    <!-- Leaflet CSS & JS for Live Interactive Pin-Drop Map (Zero Watermark) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+    <!-- Official Razorpay Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,7 +42,7 @@
                         display: ['Montserrat', 'sans-serif']
                     },
                     boxShadow: {
-                        'premium': '0 20px 50px -12px rgba(10, 34, 70, 0.08)',
+                        'premium': '0 20px 50px -12px rgba(10, 34, 70, 0.10)',
                         'card': '0 10px 30px -5px rgba(10, 34, 70, 0.06)',
                         'orange-glow': '0 12px 28px -6px rgba(243, 112, 33, 0.45)'
                     }
@@ -54,7 +57,6 @@
             color: #0A2246;
             overflow-x: hidden;
         }
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #F8FAFC; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
@@ -90,7 +92,7 @@
         }
         .leaflet-control-attribution {
             font-size: 9px !important;
-            opacity: 0.6;
+            opacity: 0.65;
         }
     </style>
 </head>
@@ -108,7 +110,7 @@
                 </span>
                 <span class="hidden md:inline-flex items-center gap-1.5 text-slate-500">
                     <svg class="w-3.5 h-3.5 text-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    Kozhikode District &amp; All-Kerala Network
+                    Kozhikode District &amp; All-Kerala Outstation Network
                 </span>
             </div>
             <div class="flex items-center gap-5">
@@ -117,7 +119,7 @@
                     +91 92074 76242
                 </a>
                 <a href="#tracking" class="hidden sm:inline-flex items-center gap-1 text-orange hover:text-navy font-bold transition">
-                    Track AWB &rarr;
+                    Track Order &rarr;
                 </a>
             </div>
         </div>
@@ -128,37 +130,30 @@
     =========================================== -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Official FARX Vector Logo (Matches Uploaded Brand Mark) -->
+            <!-- Official FARX Logo -->
             <a href="#" class="flex items-center group" aria-label="FARX Logistics Home">
                 <img src="LOGO.jpg" alt="FARX Logistics" class="h-12 w-auto object-contain hidden" onload="this.classList.remove('hidden'); document.getElementById('farx-svg-logo').classList.add('hidden');" onerror="this.classList.add('hidden');">
                 <svg id="farx-svg-logo" class="h-12 sm:h-14 w-auto" viewBox="0 0 380 115" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- F -->
                     <path d="M18 76L32 24C33.5 18.5 38 15 44 15H104L99 30H48L44 43H86L81 57H40L35 76H18Z" fill="#0A2246"/>
-                    <!-- A -->
                     <path d="M84 76L127 20C131 15 138 15 142 20L172 76H152L134 38L104 76H84Z" fill="#0A2246"/>
-                    <!-- Orange Delta Inside A -->
                     <path d="M114 76L133 52L147 76L132 71L114 76Z" fill="#F37021"/>
-                    <!-- R -->
                     <path d="M174 76L188 15H242C258 15 267 24 264 38C261 49 252 55 240 57L254 76H232L219 58H198L193 76H174ZM202 44H234C241 44 245 40 246 35C247 30 243 28 236 28H206L202 44Z" fill="#0A2246"/>
-                    <!-- X Top-Left & Bottom-Right Legs -->
                     <path d="M268 15H296L315 39L300 51L268 15Z" fill="#F37021"/>
                     <path d="M316 55L331 43L358 76H330L316 55Z" fill="#F37021"/>
-                    <!-- X Sweeping Orange Arrow -->
                     <path d="M256 76C285 52 318 30 355 14L344 11L376 4L362 32L359 21C326 38 298 57 276 76H256Z" fill="#F37021"/>
-                    <!-- Navy Dynamic Swoosh Under Arrow -->
                     <path d="M294 69C314 51 338 35 360 24C341 39 320 55 294 69Z" fill="#0A2246"/>
-                    <!-- LOGISTICS Subtext -->
                     <text x="190" y="103" text-anchor="middle" fill="#0A2246" font-family="Montserrat, sans-serif" font-weight="800" font-size="20" font-style="italic" letter-spacing="11">LOGISTICS</text>
                 </svg>
             </a>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden lg:flex items-center gap-8 text-sm font-bold text-navy">
-                <a href="#calculator" class="hover:text-orange transition">Book &amp; Fare Estimator</a>
-                <a href="#services" class="hover:text-orange transition">Our Services</a>
-                <a href="#tracking" class="hover:text-orange transition">Track Parcel</a>
+            <nav class="hidden lg:flex items-center gap-7 text-sm font-bold text-navy">
+                <a href="#booking-engine" onclick="switchBookingTab('local')" class="hover:text-orange transition">Local Delivery</a>
+                <a href="#booking-engine" onclick="switchBookingTab('outstation')" class="hover:text-orange transition">Outstation Courier</a>
+                <a href="#services" class="hover:text-orange transition">Services</a>
                 <a href="#why-farx" class="hover:text-orange transition">Why FARX</a>
-                <a href="#contact" class="hover:text-orange transition">Contact</a>
+                <a href="#tracking" class="hover:text-orange transition">Track Shipment</a>
+                <button type="button" onclick="openTermsModal()" class="hover:text-orange transition">Terms &amp; Conditions</button>
             </nav>
 
             <!-- Desktop Actions -->
@@ -166,12 +161,12 @@
                 <a href="tel:+919207476242" class="px-4 py-2.5 rounded-xl border-2 border-navy/15 text-navy font-extrabold text-sm hover:border-navy transition">
                     +91 92074 76242
                 </a>
-                <a href="#calculator" class="bg-orange hover:bg-orange-hover text-white font-extrabold text-sm px-5 py-2.5 rounded-xl shadow-orange-glow transition">
-                    Schedule Pickup
+                <a href="#booking-engine" class="bg-orange hover:bg-orange-hover text-white font-extrabold text-sm px-5 py-2.5 rounded-xl shadow-orange-glow transition">
+                    Book Pickup Now
                 </a>
             </div>
 
-            <!-- Mobile Hamburger Button (Matches Your Screenshot) -->
+            <!-- Mobile Hamburger Button -->
             <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden w-11 h-11 rounded-xl border border-slate-200 flex items-center justify-center text-navy hover:bg-slate-50 transition" aria-label="Open Menu">
                 <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -181,215 +176,362 @@
         <!-- Mobile Slide-Down Navigation Drawer -->
         <div id="mobileMenuDrawer" class="hidden lg:hidden bg-white border-b border-slate-200 px-6 py-6 space-y-4 shadow-xl">
             <div class="flex flex-col space-y-3 font-bold text-navy text-base">
-                <a href="#calculator" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">📍 Instant Fare &amp; Map Booking</a>
-                <a href="#services" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">📦 Courier &amp; Express Services</a>
-                <a href="#tracking" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">🔍 Live Shipment Tracking</a>
-                <a href="#why-farx" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">🛡️ Why Businesses Choose FARX</a>
-                <a href="#contact" onclick="toggleMobileMenu()" class="py-2 hover:text-orange">📞 Contact &amp; Hub Details</a>
+                <a href="#booking-engine" onclick="switchBookingTab('local'); toggleMobileMenu();" class="py-2 border-b border-slate-100 hover:text-orange">🛵 Book Local Delivery (Razorpay + Shipday)</a>
+                <a href="#booking-engine" onclick="switchBookingTab('outstation'); toggleMobileMenu();" class="py-2 border-b border-slate-100 hover:text-orange">📦 Book Outstation Shipment</a>
+                <a href="#services" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">🛡️ Our Courier Services</a>
+                <a href="#why-farx" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">⭐ Why Choose FARX</a>
+                <a href="#tracking" onclick="toggleMobileMenu()" class="py-2 border-b border-slate-100 hover:text-orange">🔍 Track Live Order</a>
+                <button type="button" onclick="toggleMobileMenu(); openTermsModal();" class="text-left py-2 hover:text-orange">📜 Terms &amp; Conditions</button>
             </div>
-            <div class="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a href="tel:+919207476242" class="w-full py-3 rounded-xl bg-navy text-white text-center font-extrabold text-sm">
-                    Call +91 92074 76242
-                </a>
-                <a href="https://wa.me/919207476242?text=Hi%20FARX%20Logistics,%20I%20would%20like%20to%20schedule%20a%20doorstep%20pickup." target="_blank" class="w-full py-3 rounded-xl bg-orange text-white text-center font-extrabold text-sm">
-                    WhatsApp Pickup
+            <div class="pt-2">
+                <a href="tel:+919207476242" class="block w-full py-3 rounded-xl bg-navy text-white text-center font-extrabold text-sm">
+                    Call Dispatch: +91 92074 76242
                 </a>
             </div>
         </div>
     </header>
 
     <!-- ==========================================
-         3. PREMIUM WHITE HERO & INSTANT MAP CALCULATOR
+         3. PREMIUM WHITE HERO & DUAL BOOKING ENGINE
+         - Tab 1: Local Express (Sender + Receiver + Map + Razorpay + Shipday)
+         - Tab 2: Outstation Courier (Sender + Receiver + Direct to WhatsApp)
     =========================================== -->
-    <section class="relative bg-white pt-10 pb-20 lg:py-20 px-4 sm:px-6 lg:px-8 border-b border-slate-100">
-        <!-- Subtle Enterprise Grid Accent on White Background -->
-        <div class="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    <section class="relative bg-white pt-8 pb-20 lg:py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-100">
+        <div class="absolute inset-0 pointer-events-none opacity-35 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:24px_24px]"></div>
 
-        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-start">
+        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
             <!-- Left Column: Brand Value Proposition on Crisp White Canvas -->
-            <div class="lg:col-span-6 lg:pr-4 space-y-6 pt-2">
+            <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-28 pt-2">
                 <div class="inline-flex items-center gap-2 bg-orange-light border border-orange/30 text-orange font-extrabold text-xs px-4 py-2 rounded-full uppercase tracking-wider">
                     <span class="w-2 h-2 rounded-full bg-orange"></span>
-                    Kozhikode's Premier Doorstep Courier Network
+                    Kozhikode's Premier Doorstep Courier
                 </div>
 
-                <h1 class="font-display text-4xl sm:text-5xl lg:text-[54px] font-black text-navy tracking-tight leading-[1.1]">
+                <h1 class="font-display text-4xl sm:text-5xl font-black text-navy tracking-tight leading-[1.1]">
                     HASSLE-FREE <br>
                     <span class="text-orange">NEXT-DAY DELIVERY</span> <br>
-                    ACROSS KERALA.
+                    &amp; EXPRESS PICKUP.
                 </h1>
 
-                <p class="text-slate-600 text-base sm:text-lg font-medium leading-relaxed max-w-xl">
-                    Skip the courier counter queues. Schedule your booking online and our rider collects your parcel directly from your home, office, or boutique for safe <strong class="text-navy font-bold">same-day &amp; next-day delivery</strong>.
+                <p class="text-slate-600 text-base font-medium leading-relaxed">
+                    Book online in seconds. For <strong class="text-navy font-bold">Kozhikode Local Deliveries</strong>, pin your pickup &amp; drop on the live map, enter Sender &amp; Receiver details, pay securely via Razorpay, and our automated Shipday dispatch assigns your order. For <strong class="text-navy font-bold">Outstation Shipments</strong> across Kerala &amp; India, switch to the Outstation tab for priority doorstep collection.
                 </p>
 
-                <!-- Key Operational Highlights (Zero Fake 45-90 Min Claims) -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                    <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl">
-                        <div class="text-orange font-display font-black text-lg">DOORSTEP</div>
-                        <div class="text-xs font-bold text-navy uppercase mt-0.5">Scheduled Rider Pickup</div>
+                <!-- Key Trust Badges -->
+                <div class="grid grid-cols-3 gap-3 pt-1">
+                    <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl">
+                        <div class="text-orange font-display font-black text-base">DOORSTEP</div>
+                        <div class="text-[11px] font-bold text-navy uppercase mt-0.5">Scheduled Pickup</div>
                     </div>
-                    <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl">
-                        <div class="text-navy font-display font-black text-lg">EXACT KM</div>
-                        <div class="text-xs font-bold text-slate-600 uppercase mt-0.5">Google Map Pin Pricing</div>
+                    <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl">
+                        <div class="text-navy font-display font-black text-base">EXACT KM</div>
+                        <div class="text-[11px] font-bold text-slate-600 uppercase mt-0.5">Live Map Verified</div>
                     </div>
-                    <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl">
-                        <div class="text-orange font-display font-black text-lg">100% SAFE</div>
-                        <div class="text-xs font-bold text-navy uppercase mt-0.5">Zero Crushed Boxes</div>
+                    <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl">
+                        <div class="text-orange font-display font-black text-base">SHIPDAY</div>
+                        <div class="text-[11px] font-bold text-navy uppercase mt-0.5">Automated Dispatch</div>
                     </div>
                 </div>
 
-                <!-- Direct Contact Strip -->
-                <div class="pt-4 flex flex-wrap items-center gap-6 text-sm">
-                    <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-2xl bg-navy text-white flex items-center justify-center font-bold shadow-md">
-                            📞
-                        </div>
-                        <div>
-                            <div class="text-xs font-bold text-slate-500 uppercase">Direct Dispatch Helpline</div>
-                            <a href="tel:+919207476242" class="text-lg font-display font-black text-navy hover:text-orange transition">+91 92074 76242</a>
-                        </div>
-                    </div>
-                    <div class="h-8 w-px bg-slate-200 hidden sm:block"></div>
+                <!-- Direct Contact Card -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between">
                     <div>
-                        <div class="text-xs font-bold text-slate-500 uppercase">Hub Operating Hours</div>
-                        <div class="text-sm font-extrabold text-navy">Mon – Sat | 10:00 AM – 7:00 PM</div>
+                        <div class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Dispatch Support Desk</div>
+                        <a href="tel:+919207476242" class="font-display text-xl font-black text-navy hover:text-orange transition">+91 92074 76242</a>
+                        <div class="text-xs font-semibold text-slate-500 mt-0.5">Mon – Sat | 10:00 AM – 7:00 PM</div>
                     </div>
+                    <a href="tel:+919207476242" class="bg-navy text-white font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-orange transition">
+                        Call Now
+                    </a>
                 </div>
             </div>
 
-            <!-- Right Column: Interactive Map-Integrated Booking & Fare Calculator (ZERO SLIDERS) -->
-            <div id="calculator" class="lg:col-span-6 bg-white rounded-3xl shadow-premium border-2 border-navy/10 p-6 sm:p-8">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-5 mb-6">
-                    <div>
-                        <span class="text-[11px] font-extrabold uppercase tracking-widest text-orange">Live Map Distance Engine</span>
-                        <h2 class="text-2xl font-display font-black text-navy mt-0.5">Calculate Fare &amp; Book Pickup</h2>
-                    </div>
-                    <div class="bg-navy text-white text-[11px] font-extrabold px-3 py-1.5 rounded-lg uppercase tracking-wider">
-                        KM + KG Verified
-                    </div>
+            <!-- Right Column: THE DUAL BOOKING ENGINE (LOCAL vs OUTSTATION) -->
+            <div id="booking-engine" class="lg:col-span-7 bg-white rounded-3xl shadow-premium border-2 border-navy/10 overflow-hidden">
+                
+                <!-- MODE SWITCHER TABS -->
+                <div class="grid grid-cols-2 bg-slate-100 p-2 gap-2 border-b border-slate-200">
+                    <button type="button" id="tabBtnLocal" onclick="switchBookingTab('local')" class="py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 bg-navy text-white shadow-md">
+                        <span>🛵</span> Local Delivery (Kozhikode)
+                    </button>
+                    <button type="button" id="tabBtnOutstation" onclick="switchBookingTab('outstation')" class="py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 text-slate-600 hover:text-navy bg-transparent">
+                        <span>📦</span> Outstation (Kerala / India)
+                    </button>
                 </div>
 
-                <div class="space-y-5">
-                    <!-- PICKUP LOCATION INPUT (Opens Search + "Select on map" Flow) -->
-                    <div>
-                        <div class="flex justify-between items-center mb-1.5">
-                            <label class="text-xs font-extrabold text-navy uppercase tracking-wider flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-                                Pickup Location
-                            </label>
+                <!-- =========================================================
+                     TAB 1: LOCAL DELIVERY FORM (RAZORPAY + SHIPDAY BACKEND)
+                ========================================================== -->
+                <form id="localBookingForm" onsubmit="handleLocalPaymentAndShipday(event)" class="p-6 sm:p-8 space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-[11px] font-extrabold uppercase tracking-widest text-orange">Intra-District Express (Kozhikode)</span>
+                            <h2 class="text-xl sm:text-2xl font-display font-black text-navy">Local Doorstep Pickup &amp; Drop</h2>
+                        </div>
+                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-extrabold px-3 py-1 rounded-full">
+                            Razorpay + Shipday Automated
+                        </span>
+                    </div>
+
+                    <!-- SECTION A: PICKUP DETAILS (SENDER) -->
+                    <div class="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-black flex items-center justify-center">&uarr;</span>
+                                <h3 class="font-display font-black text-sm text-navy uppercase tracking-wider">1. Pickup Details (Sender)</h3>
+                            </div>
                             <button type="button" onclick="openLocationPicker('pickup', true)" class="text-xs font-extrabold text-blue-600 hover:text-orange flex items-center gap-1 transition">
-                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                                 Select on map
                             </button>
                         </div>
-                        <div onclick="openLocationPicker('pickup', false)" class="cursor-pointer group bg-slate-50 hover:bg-white border-2 border-slate-200 hover:border-navy rounded-2xl px-4 py-3.5 flex items-center justify-between transition">
-                            <div class="flex items-center gap-3 overflow-hidden">
-                                <span class="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-black shrink-0">&uarr;</span>
-                                <div class="truncate">
-                                    <div id="pickupDisplayTitle" class="text-sm font-extrabold text-navy truncate">Where is your PickUp ?</div>
-                                    <div id="pickupDisplaySub" class="text-xs text-slate-500 truncate">Tap to search address or pin on live map</div>
-                                </div>
-                            </div>
-                            <span class="text-xs font-bold text-orange shrink-0 ml-2 group-hover:underline">Pin Map</span>
-                        </div>
-                    </div>
 
-                    <!-- DROP DESTINATION INPUT (Opens Search + "Select on map" Flow) -->
-                    <div>
-                        <div class="flex justify-between items-center mb-1.5">
-                            <label class="text-xs font-extrabold text-navy uppercase tracking-wider flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-orange inline-block"></span>
-                                Delivery Destination
-                            </label>
-                            <button type="button" onclick="openLocationPicker('drop', true)" class="text-xs font-extrabold text-blue-600 hover:text-orange flex items-center gap-1 transition">
-                                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                                Select on map
-                            </button>
-                        </div>
-                        <div onclick="openLocationPicker('drop', false)" class="cursor-pointer group bg-slate-50 hover:bg-white border-2 border-slate-200 hover:border-orange rounded-2xl px-4 py-3.5 flex items-center justify-between transition">
-                            <div class="flex items-center gap-3 overflow-hidden">
-                                <span class="w-7 h-7 rounded-full bg-orange text-white flex items-center justify-center text-xs font-black shrink-0">&darr;</span>
-                                <div class="truncate">
-                                    <div id="dropDisplayTitle" class="text-sm font-extrabold text-navy truncate">Where is your Drop ?</div>
-                                    <div id="dropDisplaySub" class="text-xs text-slate-500 truncate">Tap to search destination or pin on live map</div>
-                                </div>
+                        <!-- Map Trigger Field -->
+                        <div onclick="openLocationPicker('pickup', false)" class="cursor-pointer bg-white border-2 border-slate-200 hover:border-navy rounded-xl px-4 py-3 flex items-center justify-between transition">
+                            <div class="truncate pr-2">
+                                <div id="pickupDisplayTitle" class="text-sm font-extrabold text-navy truncate">Where is your PickUp ?</div>
+                                <div id="pickupDisplaySub" class="text-xs text-slate-500 truncate">Tap to search area or drop pin on live map</div>
                             </div>
-                            <span class="text-xs font-bold text-orange shrink-0 ml-2 group-hover:underline">Pin Map</span>
+                            <span class="text-xs font-extrabold text-orange shrink-0">Pin Map &rarr;</span>
                         </div>
-                    </div>
 
-                    <!-- AUTO-CALCULATED GOOGLE MAPS / ROAD DISTANCE BAR (NO SLIDERS) -->
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-navy/5 text-navy flex items-center justify-center font-bold">
-                                🛣️
+                        <!-- Sender Name & Sender Phone (Mandatory Both Parties) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Name *</label>
+                                <input type="text" id="localSenderName" required placeholder="Enter sender full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                             <div>
-                                <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Verified Road Distance</div>
-                                <div id="routeStatusText" class="text-xs font-semibold text-slate-600">Select pickup &amp; drop on map to auto-calculate</div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Mobile Number *</label>
+                                <input type="tel" id="localSenderPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                         </div>
-                        <div class="text-right">
-                            <span id="calculatedKmBadge" class="font-display text-xl font-black text-navy">-- km</span>
+
+                        <div>
+                            <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Pickup House / Building / Shop Name &amp; Landmark *</label>
+                            <input type="text" id="localPickupBuilding" required placeholder="e.g., Shop No. 4, 1st Floor, Near Mananchira Square" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
                         </div>
                     </div>
 
-                    <!-- PARCEL WEIGHT & PACKAGE CATEGORY (CLEAN INPUT + PRESET CHIPS, ZERO SLIDERS) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="parcelWeightInput" class="block text-xs font-extrabold text-navy uppercase tracking-wider mb-1.5">Parcel Weight (KG)</label>
-                            <div class="relative">
-                                <input type="number" id="parcelWeightInput" value="1.0" min="0.1" max="100" step="0.5" oninput="recalculateFare()" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-navy focus:bg-white rounded-xl px-4 py-3 text-base font-extrabold text-navy focus:outline-none transition" />
-                                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-extrabold text-slate-400 uppercase">KG</span>
+                    <!-- SECTION B: DROP DETAILS (RECEIVER) -->
+                    <div class="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-orange text-white text-xs font-black flex items-center justify-center">&darr;</span>
+                                <h3 class="font-display font-black text-sm text-navy uppercase tracking-wider">2. Drop Details (Receiver)</h3>
                             </div>
-                            <!-- Quick Weight Chips -->
-                            <div class="flex flex-wrap gap-1.5 mt-2">
-                                <button type="button" onclick="setWeight(0.5)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">0.5 kg</button>
-                                <button type="button" onclick="setWeight(1)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">1 kg</button>
-                                <button type="button" onclick="setWeight(2)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">2 kg</button>
-                                <button type="button" onclick="setWeight(5)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">5 kg</button>
-                                <button type="button" onclick="setWeight(10)" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">10 kg</button>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label for="CustomerPhone" class="block text-xs font-extrabold text-navy uppercase tracking-wider mb-1.5">Your Mobile / WhatsApp Number</label>
-                            <input type="tel" id="CustomerPhone" maxlength="10" placeholder="Enter 10-digit mobile number" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-orange focus:bg-white rounded-xl px-4 py-3 text-sm font-bold text-navy focus:outline-none transition" />
-                            <div class="text-[11px] font-semibold text-slate-500 mt-2">
-                                For rider pickup coordination &amp; live tracking link
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- LIVE FARE SUMMARY & BOOKING ACTION BAR -->
-                    <div class="bg-navy text-white p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5">
-                        <div>
-                            <div class="text-[11px] font-extrabold uppercase tracking-widest text-orange">Estimated Doorstep Fare</div>
-                            <div class="flex items-baseline gap-2 mt-1">
-                                <span id="fareDisplayAmount" class="font-display text-4xl font-black text-white">₹60</span>
-                                <span id="fareBreakdownSub" class="text-xs font-semibold text-slate-300">(Base 5 km • 1.0 kg)</span>
-                            </div>
-                            <div class="text-[11px] text-slate-300 mt-1">Includes scheduled doorstep rider pickup &amp; verified weight slab</div>
-                        </div>
-
-                        <div class="w-full sm:w-auto flex flex-col gap-2">
-                            <button type="button" onclick="submitBookingRequest()" class="w-full sm:w-auto bg-orange hover:bg-orange-hover text-white font-extrabold text-sm px-7 py-4 rounded-xl shadow-orange-glow transition flex items-center justify-center gap-2">
-                                Confirm &amp; Book Pickup &rarr;
+                            <button type="button" onclick="openLocationPicker('drop', true)" class="text-xs font-extrabold text-blue-600 hover:text-orange flex items-center gap-1 transition">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                Select on map
                             </button>
                         </div>
+
+                        <!-- Map Trigger Field -->
+                        <div onclick="openLocationPicker('drop', false)" class="cursor-pointer bg-white border-2 border-slate-200 hover:border-orange rounded-xl px-4 py-3 flex items-center justify-between transition">
+                            <div class="truncate pr-2">
+                                <div id="dropDisplayTitle" class="text-sm font-extrabold text-navy truncate">Where is your Drop ?</div>
+                                <div id="dropDisplaySub" class="text-xs text-slate-500 truncate">Tap to search destination or drop pin on live map</div>
+                            </div>
+                            <span class="text-xs font-extrabold text-orange shrink-0">Pin Map &rarr;</span>
+                        </div>
+
+                        <!-- Receiver Name & Receiver Phone (Mandatory Both Parties) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Receiver Name *</label>
+                                <input type="text" id="localReceiverName" required placeholder="Enter receiver full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Receiver Mobile Number *</label>
+                                <input type="tel" id="localReceiverPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Drop House / Building / Shop Name &amp; Landmark *</label>
+                            <input type="text" id="localDropBuilding" required placeholder="e.g., Flat 2B, Skyline Apt, Thondayad Bypass" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
+                        </div>
                     </div>
-                </div>
+
+                    <!-- SECTION C: PARCEL WEIGHT, ITEM CONTENTS & VERIFIED DISTANCE (NO SLIDERS) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-start">
+                        <div class="sm:col-span-5">
+                            <label for="parcelWeightInput" class="block text-xs font-extrabold text-navy uppercase tracking-wider mb-1.5">Parcel Weight (KG) *</label>
+                            <div class="relative">
+                                <input type="number" id="parcelWeightInput" value="1.0" min="0.1" max="50" step="0.5" required oninput="recalculateFare()" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-navy focus:bg-white rounded-xl px-4 py-2.5 text-base font-extrabold text-navy focus:outline-none" />
+                                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-extrabold text-slate-400">KG</span>
+                            </div>
+                            <div class="flex flex-wrap gap-1 mt-1.5">
+                                <button type="button" onclick="setWeight(0.5)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">0.5kg</button>
+                                <button type="button" onclick="setWeight(1)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">1kg</button>
+                                <button type="button" onclick="setWeight(2)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">2kg</button>
+                                <button type="button" onclick="setWeight(5)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">5kg</button>
+                                <button type="button" onclick="setWeight(10)" class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 hover:bg-navy hover:text-white text-slate-700 transition">10kg</button>
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-4">
+                            <label for="localParcelContents" class="block text-xs font-extrabold text-navy uppercase tracking-wider mb-1.5">Package Contents *</label>
+                            <input type="text" id="localParcelContents" required placeholder="e.g., Documents, Garments, Box" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-navy focus:bg-white rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            <div class="text-[10px] text-slate-500 font-semibold mt-1">No illegal / prohibited items</div>
+                        </div>
+
+                        <div class="sm:col-span-3 bg-slate-50 border border-slate-200 rounded-xl p-3 text-center">
+                            <div class="text-[10px] font-extrabold uppercase text-slate-400">Map Distance</div>
+                            <div id="calculatedKmBadge" class="font-display text-xl font-black text-navy mt-0.5">-- km</div>
+                            <div id="routeStatusText" class="text-[10px] font-semibold text-orange truncate">Pin Pickup &amp; Drop</div>
+                        </div>
+                    </div>
+
+                    <!-- MANDATORY TERMS & CONDITIONS CHECKBOX -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex items-start gap-3">
+                        <input type="checkbox" id="localTermsCheck" required class="mt-1 w-4 h-4 accent-orange rounded cursor-pointer shrink-0" />
+                        <label for="localTermsCheck" class="text-xs font-semibold text-slate-600 leading-relaxed">
+                            I confirm that the parcel weight is accurate, contains no prohibited/illegal items, and I agree to the FARX Logistics 
+                            <button type="button" onclick="openTermsModal()" class="text-navy font-extrabold underline hover:text-orange">Terms &amp; Conditions, Liability &amp; Refund Policy</button>.
+                        </label>
+                    </div>
+
+                    <!-- PAYMENT & SHIPDAY DISPATCH BAR -->
+                    <div class="bg-navy text-white p-5 sm:p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <div class="text-[11px] font-extrabold uppercase tracking-widest text-orange">Total Doorstep Delivery Fare</div>
+                            <div class="flex items-baseline gap-2 mt-0.5">
+                                <span id="fareDisplayAmount" class="font-display text-3xl sm:text-4xl font-black text-white">₹60</span>
+                                <span id="fareBreakdownSub" class="text-xs font-semibold text-slate-300">(Select map pins to lock fare)</span>
+                            </div>
+                            <div class="text-[11px] text-slate-300 mt-1">Server-verified KM &amp; KG slab • Instant Shipday Rider Dispatch</div>
+                        </div>
+
+                        <button type="submit" id="localPayBtn" class="w-full sm:w-auto bg-orange hover:bg-orange-hover text-white font-extrabold text-sm px-7 py-4 rounded-xl shadow-orange-glow transition flex items-center justify-center gap-2 shrink-0">
+                            <span>Pay &amp; Book Now</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Live Booking Confirmation Alert -->
+                    <div id="localBookingSuccessBox" class="hidden bg-emerald-50 border-2 border-emerald-500 text-emerald-900 rounded-2xl p-5 space-y-2">
+                        <div class="font-display font-black text-lg text-emerald-800">✅ Payment Verified &amp; Dispatched to Shipday!</div>
+                        <p id="localBookingOrderDetails" class="text-xs font-bold text-emerald-700"></p>
+                    </div>
+                </form>
+
+                <!-- =========================================================
+                     TAB 2: OUTSTATION SHIPMENT FORM (ALL-KERALA & PAN-INDIA)
+                     - Captures Pickup Details (Sender + Phone) & Drop Details (Receiver + Phone + PIN)
+                     - Sends Directly to WhatsApp Desk (+91 92074 76242)
+                ========================================================== -->
+                <form id="outstationBookingForm" onsubmit="handleOutstationWhatsAppBooking(event)" class="hidden p-6 sm:p-8 space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-[11px] font-extrabold uppercase tracking-widest text-orange">All-Kerala &amp; Pan-India Domestic Surface</span>
+                            <h2 class="text-xl sm:text-2xl font-display font-black text-navy">Outstation Doorstep Pickup</h2>
+                        </div>
+                        <span class="bg-orange-light text-orange border border-orange/30 text-[11px] font-extrabold px-3 py-1 rounded-full">
+                            Direct Outstation Desk
+                        </span>
+                    </div>
+
+                    <!-- OUTSTATION PICKUP DETAILS (SENDER IN KOZHIKODE) -->
+                    <div class="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs font-black flex items-center justify-center">&uarr;</span>
+                                <h3 class="font-display font-black text-sm text-navy uppercase tracking-wider">1. Pickup Details (Kozhikode Sender)</h3>
+                            </div>
+                            <button type="button" onclick="openLocationPicker('outstation_pickup', true)" class="text-xs font-extrabold text-blue-600 hover:text-orange flex items-center gap-1 transition">
+                                📍 Select on map
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Name *</label>
+                                <input type="text" id="outSenderName" required placeholder="Sender full name or business" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Mobile Number *</label>
+                                <input type="tel" id="outSenderPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Full Pickup Address in Kozhikode *</label>
+                            <input type="text" id="outPickupAddress" required placeholder="Building/Shop Name, Street, Area, Kozhikode (or click Select on map)" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
+                        </div>
+                    </div>
+
+                    <!-- OUTSTATION DROP DETAILS (RECEIVER ANYWHERE IN KERALA / INDIA) -->
+                    <div class="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-orange text-white text-xs font-black flex items-center justify-center">&darr;</span>
+                            <h3 class="font-display font-black text-sm text-navy uppercase tracking-wider">2. Outstation Delivery Details (Receiver)</h3>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Receiver Name *</label>
+                                <input type="text" id="outReceiverName" required placeholder="Receiver full name" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Receiver Mobile Number *</label>
+                                <input type="tel" id="outReceiverPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Full Delivery Address (House / Building / Street) *</label>
+                            <input type="text" id="outDropAddress" required placeholder="Complete door address of recipient" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Destination City / State *</label>
+                                <input type="text" id="outDropCity" required placeholder="e.g., Kochi, Trivandrum, Bengaluru" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Destination PIN Code *</label>
+                                <input type="text" id="outDropPincode" required pattern="[0-9]{6}" maxlength="6" placeholder="6-digit PIN Code" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Approx Weight (KG) *</label>
+                                <input type="number" id="outParcelWeight" required value="1.0" min="0.1" max="100" step="0.5" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-navy focus:outline-none" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MANDATORY TERMS & CONDITIONS CHECKBOX -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex items-start gap-3">
+                        <input type="checkbox" id="outTermsCheck" required class="mt-1 w-4 h-4 accent-orange rounded cursor-pointer shrink-0" />
+                        <label for="outTermsCheck" class="text-xs font-semibold text-slate-600 leading-relaxed">
+                            I agree to the FARX Logistics <button type="button" onclick="openTermsModal()" class="text-navy font-extrabold underline hover:text-orange">Terms &amp; Conditions</button> and confirm that this shipment contains no contraband or prohibited goods.
+                        </label>
+                    </div>
+
+                    <!-- SUBMIT OUTSTATION TO WHATSAPP -->
+                    <div class="bg-navy text-white p-5 sm:p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <div class="text-[11px] font-extrabold uppercase tracking-widest text-orange">Outstation Doorstep Collection</div>
+                            <div class="font-display text-xl font-black text-white mt-0.5">All-Kerala &amp; Pan-India Courier</div>
+                            <div class="text-xs text-slate-300 mt-1">Instant pickup confirmation &amp; AWB generation via FARX Outstation Desk</div>
+                        </div>
+
+                        <button type="submit" class="w-full sm:w-auto bg-orange hover:bg-orange-hover text-white font-extrabold text-sm px-7 py-4 rounded-xl shadow-orange-glow transition flex items-center justify-center gap-2 shrink-0">
+                            <span>Book Outstation Pickup &rarr;</span>
+                        </button>
+                    </div>
+                </form>
+
             </div>
 
         </div>
     </section>
 
     <!-- ==========================================
-         4. CORE SERVICES SECTION (WITH YOUR EXACT CORRECTIONS)
+         4. CORE SERVICES SECTION
          - No 45-90 mins promise
-         - No false active Air & Sea cargo (Marked Coming Soon)
+         - Surface Express + Air/Sea Marked Coming Soon
     =========================================== -->
     <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/70 border-b border-slate-200/70">
         <div class="max-w-7xl mx-auto">
@@ -402,8 +544,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <!-- CARD 1: Kozhikode Local Same-Day & Next-Day (Fixed: NO 45-90 mins claim) -->
+                <!-- CARD 1: Kozhikode Local Same-Day & Next-Day -->
                 <div class="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-card flex flex-col justify-between hover:border-navy transition">
                     <div>
                         <div class="w-14 h-14 rounded-2xl bg-navy text-white flex items-center justify-center mb-6 shadow-md">
@@ -412,7 +553,7 @@
                         <div class="text-xs font-extrabold uppercase tracking-widest text-orange mb-2">KOZHIKODE DISTRICT EXPRESS</div>
                         <h3 class="font-display text-2xl font-black text-navy mb-4">Local Same-Day &amp; Next-Day Express</h3>
                         <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                            Direct two-wheeler and city fleet pickup from your home, office, or store. Once booked, our rider collects and delivers your parcel cleanly on our scheduled same-day and next-day routes across Kozhikode district.
+                            Direct two-wheeler and city fleet pickup from your home, office, or store. Once booked online, our rider collects and delivers your parcel cleanly on our scheduled same-day and next-day routes across Kozhikode district.
                         </p>
                     </div>
                     <ul class="space-y-3 pt-6 border-t border-slate-100 text-sm font-bold text-navy">
@@ -422,16 +563,16 @@
                         </li>
                         <li class="flex items-center gap-2.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-orange shrink-0"></span>
-                            Pure Google Map Distance &amp; Weight Pricing
+                            Pure Map Distance &amp; Weight Slab Pricing
                         </li>
                         <li class="flex items-center gap-2.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-orange shrink-0"></span>
-                            Live WhatsApp &amp; Phone Dispatch Updates
+                            Automated Shipday Dispatch &amp; Tracking
                         </li>
                     </ul>
                 </div>
 
-                <!-- CARD 2: All-Kerala & Pan-India Courier (Fixed: Surface Express + Air & Sea Cargo Marked Coming Soon) -->
+                <!-- CARD 2: All-Kerala & Pan-India Courier -->
                 <div class="relative bg-white rounded-3xl p-8 border-2 border-navy shadow-premium flex flex-col justify-between">
                     <div class="absolute -top-3.5 right-6 bg-orange text-white text-[11px] font-extrabold uppercase tracking-widest px-4 py-1 rounded-full shadow">
                         MOST POPULAR
@@ -494,56 +635,14 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- ==========================================
-         5. LIVE SHIPMENT / AWB TRACKING SECTION
+         5. WHY CHOOSE FARX LOGISTICS SECTION
     =========================================== -->
-    <section id="tracking" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-100">
-        <div class="max-w-4xl mx-auto bg-slate-50 border-2 border-navy/10 rounded-3xl p-8 sm:p-12 shadow-card">
-            <div class="text-center max-w-xl mx-auto mb-8">
-                <span class="text-xs font-extrabold uppercase tracking-widest text-orange">Real-Time Dispatch Status</span>
-                <h2 class="font-display text-2xl sm:text-3xl font-black text-navy mt-1">Track Your FARX Shipment</h2>
-                <p class="text-slate-600 text-sm font-medium mt-2">Enter your FARX Order ID or AWB Consignment Number to check live status.</p>
-            </div>
-
-            <form onsubmit="handleTrackShipment(event)" class="flex flex-col sm:flex-row gap-3">
-                <input type="text" id="trackingNumberInput" required placeholder="Enter Order ID / AWB Number (e.g., FARX-84920)" class="flex-1 bg-white border-2 border-slate-200 focus:border-navy rounded-2xl px-5 py-4 text-sm font-extrabold text-navy uppercase tracking-wider focus:outline-none transition" />
-                <button type="submit" class="bg-navy hover:bg-navy-light text-white font-extrabold text-sm px-8 py-4 rounded-2xl shadow-md transition shrink-0">
-                    Track Status
-                </button>
-            </form>
-
-            <!-- Tracking Output Box -->
-            <div id="trackingResultBox" class="hidden mt-6 bg-white border border-slate-200 rounded-2xl p-6">
-                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
-                    <div>
-                        <span class="text-xs font-bold text-slate-400 uppercase">Consignment ID</span>
-                        <div id="trackedIdDisplay" class="font-display text-lg font-black text-navy">FARX-0000</div>
-                    </div>
-                    <span class="bg-orange-light text-orange text-xs font-extrabold px-3 py-1 rounded-full uppercase">
-                        Live WhatsApp Verification Ready
-                    </span>
-                </div>
-                <p class="text-sm text-slate-600 font-medium mt-4">
-                    Click below to get your instant live rider location or outstation AWB status directly from our dispatch desk on WhatsApp.
-                </p>
-                <div class="mt-4">
-                    <a id="trackingWhatsappLink" href="#" target="_blank" class="inline-flex items-center gap-2 bg-orange text-white font-extrabold text-xs px-5 py-3 rounded-xl hover:bg-orange-hover transition">
-                        Get Instant Status on WhatsApp &rarr;
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================
-         6. WHY CHOOSE FARX LOGISTICS (WHITE THEME)
-    =========================================== -->
-    <section id="why-farx" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="why-farx" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-100">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-5 space-y-5">
@@ -552,18 +651,21 @@
                         Why Kozhikode's Leading Brands Trust <span class="text-orange">FARX</span>.
                     </h2>
                     <p class="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-                        We built FARX Logistics to eliminate unclear courier rates, damaged boxes, and counter delays. You drop a pin on the map, see the exact kilometer and weight slab price, and we handle the rest.
+                        We built FARX Logistics to eliminate unclear courier rates, damaged boxes, and counter delays. You drop a pin on the map, see the exact kilometer and weight slab price, pay securely online, and our dispatch system handles the rest.
                     </p>
-                    <div class="pt-2">
-                        <a href="#calculator" class="inline-flex items-center gap-2 bg-navy hover:bg-navy-light text-white font-extrabold text-sm px-6 py-3.5 rounded-xl transition">
-                            Try the Map Fare Calculator &rarr;
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <a href="#booking-engine" onclick="switchBookingTab('local')" class="inline-flex items-center gap-2 bg-navy hover:bg-navy-light text-white font-extrabold text-sm px-6 py-3.5 rounded-xl transition">
+                            Book Local Pickup &rarr;
+                        </a>
+                        <a href="#booking-engine" onclick="switchBookingTab('outstation')" class="inline-flex items-center gap-2 bg-orange hover:bg-orange-hover text-white font-extrabold text-sm px-6 py-3.5 rounded-xl transition">
+                            Book Outstation &rarr;
                         </a>
                     </div>
                 </div>
 
                 <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
-                        <div class="text-orange font-display font-black text-xl mb-2">01. Exact Map Pinning</div>
+                        <div class="text-orange font-display font-black text-xl mb-2">01. Live Map Pinning</div>
                         <p class="text-slate-600 text-sm font-medium">Pin your exact home, shop, or office on our live street map so riders never have to guess your doorstep location.</p>
                     </div>
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
@@ -571,8 +673,8 @@
                         <p class="text-slate-600 text-sm font-medium">No arbitrary hidden zone charges. Every fare is computed transparently from actual road distance and parcel weight.</p>
                     </div>
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
-                        <div class="text-navy font-display font-black text-xl mb-2">03. Scheduled Same/Next-Day</div>
-                        <p class="text-slate-600 text-sm font-medium">Reliable, well-planned daily pickup and delivery runs across Kozhikode without false countdown promises.</p>
+                        <div class="text-navy font-display font-black text-xl mb-2">03. Automated Shipday Dispatch</div>
+                        <p class="text-slate-600 text-sm font-medium">Local orders verified through Razorpay are automatically pushed to our Shipday dispatch platform for seamless rider assignment.</p>
                     </div>
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
                         <div class="text-orange font-display font-black text-xl mb-2">04. Direct Human Support</div>
@@ -584,12 +686,44 @@
     </section>
 
     <!-- ==========================================
-         7. CORPORATE FOOTER
+         6. LIVE SHIPMENT / AWB TRACKING (`/api/track`)
+    =========================================== -->
+    <section id="tracking" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-100">
+        <div class="max-w-4xl mx-auto bg-slate-50 border-2 border-navy/10 rounded-3xl p-8 sm:p-12 shadow-card">
+            <div class="text-center max-w-xl mx-auto mb-8">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-orange">Real-Time Dispatch Status</span>
+                <h2 class="font-display text-2xl sm:text-3xl font-black text-navy mt-1">Track Your FARX Shipment</h2>
+                <p class="text-slate-600 text-sm font-medium mt-2">Enter your FARX Order ID or AWB Number to fetch real-time status from our server.</p>
+            </div>
+
+            <form onsubmit="handleTrackShipment(event)" class="flex flex-col sm:flex-row gap-3">
+                <input type="text" id="trackingNumberInput" required placeholder="Enter Order ID / AWB Number" class="flex-1 bg-white border-2 border-slate-200 focus:border-navy rounded-2xl px-5 py-4 text-sm font-extrabold text-navy uppercase tracking-wider focus:outline-none transition" />
+                <button type="submit" id="trackSubmitBtn" class="bg-navy hover:bg-navy-light text-white font-extrabold text-sm px-8 py-4 rounded-2xl shadow-md transition shrink-0">
+                    Track Status
+                </button>
+            </form>
+
+            <div id="trackingResultBox" class="hidden mt-6 bg-white border border-slate-200 rounded-2xl p-6">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <span class="text-xs font-bold text-slate-400 uppercase">Order / Consignment ID</span>
+                        <div id="trackedIdDisplay" class="font-display text-lg font-black text-navy">--</div>
+                    </div>
+                    <span id="trackedStatusBadge" class="bg-orange-light text-orange text-xs font-extrabold px-3 py-1 rounded-full uppercase">
+                        Checking...
+                    </span>
+                </div>
+                <div id="trackedDetailsBody" class="text-sm text-slate-600 font-medium mt-4 space-y-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         7. CORPORATE FOOTER (WITH TERMS & CONDITIONS)
     =========================================== -->
     <footer id="contact" class="bg-navy text-white pt-16 pb-24 sm:pb-14 px-4 sm:px-6 lg:px-8 border-t-4 border-orange">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
             
-            <!-- Col 1: Brand -->
             <div class="md:col-span-5 space-y-4">
                 <div class="bg-white inline-block px-4 py-2.5 rounded-2xl shadow-md">
                     <svg class="h-10 w-auto" viewBox="0 0 380 115" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -612,20 +746,19 @@
                 </div>
             </div>
 
-            <!-- Col 2: Quick Links -->
             <div class="md:col-span-3 space-y-2.5 text-sm">
-                <div class="text-xs font-extrabold uppercase tracking-widest text-orange mb-3">Navigation</div>
-                <div><a href="#calculator" class="text-slate-300 hover:text-white transition">Instant Map Fare Calculator</a></div>
-                <div><a href="#services" class="text-slate-300 hover:text-white transition">Local Same-Day &amp; Next-Day</a></div>
-                <div><a href="#services" class="text-slate-300 hover:text-white transition">All-Kerala &amp; Pan-India Courier</a></div>
+                <div class="text-xs font-extrabold uppercase tracking-widest text-orange mb-3">Quick Links &amp; Legal</div>
+                <div><a href="#booking-engine" onclick="switchBookingTab('local')" class="text-slate-300 hover:text-white transition">Local Delivery (Kozhikode)</a></div>
+                <div><a href="#booking-engine" onclick="switchBookingTab('outstation')" class="text-slate-300 hover:text-white transition">Outstation Shipment</a></div>
+                <div><a href="#services" class="text-slate-300 hover:text-white transition">Courier Services</a></div>
                 <div><a href="#tracking" class="text-slate-300 hover:text-white transition">Track Shipment</a></div>
+                <div><button type="button" onclick="openTermsModal()" class="text-slate-300 hover:text-orange underline font-semibold transition">Terms &amp; Conditions / Policy</button></div>
             </div>
 
-            <!-- Col 3: Contact & Working Hours -->
             <div class="md:col-span-4 space-y-3">
                 <div class="text-xs font-extrabold uppercase tracking-widest text-orange mb-3">Dispatch &amp; Booking Desk</div>
                 <div>
-                    <div class="text-xs text-slate-400">Call or WhatsApp Booking:</div>
+                    <div class="text-xs text-slate-400">Helpline &amp; Outstation Desk:</div>
                     <a href="tel:+919207476242" class="font-display text-2xl font-black text-white hover:text-orange transition">+91 92074 76242</a>
                 </div>
                 <div>
@@ -642,29 +775,64 @@
 
         <div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400">
             <div>&copy; 2026 FARX Logistics. All rights reserved.</div>
-            <div>Pure Distance &amp; Weight Verified Platform</div>
+            <div class="flex gap-4">
+                <button type="button" onclick="openTermsModal()" class="hover:text-white">Terms of Service</button>
+                <span>•</span>
+                <button type="button" onclick="openTermsModal()" class="hover:text-white">Refund &amp; Liability Policy</button>
+            </div>
         </div>
     </footer>
 
     <!-- ==========================================
-         8. FLOATING "WHATSAPP PICKUP" PILL BUTTON
-         (Matches Your Mobile Screenshots)
+         8. TERMS & CONDITIONS MODAL (FULL LEGAL COMPLIANCE)
     =========================================== -->
-    <a href="https://wa.me/919207476242?text=Hi%20FARX%20Logistics,%20I%20want%20to%20schedule%20a%20doorstep%20pickup." target="_blank" class="fixed bottom-5 right-5 z-40 bg-orange hover:bg-orange-hover text-white font-extrabold text-sm px-5 py-3.5 rounded-full shadow-orange-glow flex items-center gap-2.5 transition transform hover:scale-105">
-        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-        <span>WhatsApp Pickup</span>
-    </a>
+    <div id="termsModal" class="fixed inset-0 z-50 bg-navy/70 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <div class="p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                <div>
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-orange">Legal &amp; Operational Compliance</span>
+                    <h3 class="font-display text-xl font-black text-navy">FARX Logistics — Terms &amp; Conditions</h3>
+                </div>
+                <button type="button" onclick="closeTermsModal()" class="w-9 h-9 rounded-full bg-slate-200 hover:bg-navy hover:text-white font-bold text-lg flex items-center justify-center transition">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <div>
+                    <h4 class="font-extrabold text-navy uppercase text-xs mb-1">1. Distance &amp; Weight Slab Server Verification</h4>
+                    <p>All local delivery fares are calculated strictly on actual road distance (kilometers) and parcel weight (kilograms). Server-side validation locks coordinates and weight slabs. If actual physical or volumetric weight exceeds the declared weight at pickup, the differential slab charge must be settled prior to dispatch.</p>
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-navy uppercase text-xs mb-1">2. Packaging &amp; Fragile Consignments</h4>
+                    <p>Senders are responsible for ensuring adequate internal cushioning and outer packaging suitable for road transport. Fragile items (glassware, electronics, liquids, cakes/perishables) must be explicitly declared prior to pickup.</p>
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-navy uppercase text-xs mb-1">3. Strictly Prohibited Items</h4>
+                    <p>FARX Logistics does not transport cash, bullion, jewelry, precious stones, narcotics, illegal substances, weapons, hazardous/flammable chemicals, or contraband. The sender holds complete legal liability for the contents inside sealed packages.</p>
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-navy uppercase text-xs mb-1">4. Transit Liability &amp; Force Majeure</h4>
+                    <p>While FARX Logistics takes maximum care to ensure safe same-day and next-day delivery, transit schedules may be affected by severe weather, traffic blockades, strikes, or force majeure events. Maximum carrier liability for proven transit loss or damage of non-insured parcels is limited to standard courier liability norms.</p>
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-navy uppercase text-xs mb-1">5. Cancellation, Re-Attempt &amp; Refund Policy</h4>
+                    <p>Cancellations requested before a rider is dispatched are eligible for a refund minus payment gateway processing charges. Once a rider has been dispatched to the pickup location, the base pickup fee is non-refundable. If the receiver is unavailable at the drop address, re-delivery or return-to-origin (RTO) charges apply.</p>
+                </div>
+            </div>
+            <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-end">
+                <button type="button" onclick="closeTermsModal()" class="bg-navy hover:bg-orange text-white font-extrabold text-xs px-6 py-3 rounded-xl transition">
+                    I Understand &amp; Agree
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- =========================================================================
          9. FULL-SCREEN LOCATION SEARCH & LIVE PIN-DROP MAP MODAL
-         Matches Screenshots 1000259890.jpg ("Where is your PickUp?" + "Select on map")
-         and 1792333859495.jpeg ("Your goods will be picked from here" + Live Map + Confirm)
+         - Uses Clean OpenStreetMap Tiles (ZERO Carto API Key Watermark!)
     ========================================================================== -->
     <div id="locationModal" class="fixed inset-0 z-50 bg-white hidden flex-col">
         
-        <!-- VIEW A: ADDRESS SEARCH & "SELECT ON MAP" SCREEN (Screenshot 1) -->
+        <!-- VIEW A: ADDRESS SEARCH & "SELECT ON MAP" SCREEN -->
         <div id="searchSubView" class="flex flex-col h-full bg-slate-50">
-            <!-- Top Search Card with Subtle Map Pattern Background -->
             <div class="bg-white p-4 sm:p-6 shadow-sm border-b border-slate-200">
                 <div class="max-w-2xl mx-auto">
                     <button type="button" onclick="closeLocationPicker()" class="mb-3 inline-flex items-center gap-2 text-navy font-bold text-sm hover:text-orange">
@@ -677,7 +845,6 @@
                         <input type="text" id="addressSearchInput" oninput="handleLivePlaceSearch(this.value)" placeholder="Where is your PickUp ?" class="w-full border-2 border-blue-600 rounded-xl px-4 py-3 text-base font-semibold text-navy focus:outline-none" />
                     </div>
 
-                    <!-- "Select on map" Bar (Matches Screenshot 1000259890.jpg) -->
                     <button type="button" onclick="switchToLiveMapSubView()" class="mt-3 w-full bg-white hover:bg-blue-50 border border-slate-200 rounded-2xl py-3.5 px-4 flex items-center justify-center gap-2 text-blue-600 font-extrabold text-sm shadow-sm transition">
                         <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                         Select on map
@@ -685,42 +852,34 @@
                 </div>
             </div>
 
-            <!-- Live Search Suggestions List -->
-            <div class="flex-1 overflow-y-auto p-4 max-w-2xl mx-auto w-full space-y-2" id="searchSuggestionsList">
-                <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400 px-2 py-1">Popular Hubs &amp; Search Results</div>
-                <!-- Populated dynamically via live search or quick Kozhikode/Kerala hubs -->
-            </div>
+            <div class="flex-1 overflow-y-auto p-4 max-w-2xl mx-auto w-full space-y-2" id="searchSuggestionsList"></div>
         </div>
 
-        <!-- VIEW B: LIVE INTERACTIVE DRAGGABLE MAP SCREEN (Screenshot 2: 1792333859495.jpeg) -->
+        <!-- VIEW B: LIVE INTERACTIVE DRAGGABLE MAP SCREEN -->
         <div id="liveMapSubView" class="hidden flex-col h-full relative">
-            <!-- Floating Back Button -->
             <button type="button" onclick="backToSearchSubView()" class="absolute top-4 left-4 z-[1001] w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center text-navy hover:bg-slate-100">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             </button>
 
-            <!-- Interactive Map Container -->
             <div id="interactiveMapContainer" class="flex-1 w-full relative bg-slate-100">
-                <!-- Center Fixed Pin + Dark Tooltip ("Your goods will be picked from here") -->
                 <div class="center-pin-wrapper">
                     <div id="mapPinTooltipText" class="bg-slate-900 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xl mb-1.5 whitespace-nowrap relative">
                         Your goods will be picked from here
                         <div class="w-2.5 h-2.5 bg-slate-900 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
                     </div>
-                    <!-- Green / Orange Teardrop Pin Icon -->
                     <div id="mapCenterPinIcon" class="w-11 h-11 rounded-full bg-emerald-500 border-4 border-white shadow-xl flex items-center justify-center text-white font-black text-base">
                         &uarr;
                     </div>
                     <div class="pin-pulse"></div>
                 </div>
 
-                <!-- Floating GPS "Use Current Location" Button (Bottom-Right of Map) -->
+                <!-- Floating GPS Button -->
                 <button type="button" onclick="locateUserGPS()" title="Use My Current GPS Location" class="absolute bottom-6 right-4 z-[1001] w-12 h-12 rounded-full bg-white shadow-xl border border-slate-200 flex items-center justify-center text-navy hover:text-blue-600 transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0013 3.06V1h-2v2.06A8.994 8.994 0 003.06 11H1v2h2.06A8.994 8.994 0 0011 20.94V23h2v-2.06A8.994 8.994 0 0020.94 13H23v-2h-2.06z"/></svg>
                 </button>
             </div>
 
-            <!-- Bottom Address Confirmation Sheet (Matches Screenshot 1792333859495.jpeg) -->
+            <!-- Bottom Address Confirmation Sheet -->
             <div class="bg-white rounded-t-3xl shadow-2xl border-t border-slate-200 p-4 sm:p-6 z-[1001]">
                 <div class="max-w-xl mx-auto space-y-4">
                     <div class="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 flex items-center gap-3.5">
@@ -741,30 +900,39 @@
     </div>
 
     <!-- ==========================================
-         10. APPLICATION JAVASCRIPT
-         - Live Map Dragging + Reverse Geocoding
-         - Exact OSRM / Google Road Distance Routing
-         - Pure KM & KG Slab Fare Calculation
+         10. COMPLETE APPLICATION JAVASCRIPT
+         - Zero Missing Functions
+         - Local Booking -> Razorpay + Shipday Backend (/api/create-payment, /api/verify-payment, /api/book)
+         - Outstation Booking -> Formatted WhatsApp Dispatch (+91 92074 76242)
+         - Live Tracking -> /api/track
     =========================================== -->
     <script>
-        // State Management
-        let activeMode = 'pickup'; // 'pickup' or 'drop'
+        const CONFIG = {
+            WHATSAPP_NUMBER: '919207476242',
+            ENDPOINTS: {
+                CREATE_PAYMENT: '/api/create-payment',
+                VERIFY_PAYMENT: '/api/verify-payment',
+                BOOK_SHIPDAY: '/api/book',
+                TRACK_ORDER: '/api/track'
+            }
+        };
+
+        let activeMode = 'pickup'; // 'pickup' | 'drop' | 'outstation_pickup'
         let leafletMap = null;
         let reverseGeoTimeout = null;
         let searchDebounceTimeout = null;
 
-        // Default Coordinates (Kozhikode City Center)
         const state = {
             pickup: {
                 lat: 11.2588,
                 lng: 75.7804,
-                title: 'Kozhikode Main City',
-                address: 'Kozhikode, Kerala 673001, India',
+                title: 'Mananchira',
+                address: 'Wayanad Road, Tazhekkod, Mananchira, Kozhikode, Kerala 673001',
                 confirmed: false
             },
             drop: {
-                lat: 11.2785,
-                lng: 75.8034,
+                lat: 11.2695,
+                lng: 75.8075,
                 title: 'Thondayad Bypass',
                 address: 'Thondayad, Kozhikode, Kerala 673016, India',
                 confirmed: false
@@ -772,8 +940,8 @@
             currentPin: {
                 lat: 11.2588,
                 lng: 75.7804,
-                title: 'Kozhikode',
-                address: 'Kozhikode, Kerala, India'
+                title: 'Mananchira',
+                address: 'Wayanad Road, Tazhekkod, Mananchira, Kozhikode, Kerala 673001'
             },
             distanceKm: 5.0,
             weightKg: 1.0,
@@ -781,6 +949,7 @@
         };
 
         const defaultKeralaLocations = [
+            { title: 'Mananchira', address: 'Wayanad Road, Mananchira, Kozhikode, Kerala 673001', lat: 11.2588, lng: 75.7804 },
             { title: 'SM Street (Sweet Meat Street)', address: 'Palayam, Kozhikode, Kerala 673001', lat: 11.2530, lng: 75.7810 },
             { title: 'Thondayad Bypass', address: 'Thondayad, Kozhikode, Kerala 673016', lat: 11.2695, lng: 75.8075 },
             { title: 'Nadakkavu', address: 'West Nadakkavu, Kozhikode, Kerala 673011', lat: 11.2752, lng: 75.7745 },
@@ -789,6 +958,38 @@
             { title: 'Koyilandy', address: 'Koyilandy, Kozhikode District, Kerala 673305', lat: 11.4429, lng: 75.6976 },
             { title: 'Ramanattukara', address: 'Ramanattukara, Kozhikode, Kerala 673633', lat: 11.1778, lng: 75.8655 }
         ];
+
+        // Switch Between Local Delivery (Razorpay + Shipday) and Outstation (WhatsApp)
+        function switchBookingTab(tab) {
+            const localForm = document.getElementById('localBookingForm');
+            const outForm = document.getElementById('outstationBookingForm');
+            const btnLocal = document.getElementById('tabBtnLocal');
+            const btnOut = document.getElementById('tabBtnOutstation');
+
+            if (tab === 'local') {
+                localForm.classList.remove('hidden');
+                outForm.classList.add('hidden');
+                btnLocal.className = 'py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 bg-navy text-white shadow-md';
+                btnOut.className = 'py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 text-slate-600 hover:text-navy bg-transparent';
+            } else {
+                localForm.classList.add('hidden');
+                outForm.classList.remove('hidden');
+                btnOut.className = 'py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 bg-orange text-white shadow-md';
+                btnLocal.className = 'py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 text-slate-600 hover:text-navy bg-transparent';
+            }
+        }
+
+        // Terms & Conditions Modal
+        function openTermsModal() {
+            const modal = document.getElementById('termsModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeTermsModal() {
+            const modal = document.getElementById('termsModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
 
         // Mobile Menu Toggle
         function toggleMobileMenu() {
@@ -800,14 +1001,14 @@
             closeIcon.classList.toggle('hidden');
         }
 
-        // Open Location Picker Modal (Search Screen or Directly to Map)
+        // Open Map / Search Modal
         function openLocationPicker(mode, jumpStraightToMap = false) {
             activeMode = mode;
             const modal = document.getElementById('locationModal');
             const searchInput = document.getElementById('addressSearchInput');
             const searchPinBadge = document.getElementById('searchPinBadge');
 
-            if (mode === 'pickup') {
+            if (mode === 'pickup' || mode === 'outstation_pickup') {
                 searchInput.placeholder = 'Where is your PickUp ?';
                 searchPinBadge.className = 'w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-black text-sm shrink-0 ml-1';
                 searchPinBadge.innerHTML = '&uarr;';
@@ -847,7 +1048,6 @@
             document.getElementById('searchSubView').classList.add('flex');
         }
 
-        // Switch to Live Interactive Pin-Drop Map (Screenshot 2)
         function switchToLiveMapSubView() {
             document.getElementById('searchSubView').classList.add('hidden');
             document.getElementById('searchSubView').classList.remove('flex');
@@ -860,7 +1060,7 @@
             const bottomBadge = document.getElementById('bottomCardPinBadge');
             const confirmBtn = document.getElementById('confirmMapLocationBtn');
 
-            if (activeMode === 'pickup') {
+            if (activeMode === 'pickup' || activeMode === 'outstation_pickup') {
                 tooltip.innerHTML = 'Your goods will be picked from here <div class="w-2.5 h-2.5 bg-slate-900 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>';
                 pinIcon.className = 'w-11 h-11 rounded-full bg-emerald-500 border-4 border-white shadow-xl flex items-center justify-center text-white font-black text-base';
                 pinIcon.innerHTML = '&uarr;';
@@ -876,23 +1076,22 @@
                 confirmBtn.innerText = 'Confirm Drop Location';
             }
 
-            const targetCoords = activeMode === 'pickup' ? state.pickup : state.drop;
+            const targetCoords = (activeMode === 'drop') ? state.drop : state.pickup;
             initOrUpdateLeafletMap(targetCoords.lat, targetCoords.lng);
         }
 
-        // Initialize Real Draggable Street Map
+        // Clean OpenStreetMap Street Tiles (Zero Watermark, Zero API Key)
         function initOrUpdateLeafletMap(lat, lng) {
             const container = document.getElementById('interactiveMapContainer');
 
             if (!leafletMap) {
                 leafletMap = L.map('interactiveMapContainer', {
                     center: [lat, lng],
-                    zoom: 15,
+                    zoom: 16,
                     zoomControl: false
                 });
 
-                // Clean Google-style Road Map Tiles
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 19,
                     attribution: '&copy; OpenStreetMap'
                 }).addTo(leafletMap);
@@ -910,7 +1109,7 @@
             } else {
                 setTimeout(() => {
                     leafletMap.invalidateSize();
-                    leafletMap.setView([lat, lng], 15);
+                    leafletMap.setView([lat, lng], 16);
                 }, 120);
             }
 
@@ -920,7 +1119,6 @@
             }, 200);
         }
 
-        // Live GPS Button ("Locate Me")
         function locateUserGPS() {
             if (!navigator.geolocation) {
                 alert('Geolocation is not supported by your browser.');
@@ -931,19 +1129,18 @@
                 (pos) => {
                     const { latitude, longitude } = pos.coords;
                     if (leafletMap) {
-                        leafletMap.setView([latitude, longitude], 16);
+                        leafletMap.setView([latitude, longitude], 17);
                     }
                     reverseGeocodeCoordinates(latitude, longitude);
                 },
                 () => {
-                    alert('Please allow location access on your phone/browser to use live GPS.');
+                    alert('Please enable location permissions on your phone/browser.');
                     reverseGeocodeCoordinates(state.pickup.lat, state.pickup.lng);
                 },
                 { enableHighAccuracy: true, timeout: 8000 }
             );
         }
 
-        // Live Reverse Geocoding (Converts Dropped Pin Coordinates into Street & PIN Code)
         function reverseGeocodeCoordinates(lat, lng) {
             clearTimeout(reverseGeoTimeout);
             reverseGeoTimeout = setTimeout(async () => {
@@ -954,31 +1151,23 @@
                     const data = await res.json();
                     const addr = data.address || {};
                     const shortTitle = addr.suburb || addr.neighbourhood || addr.village || addr.town || addr.city_district || addr.city || 'Pinned Location';
-                    const fullFormatted = data.display_name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                    const fullFormatted = data.display_name || `${lat.toFixed(4)},${lng.toFixed(4)}`;
 
-                    state.currentPin = {
-                        lat: lat,
-                        lng: lng,
-                        title: shortTitle,
-                        address: fullFormatted
-                    };
-
+                    state.currentPin = { lat, lng, title: shortTitle, address: fullFormatted };
                     document.getElementById('liveReverseGeoTitle').innerText = shortTitle;
                     document.getElementById('liveReverseGeoSub').innerText = fullFormatted;
                 } catch (e) {
                     state.currentPin = {
-                        lat: lat,
-                        lng: lng,
+                        lat, lng,
                         title: 'Pinned Map Location',
-                        address: `Lat ${lat.toFixed(4)}, Lng ${lng.toFixed(4)}, Kerala`
+                        address: `Lat ${lat.toFixed(4)}, Lng${lng.toFixed(4)}, Kozhikode`
                     };
                     document.getElementById('liveReverseGeoTitle').innerText = state.currentPin.title;
                     document.getElementById('liveReverseGeoSub').innerText = state.currentPin.address;
                 }
-            }, 300);
+            }, 280);
         }
 
-        // Live Address Search Autocomplete
         function handleLivePlaceSearch(query) {
             clearTimeout(searchDebounceTimeout);
             if (!query || query.trim().length < 2) {
@@ -1001,7 +1190,7 @@
                 } catch (err) {
                     renderSearchSuggestions(defaultKeralaLocations);
                 }
-            }, 320);
+            }, 300);
         }
 
         function renderSearchSuggestions(items) {
@@ -1019,26 +1208,26 @@
                     </div>
                 `;
                 btn.onclick = () => {
-                    state[activeMode] = {
-                        lat: item.lat,
-                        lng: item.lng,
-                        title: item.title,
-                        address: item.address,
-                        confirmed: true
-                    };
-                    // Open map right at that chosen place so user can verify pin and confirm
+                    state.currentPin = { lat: item.lat, lng: item.lng, title: item.title, address: item.address };
+                    if (activeMode === 'drop') {
+                        state.drop = { ...state.currentPin, confirmed: true };
+                    } else {
+                        state.pickup = { ...state.currentPin, confirmed: true };
+                    }
                     switchToLiveMapSubView();
                 };
                 container.appendChild(btn);
             });
         }
 
-        // Confirm Pin-Dropped Location & Compute Real Driving Road Distance
         async function confirmPinDroppedLocation() {
-            state[activeMode] = {
-                ...state.currentPin,
-                confirmed: true
-            };
+            if (activeMode === 'outstation_pickup') {
+                document.getElementById('outPickupAddress').value = `${state.currentPin.title},${state.currentPin.address}`;
+                closeLocationPicker();
+                return;
+            }
+
+            state[activeMode] = { ...state.currentPin, confirmed: true };
 
             if (activeMode === 'pickup') {
                 document.getElementById('pickupDisplayTitle').innerText = state.pickup.title;
@@ -1052,11 +1241,10 @@
             await computeVerifiedRoadDistance();
         }
 
-        // Compute Real Driving Distance in KM via OSRM Road Routing API (Fallback to Haversine * 1.25 road factor)
         async function computeVerifiedRoadDistance() {
             const statusEl = document.getElementById('routeStatusText');
             const badgeEl = document.getElementById('calculatedKmBadge');
-            statusEl.innerText = 'Calculating exact driving route...';
+            statusEl.innerText = 'Calculating road route...';
 
             try {
                 const url = `https://router.project-osrm.org/route/v1/driving/${state.pickup.lng},${state.pickup.lat};${state.drop.lng},${state.drop.lat}?overview=false`;
@@ -1067,10 +1255,9 @@
                     const meters = data.routes[0].distance;
                     state.distanceKm = Math.max(1, parseFloat((meters / 1000).toFixed(1)));
                 } else {
-                    throw new Error('Fallback to road factor');
+                    throw new Error('Fallback');
                 }
             } catch (err) {
-                // Haversine with 1.28x Kerala road curvature multiplier
                 const R = 6371;
                 const dLat = (state.drop.lat - state.pickup.lat) * Math.PI / 180;
                 const dLon = (state.drop.lng - state.pickup.lng) * Math.PI / 180;
@@ -1082,7 +1269,7 @@
             }
 
             badgeEl.innerText = `${state.distanceKm} km`;
-            statusEl.innerText = `${state.pickup.title} → ${state.drop.title}`;
+            statusEl.innerText = `${state.pickup.title} →${state.drop.title}`;
             recalculateFare();
         }
 
@@ -1091,13 +1278,11 @@
             recalculateFare();
         }
 
-        // Pure Distance & Weight Slab Pricing Calculation
         function recalculateFare() {
             const weightInput = parseFloat(document.getElementById('parcelWeightInput').value);
             state.weightKg = isNaN(weightInput) || weightInput <= 0 ? 0.5 : weightInput;
             const km = state.distanceKm || 5.0;
 
-            // Base ₹40 (covers first 3 km & up to 1 kg) + ₹8/km above 3 km + ₹15/kg above 1 kg
             const extraKm = Math.max(0, km - 3);
             const extraKg = Math.max(0, Math.ceil(state.weightKg - 1));
             const totalFare = Math.round(45 + (extraKm * 8) + (extraKg * 15));
@@ -1107,47 +1292,207 @@
             document.getElementById('fareBreakdownSub').innerText = `(${km} km • ${state.weightKg} kg)`;
         }
 
-        // Submit Booking Request via WhatsApp / Backend Dispatch
-        function submitBookingRequest() {
-            const phone = document.getElementById('CustomerPhone').value.trim();
-            if (!phone || phone.length < 10) {
-                alert('Please enter your 10-digit mobile/WhatsApp number so our rider can coordinate pickup.');
-                document.getElementById('CustomerPhone').focus();
-                return;
+        // =========================================================================
+        // 1. LOCAL DELIVERY FLOW: RAZORPAY PAYMENT + SHIPDAY DISPATCH (/api/...)
+        // =========================================================================
+        async function handleLocalPaymentAndShipday(e) {
+            e.preventDefault();
+
+            const payBtn = document.getElementById('localPayBtn');
+            const senderName = document.getElementById('localSenderName').value.trim();
+            const senderPhone = document.getElementById('localSenderPhone').value.trim();
+            const pickupBuilding = document.getElementById('localPickupBuilding').value.trim();
+
+            const receiverName = document.getElementById('localReceiverName').value.trim();
+            const receiverPhone = document.getElementById('localReceiverPhone').value.trim();
+            const dropBuilding = document.getElementById('localDropBuilding').value.trim();
+            const contents = document.getElementById('localParcelContents').value.trim();
+
+            const bookingPayload = {
+                serviceType: 'LOCAL_EXPRESS',
+                senderName,
+                senderPhone,
+                pickupAddress: `${pickupBuilding}, ${state.pickup.title},${state.pickup.address}`,
+                pickupLat: state.pickup.lat,
+                pickupLng: state.pickup.lng,
+                receiverName,
+                receiverPhone,
+                dropAddress: `${dropBuilding}, ${state.drop.title},${state.drop.address}`,
+                dropLat: state.drop.lat,
+                dropLng: state.drop.lng,
+                distanceKm: state.distanceKm,
+                weightKg: state.weightKg,
+                packageContents: contents,
+                amount: state.calculatedFare
+            };
+
+            const originalBtnText = payBtn.innerHTML;
+            payBtn.disabled = true;
+            payBtn.innerHTML = '<span>Initializing Razorpay...</span>';
+
+            try {
+                // Step 1: Create Server-Verified Razorpay Order via /api/create-payment
+                const orderRes = await fetch(CONFIG.ENDPOINTS.CREATE_PAYMENT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bookingPayload)
+                });
+
+                if (!orderRes.ok) {
+                    throw new Error('Backend payment endpoint returned an error');
+                }
+
+                const orderData = await orderRes.json();
+
+                // Step 2: Open Official Razorpay Checkout Window
+                const options = {
+                    key: orderData.keyId || orderData.key,
+                    amount: orderData.amount || (state.calculatedFare * 100),
+                    currency: orderData.currency || 'INR',
+                    name: 'FARX Logistics',
+                    description: `Local Express (${state.distanceKm} km • ${state.weightKg} kg)`,
+                    order_id: orderData.orderId || orderData.id,
+                    prefill: {
+                        name: senderName,
+                        contact: `+91${senderPhone}`
+                    },
+                    theme: { color: '#0A2246' },
+                    handler: async function (response) {
+                        payBtn.innerHTML = '<span>Dispatching to Shipday...</span>';
+
+                        // Step 3: Verify Payment & Push Order to Shipday (/api/verify-payment or /api/book)
+                        const verifyRes = await fetch(CONFIG.ENDPOINTS.VERIFY_PAYMENT, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                ...bookingPayload,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature
+                            })
+                        });
+
+                        let finalResult = {};
+                        if (verifyRes.ok) {
+                            finalResult = await verifyRes.json();
+                        } else {
+                            const bookRes = await fetch(CONFIG.ENDPOINTS.BOOK_SHIPDAY, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    ...bookingPayload,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature
+                                })
+                            });
+                            if (bookRes.ok) finalResult = await bookRes.json();
+                        }
+
+                        const orderIdText = finalResult.orderId || finalResult.trackingId || response.razorpay_payment_id;
+                        const successBox = document.getElementById('localBookingSuccessBox');
+                        document.getElementById('localBookingOrderDetails').innerText =
+                            `Order Reference: ${orderIdText} | Sender: ${senderName} (${senderPhone}) → Receiver: ${receiverName} (${receiverPhone}). Dispatched to Shipday!`;
+                        successBox.classList.remove('hidden');
+                        payBtn.disabled = false;
+                        payBtn.innerHTML = originalBtnText;
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function (resp) {
+                    alert('Payment failed: ' + (resp.error && resp.error.description ? resp.error.description : 'Please try again.'));
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = originalBtnText;
+                });
+                rzp.open();
+
+            } catch (err) {
+                console.error('Payment/Backend Error:', err);
+                alert('Could not connect to the payment server. Please try again or call +91 92074 76242.');
+            } finally {
+                payBtn.disabled = false;
+                payBtn.innerHTML = originalBtnText;
             }
-
-            const pickupText = `${state.pickup.title} (${state.pickup.address})`;
-            const dropText = `${state.drop.title} (${state.drop.address})`;
-            const mapsPinLink = `https://www.google.com/maps/dir/?api=1&origin=${state.pickup.lat},${state.pickup.lng}&destination=${state.drop.lat},${state.drop.lng}`;
-
-            const message = [
-                `*NEW PICKUP BOOKING — FARX LOGISTICS*`,
-                `----------------------------------`,
-                `📞 *Customer Phone:* +91 ${phone}`,
-                `🟢 *Pickup:* ${pickupText}`,
-                `🟠 *Drop:* ${dropText}`,
-                `🛣️ *Map Verified Distance:* ${state.distanceKm} km`,
-                `📦 *Parcel Weight:* ${state.weightKg} kg`,
-                `💰 *Estimated Fare:* ₹${state.calculatedFare}`,
-                `🗺️ *Google Maps Route:* ${mapsPinLink}`
-            ].join('\n');
-
-            window.open(`https://wa.me/919207476242?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        // Handle Shipment Tracking
-        function handleTrackShipment(e) {
+        // =========================================================================
+        // 2. OUTSTATION SHIPMENT FLOW: DIRECT TO WHATSAPP (+91 92074 76242)
+        // =========================================================================
+        function handleOutstationWhatsAppBooking(e) {
+            e.preventDefault();
+
+            const senderName = document.getElementById('outSenderName').value.trim();
+            const senderPhone = document.getElementById('outSenderPhone').value.trim();
+            const pickupAddr = document.getElementById('outPickupAddress').value.trim();
+
+            const receiverName = document.getElementById('outReceiverName').value.trim();
+            const receiverPhone = document.getElementById('outReceiverPhone').value.trim();
+            const dropAddr = document.getElementById('outDropAddress').value.trim();
+            const dropCity = document.getElementById('outDropCity').value.trim();
+            const dropPin = document.getElementById('outDropPincode').value.trim();
+            const weight = document.getElementById('outParcelWeight').value.trim();
+
+            const message = [
+                `*📦 NEW OUTSTATION SHIPMENT — FARX LOGISTICS*`,
+                `------------------------------------------`,
+                `*🟢 PICKUP DETAILS (SENDER):*`,
+                `• Name: ${senderName}`,
+                `• Phone: +91 ${senderPhone}`,
+                `• Pickup Address: ${pickupAddr}`,
+                ``,
+                `*🟠 DROP DETAILS (OUTSTATION RECEIVER):*`,
+                `• Name: ${receiverName}`,
+                `• Phone: +91 ${receiverPhone}`,
+                `• Delivery Address: ${dropAddr}`,
+                `• Destination City/State: ${dropCity}`,
+                `• Destination PIN: ${dropPin}`,
+                ``,
+                `*⚖️ PARCEL DETAILS:*`,
+                `• Approx Weight: ${weight} kg`,
+                `• Terms & Conditions: Accepted ✅`
+            ].join('\n');
+
+            window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // =========================================================================
+        // 3. LIVE ORDER TRACKING (/api/track)
+        // =========================================================================
+        async function handleTrackShipment(e) {
             e.preventDefault();
             const code = document.getElementById('trackingNumberInput').value.trim().toUpperCase();
             if (!code) return;
 
+            const box = document.getElementById('trackingResultBox');
+            const badge = document.getElementById('trackedStatusBadge');
+            const body = document.getElementById('trackedDetailsBody');
             document.getElementById('trackedIdDisplay').innerText = code;
-            const waText = `Hi FARX Logistics, please share the current tracking status for my shipment: *${code}*`;
-            document.getElementById('trackingWhatsappLink').href = `https://wa.me/919207476242?text=${encodeURIComponent(waText)}`;
-            document.getElementById('trackingResultBox').classList.remove('hidden');
+            box.classList.remove('hidden');
+            badge.innerText = 'Fetching Live Status...';
+            body.innerHTML = 'Connecting to FARX dispatch server...';
+
+            try {
+                const res = await fetch(`${CONFIG.ENDPOINTS.TRACK_ORDER}?id=${encodeURIComponent(code)}`);
+                if (!res.ok) throw new Error('Status lookup fallback');
+                const data = await res.json();
+
+                badge.innerText = data.status || 'IN TRANSIT';
+                body.innerHTML = `
+                    <div><strong>Current Status:</strong> ${data.status || 'Active in Shipday Network'}</div>
+                    ${data.riderName ? `<div><strong>Assigned Rider:</strong> ${data.riderName} (${data.riderPhone || ''})</div>` : ''}
+                    ${data.eta ? `<div><strong>Estimated Delivery:</strong> ${data.eta}</div>` : ''}
+                `;
+            } catch (err) {
+                badge.innerText = 'Dispatch Desk Verification';
+                const waUrl = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi FARX Logistics, please share live tracking status for Order ID: ' + code)}`;
+                body.innerHTML = `
+                    <p>For instant live GPS rider tracking or outstation AWB status on order <strong>${code}</strong>, tap below:</p>
+                    <a href="${waUrl}" target="_blank" class="inline-block mt-2 bg-orange text-white font-extrabold text-xs px-5 py-2.5 rounded-xl">Check Status with Dispatch Desk &rarr;</a>
+                `;
+            }
         }
 
-        // Initialize Default Calculation on Page Load
         window.addEventListener('DOMContentLoaded', () => {
             recalculateFare();
         });
