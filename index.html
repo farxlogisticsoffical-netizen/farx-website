@@ -223,15 +223,14 @@
 
     <!-- ==========================================
          3. PREMIUM WHITE HERO & DUAL BOOKING ENGINE
-         - Tab 1: Intra-District Local (Kozhikode)
-         - Tab 2: Inter-District Outstation (D2C / B2B)
+         - Mandatory WhatsApp Number Verification for ALL Customers
     =========================================== -->
     <section class="relative bg-white pt-8 pb-20 lg:py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-100">
         <div class="absolute inset-0 pointer-events-none opacity-35 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:24px_24px]"></div>
 
         <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
-            <!-- Left Column: Brand Value Proposition on Crisp White Canvas -->
+            <!-- Left Column: Brand Value Proposition -->
             <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-28 pt-2">
                 <div class="inline-flex items-center gap-2 bg-orange-light border border-orange/30 text-orange font-extrabold text-xs px-4 py-2 rounded-full uppercase tracking-wider">
                     <span class="w-2 h-2 rounded-full bg-orange"></span>
@@ -263,8 +262,8 @@
                         <div class="text-xs font-bold text-slate-600 mt-0.5">Book by 6 PM, delivered tomorrow</div>
                     </div>
                     <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
-                        <div class="text-orange font-display font-black text-lg">100% SECURE</div>
-                        <div class="text-xs font-bold text-navy mt-0.5">Verified Doorstep Dispatch</div>
+                        <div class="text-orange font-display font-black text-lg">100% VERIFIED</div>
+                        <div class="text-xs font-bold text-navy mt-0.5">WhatsApp OTP Protected</div>
                     </div>
                 </div>
 
@@ -281,7 +280,7 @@
                 </div>
             </div>
 
-            <!-- Right Column: THE DUAL BOOKING ENGINE (LOCAL vs OUTSTATION) -->
+            <!-- Right Column: DUAL BOOKING ENGINE -->
             <div id="booking-engine" class="lg:col-span-7 bg-white rounded-3xl shadow-premium border-2 border-navy/10 overflow-hidden">
                 
                 <!-- MODE SWITCHER TABS -->
@@ -327,7 +326,6 @@
                             </button>
                         </div>
 
-                        <!-- Pickup Address Input + Pin Map Button -->
                         <div class="relative">
                             <input type="text" id="pickupAddr" required placeholder="Search pickup shop, landmark, or click 'Select on map'" onchange="scheduleAutoRouteCalc()" class="w-full bg-white border-2 border-slate-200 focus:border-navy rounded-xl pl-4 pr-24 py-3 text-sm font-bold text-navy focus:outline-none transition" />
                             <button type="button" onclick="openLocationPicker('pickup')" class="absolute right-2.5 top-1/2 -translate-y-1/2 bg-orange-light text-orange hover:bg-orange hover:text-white text-xs font-extrabold px-3 py-1.5 rounded-lg transition">
@@ -335,28 +333,54 @@
                             </button>
                         </div>
 
-                        <!-- Sender Name & Mobile Number -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Name *</label>
                                 <input type="text" id="bk-name" required minlength="2" placeholder="Your name or business" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                             <div>
-                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Mobile Number *</label>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender WhatsApp Number *</label>
                                 <input type="tel" id="bk-phone" required inputmode="numeric" maxlength="10"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); resetCodOtpVerification();"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); resetLocalWhatsAppOtp();"
                                     placeholder="10-digit mobile (6-9...)"
                                     class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                         </div>
 
+                        <!-- MANDATORY WHATSAPP OTP VERIFICATION BOX FOR ALL LOCAL CUSTOMERS (PREPAID & COD) -->
+                        <div class="bg-emerald-50/90 border-2 border-emerald-400 rounded-xl p-4 space-y-2.5">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div>
+                                    <div class="text-xs font-extrabold text-emerald-950 uppercase flex items-center gap-1.5">
+                                        <span>🔒 Mandatory WhatsApp OTP Verification</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-700 mt-0.5">To prevent fake bookings, all customers (Prepaid &amp; COD) must verify their Sender Mobile Number via WhatsApp.</p>
+                                </div>
+                                <button type="button" id="localWaOtpBtn" onclick="sendWhatsAppOtp('local')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold px-4 py-2.5 rounded-xl shadow transition shrink-0">
+                                    1. Send OTP on WhatsApp
+                                </button>
+                            </div>
+
+                            <!-- Step 2 Confirmation Row (Appears after WhatsApp opens) -->
+                            <div id="localWaConfirmRow" class="hidden pt-2 border-t border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <span id="localWaCodeDisplay" class="text-xs font-extrabold text-navy"></span>
+                                <button type="button" onclick="confirmWhatsAppOtpSent('local')" class="bg-navy hover:bg-orange text-white text-xs font-extrabold px-4 py-2 rounded-lg transition shrink-0">
+                                    2. I Sent the OTP on WhatsApp — Unlock Booking ✓
+                                </button>
+                            </div>
+
+                            <div id="localWaVerifiedBadge" class="hidden text-xs font-extrabold text-emerald-700 bg-white border border-emerald-300 px-3 py-2 rounded-lg">
+                                ✅ WhatsApp OTP Verified! You can now complete your booking below.
+                            </div>
+                        </div>
+
                         <div>
-                            <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Email (Optional — For Receipt)</label>
+                            <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Email (Optional)</label>
                             <input type="email" id="bk-email" placeholder="name@example.com" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-semibold text-navy focus:outline-none" />
                         </div>
                     </div>
 
-                    <!-- SECTION B: DROP DETAILS (RECIPIENT) -->
+                    <!-- SECTION B: DROP DETAILS -->
                     <div class="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-4">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
@@ -369,7 +393,6 @@
                             </button>
                         </div>
 
-                        <!-- Drop Address Input + Pin Map Button -->
                         <div class="relative">
                             <input type="text" id="dropAddr" required placeholder="Search recipient location, landmark, or click 'Select on map'" onchange="scheduleAutoRouteCalc()" class="w-full bg-white border-2 border-slate-200 focus:border-orange rounded-xl pl-4 pr-24 py-3 text-sm font-bold text-navy focus:outline-none transition" />
                             <button type="button" onclick="openLocationPicker('drop')" class="absolute right-2.5 top-1/2 -translate-y-1/2 bg-orange-light text-orange hover:bg-orange hover:text-white text-xs font-extrabold px-3 py-1.5 rounded-lg transition">
@@ -377,7 +400,6 @@
                             </button>
                         </div>
 
-                        <!-- Recipient Name & Validated 10-Digit Mobile Number -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Recipient Name *</label>
@@ -393,7 +415,7 @@
                         </div>
                     </div>
 
-                    <!-- SECTION C: PARCEL WEIGHT (MAX 20 KG, STEP="ANY"), ROUTE CALCULATOR & PAYMENT METHOD -->
+                    <!-- SECTION C: WEIGHT, ROUTE & PAYMENT METHOD -->
                     <div class="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-5 space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
                             <div class="sm:col-span-7">
@@ -412,19 +434,17 @@
 
                             <div class="sm:col-span-5">
                                 <button type="button" id="calcBtn" onclick="calcFare()" class="w-full bg-navy hover:bg-navy-light text-white font-extrabold text-xs uppercase tracking-wider py-3.5 px-4 rounded-xl shadow transition">
-                                    Calculate Exact Road Fare
+                                    Calculate Road Fare
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Live Route Breakdown Box -->
                         <div id="breakdownOut" class="bg-white border border-slate-200 rounded-xl p-3.5 text-xs space-y-1.5 text-slate-600">
                             <div class="flex justify-between font-bold text-navy"><span>Base Fare (0 – 3 km, up to 5 kg)</span><span>₹50</span></div>
                             <div class="flex justify-between"><span>Select Pickup &amp; Drop to calculate exact road km</span><span>—</span></div>
                         </div>
                         <div id="routeInfo" class="text-xs font-bold text-slate-600"></div>
 
-                        <!-- Freight Payment Mode Toggle (Online Prepaid vs Freight COD) -->
                         <div>
                             <label class="block text-[11px] font-extrabold text-navy uppercase tracking-wider mb-1.5">Freight Payment Method</label>
                             <div class="grid grid-cols-2 gap-2 bg-slate-200/70 p-1.5 rounded-xl">
@@ -437,39 +457,16 @@
                                 <label class="cursor-pointer">
                                     <input type="radio" name="paymentMode" value="cod" onchange="handlePaymentModeChange()" class="peer sr-only" />
                                     <span class="block text-center py-2.5 px-3 rounded-lg text-xs font-extrabold text-slate-600 peer-checked:bg-navy peer-checked:text-white transition">
-                                        Pay on Delivery (Freight COD)
+                                        Pay on Delivery (COD)
                                     </span>
                                 </label>
                             </div>
                         </div>
-
-                        <!-- Conditional OTP Box: Appears ONLY when COD is selected -->
-                        <div id="codOtpVerificationBox" class="hidden bg-amber-50 border border-amber-300 rounded-xl p-4 space-y-2.5">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-extrabold text-amber-900 uppercase">🔒 COD Mobile Verification Required</span>
-                                <button type="button" id="sendCodOtpBtn" onclick="requestCodSmsOtp()" class="bg-navy hover:bg-orange text-white text-xs font-extrabold px-4 py-2 rounded-lg transition">
-                                    Send SMS OTP
-                                </button>
-                            </div>
-                            <p class="text-[11px] text-slate-700">Pay Online (Prepaid) requires no OTP. For Pay on Delivery (COD), please verify your Sender Mobile Number with a 4-digit OTP.</p>
-                            <div id="codOtpInputRow" class="hidden flex items-center gap-2 pt-1">
-                                <input type="text" id="codEnteredOtp" inputmode="numeric" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)" placeholder="Enter 4-digit OTP" class="bg-white border-2 border-orange rounded-lg px-3 py-2 text-xs font-extrabold text-navy tracking-widest w-40 focus:outline-none" />
-                                <button type="button" onclick="confirmCodSmsOtp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold px-4 py-2 rounded-lg transition">
-                                    Verify OTP
-                                </button>
-                            </div>
-                            <div id="codOtpStatusMsg" class="text-[11px] font-bold text-orange"></div>
-                            <div id="codOtpVerifiedBadge" class="hidden text-xs font-extrabold text-emerald-600">
-                                ✓ Sender Mobile Verified for COD Dispatch
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- Inline Validation / Status Banner -->
                     <div id="localValidationAlert" class="hidden bg-red-50 border border-red-300 text-red-700 text-xs font-bold px-4 py-3 rounded-xl"></div>
                     <div id="bookingStatus" class="hidden bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold px-4 py-3.5 rounded-xl"></div>
 
-                    <!-- MANDATORY TERMS & CONDITIONS CHECKBOX -->
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex items-start gap-3">
                         <input type="checkbox" id="agreeTerms" required class="mt-1 w-4 h-4 accent-orange rounded cursor-pointer shrink-0" />
                         <label for="agreeTerms" class="text-xs font-semibold text-slate-600 leading-relaxed">
@@ -477,7 +474,6 @@
                         </label>
                     </div>
 
-                    <!-- TOTAL FARE & SUBMIT BAR -->
                     <div class="bg-navy text-white p-5 sm:p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div>
                             <div class="text-[11px] font-extrabold uppercase tracking-widest text-orange">Estimated Doorstep Fare</div>
@@ -495,7 +491,7 @@
                 </form>
 
                 <!-- =========================================================
-                     TAB 2: INTER-DISTRICT OUTSTATION SHIPMENT FORM (D2C / B2B)
+                     TAB 2: OUTSTATION SHIPMENT FORM (D2C / B2B)
                 ========================================================== -->
                 <form id="outstationBookingForm" onsubmit="sendEnquiry(event)" class="hidden p-6 sm:p-8 space-y-6">
                     <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
@@ -528,10 +524,34 @@
                                 <input type="text" id="enqSenderName" required placeholder="Your name or business" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
                             </div>
                             <div>
-                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender Mobile Number *</label>
+                                <label class="block text-[11px] font-extrabold text-slate-600 uppercase mb-1">Sender WhatsApp Number *</label>
                                 <input type="tel" id="enqPhone" required inputmode="numeric" maxlength="10"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); resetOutstationOtpVerification();"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); resetOutstationWhatsAppOtp();"
                                     placeholder="10-digit mobile" class="w-full bg-white border border-slate-300 focus:border-navy rounded-xl px-3.5 py-2.5 text-sm font-bold text-navy focus:outline-none" />
+                            </div>
+                        </div>
+
+                        <!-- MANDATORY WHATSAPP OTP VERIFICATION BOX FOR OUTSTATION -->
+                        <div class="bg-emerald-50/90 border-2 border-emerald-400 rounded-xl p-4 space-y-2.5">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div>
+                                    <div class="text-xs font-extrabold text-emerald-950 uppercase">🔒 Mandatory Outstation WhatsApp OTP</div>
+                                    <p class="text-[11px] text-slate-700 mt-0.5">Verify your Sender WhatsApp number before submitting an outstation pickup request.</p>
+                                </div>
+                                <button type="button" id="outWaOtpBtn" onclick="sendWhatsAppOtp('outstation')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold px-4 py-2.5 rounded-xl shadow transition shrink-0">
+                                    1. Send OTP on WhatsApp
+                                </button>
+                            </div>
+
+                            <div id="outWaConfirmRow" class="hidden pt-2 border-t border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                <span id="outWaCodeDisplay" class="text-xs font-extrabold text-navy"></span>
+                                <button type="button" onclick="confirmWhatsAppOtpSent('outstation')" class="bg-navy hover:bg-orange text-white text-xs font-extrabold px-4 py-2 rounded-lg transition shrink-0">
+                                    2. I Sent the OTP on WhatsApp — Unlock Quote ✓
+                                </button>
+                            </div>
+
+                            <div id="outWaVerifiedBadge" class="hidden text-xs font-extrabold text-emerald-700 bg-white border border-emerald-300 px-3 py-2 rounded-lg">
+                                ✅ WhatsApp OTP Verified! You can now request your outstation quote below.
                             </div>
                         </div>
 
@@ -563,26 +583,6 @@
                                         <span class="block text-center py-2 rounded-lg text-xs font-extrabold text-slate-600 peer-checked:bg-navy peer-checked:text-white transition">B2B Freight</span>
                                     </label>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- Outstation Mandatory OTP Verification Box -->
-                        <div class="bg-amber-50 border border-amber-300 rounded-xl p-4 space-y-2.5">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-extrabold text-amber-900 uppercase">🔒 Outstation Mobile Verification</span>
-                                <button type="button" id="sendOutOtpBtn" onclick="requestOutstationSmsOtp()" class="bg-navy hover:bg-orange text-white text-xs font-extrabold px-4 py-2 rounded-lg transition">
-                                    Send SMS OTP
-                                </button>
-                            </div>
-                            <p class="text-[11px] text-slate-700">Please verify your Sender Mobile Number with a 4-digit OTP to request an outstation pickup.</p>
-                            <div id="outOtpInputRow" class="hidden flex items-center gap-2 pt-1">
-                                <input type="text" id="outEnteredOtp" inputmode="numeric" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4)" placeholder="Enter 4-digit OTP" class="bg-white border-2 border-orange rounded-lg px-3 py-2 text-xs font-extrabold text-navy tracking-widest w-40 focus:outline-none" />
-                                <button type="button" onclick="confirmOutstationSmsOtp()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold px-4 py-2 rounded-lg transition">
-                                    Verify OTP
-                                </button>
-                            </div>
-                            <div id="outOtpVerifiedBadge" class="hidden text-xs font-extrabold text-emerald-600">
-                                ✓ Sender Mobile Verified for Outstation Dispatch
                             </div>
                         </div>
                     </div>
@@ -646,7 +646,7 @@
     </section>
 
     <!-- ==========================================
-         5. LIVE SHIPMENT / AWB TRACKING (`/api/track`)
+         5. LIVE SHIPMENT TRACKING
     =========================================== -->
     <section id="tracking" class="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-100">
         <div class="max-w-4xl mx-auto bg-slate-50 border-2 border-navy/10 rounded-3xl p-8 sm:p-12 shadow-card">
@@ -678,13 +678,10 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                <!-- Intra-District Card -->
                 <div class="bg-white rounded-3xl p-8 border-t-4 border-orange shadow-card">
                     <span class="bg-orange-light text-orange text-xs font-extrabold px-3 py-1 rounded-lg uppercase">01 · Intra-District (Kozhikode)</span>
                     <h3 class="font-display text-2xl font-black text-navy mt-4 mb-3">Local Next-Day Doorstep Delivery</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                        Designed for local stores, D2C brands, cakes, garments, and everyday parcels across Kozhikode district.
-                    </p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Designed for local stores, D2C brands, cakes, garments, and everyday parcels across Kozhikode district.</p>
                     <ul class="space-y-3 text-sm font-bold text-navy">
                         <li class="flex items-center gap-2.5"><span class="text-orange">✓</span> Book online anytime between 12:00 PM – 6:00 PM</li>
                         <li class="flex items-center gap-2.5"><span class="text-orange">✓</span> Dedicated rider collects from your doorstep next morning</li>
@@ -692,13 +689,10 @@
                     </ul>
                 </div>
 
-                <!-- Inter-District Card -->
                 <div class="bg-white rounded-3xl p-8 border-t-4 border-navy shadow-card">
                     <span class="bg-slate-100 text-navy text-xs font-extrabold px-3 py-1 rounded-lg uppercase">02 · Inter-District (D2C &amp; B2B)</span>
                     <h3 class="font-display text-2xl font-black text-navy mt-4 mb-3">Outstation Express Routes</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                        Expand your customer reach across Kerala and South India with seamless first-mile doorstep collection.
-                    </p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Expand your customer reach across Kerala and South India with seamless first-mile doorstep collection.</p>
                     <ul class="space-y-3 text-sm font-bold text-navy">
                         <li class="flex items-center gap-2.5"><span class="text-navy">✓</span> Supports both D2C retail parcels &amp; commercial B2B stock</li>
                         <li class="flex items-center gap-2.5"><span class="text-navy">✓</span> Doorstep pickup handled directly by FARX riders</li>
@@ -707,7 +701,6 @@
                 </div>
             </div>
 
-            <!-- Active Coverage Corridors -->
             <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
                 <div class="text-xs font-extrabold uppercase tracking-widest text-orange mb-2">Active Kozhikode Coverage</div>
                 <h3 class="font-display text-xl font-black text-navy mb-6">Serving All Major Kozhikode Commercial &amp; Residential Corridors</h3>
@@ -843,13 +836,11 @@
                     <div class="pin-pulse"></div>
                 </div>
 
-                <!-- Floating GPS Button -->
                 <button type="button" onclick="locateUserGPS()" title="Use My Current GPS Location" class="absolute bottom-6 right-4 z-[1001] w-12 h-12 rounded-full bg-white shadow-xl border border-slate-200 flex items-center justify-center text-navy hover:text-blue-600 transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0013 3.06V1h-2v2.06A8.994 8.994 0 003.06 11H1v2h2.06A8.994 8.994 0 0011 20.94V23h2v-2.06A8.994 8.994 0 0020.94 13H23v-2h-2.06z"/></svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
                 </button>
             </div>
 
-            <!-- Bottom Address Confirmation Sheet -->
             <div class="bg-white rounded-t-3xl shadow-2xl border-t border-slate-200 p-4 sm:p-6 z-[1001]">
                 <div class="max-w-xl mx-auto space-y-4">
                     <div class="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 flex items-center gap-3.5">
@@ -946,179 +937,107 @@
             return true;
         }
 
-        // 4. Conditional OTP Verification (Required ONLY for COD and Outstation)
-        let isCodPhoneVerified = false;
-        let verifiedCodPhone = '';
-        let currentCodOtpToken = '';
+        // 4. Mandatory ₹0 WhatsApp OTP Verification for ALL Customers (Prepaid, COD, Outstation)
+        let isLocalWhatsAppVerified = false;
+        let verifiedLocalPhone = '';
+        let localGeneratedOtp = '';
 
-        let isOutstationPhoneVerified = false;
-        let verifiedOutPhone = '';
-        let currentOutOtpToken = '';
+        let isOutstationWhatsAppVerified = false;
+        let verifiedOutstationPhone = '';
+        let outstationGeneratedOtp = '';
 
-        function resetCodOtpVerification() {
-            isCodPhoneVerified = false;
-            verifiedCodPhone = '';
-            currentCodOtpToken = '';
-            document.getElementById('codOtpVerifiedBadge').classList.add('hidden');
-            document.getElementById('codOtpStatusMsg').textContent = '';
-            const btn = document.getElementById('sendCodOtpBtn');
-            btn.classList.remove('hidden');
-            btn.disabled = false;
-            btn.innerText = 'Send SMS OTP';
+        function resetLocalWhatsAppOtp() {
+            isLocalWhatsAppVerified = false;
+            verifiedLocalPhone = '';
+            localGeneratedOtp = '';
+            document.getElementById('localWaConfirmRow').classList.add('hidden');
+            document.getElementById('localWaVerifiedBadge').classList.add('hidden');
+            document.getElementById('localWaOtpBtn').innerText = '1. Send OTP on WhatsApp';
         }
 
-        function resetOutstationOtpVerification() {
-            isOutstationPhoneVerified = false;
-            verifiedOutPhone = '';
-            currentOutOtpToken = '';
-            document.getElementById('outOtpVerifiedBadge').classList.add('hidden');
-            const btn = document.getElementById('sendOutOtpBtn');
-            btn.classList.remove('hidden');
-            btn.disabled = false;
-            btn.innerText = 'Send SMS OTP';
+        function resetOutstationWhatsAppOtp() {
+            isOutstationWhatsAppVerified = false;
+            verifiedOutstationPhone = '';
+            outstationGeneratedOtp = '';
+            document.getElementById('outWaConfirmRow').classList.add('hidden');
+            document.getElementById('outWaVerifiedBadge').classList.add('hidden');
+            document.getElementById('outWaOtpBtn').innerText = '1. Send OTP on WhatsApp';
+        }
+
+        function sendWhatsAppOtp(flowType) {
+            hideValidationError();
+            const isLocal = (flowType === 'local');
+            const phoneInputId = isLocal ? 'bk-phone' : 'enqPhone';
+            const nameInputId = isLocal ? 'bk-name' : 'enqSenderName';
+
+            const phone = cleanPhone(document.getElementById(phoneInputId).value);
+            const senderName = document.getElementById(nameInputId).value.trim() || 'Customer';
+
+            if (!isValidIndianPhone(phone)) {
+                if (isLocal) {
+                    showValidationError('Please enter a valid 10-digit Indian mobile number (starting with 6, 7, 8, or 9) first.');
+                } else {
+                    document.getElementById('enquiryInfo').textContent = 'Please enter a valid 10-digit Indian mobile number (starting with 6–9) first.';
+                }
+                document.getElementById(phoneInputId).focus();
+                return;
+            }
+
+            const otpCode = Math.floor(1000 + Math.random() * 9000).toString();
+
+            const waMessage = encodeURIComponent(
+                `🔒 *FARX LOGISTICS — WHATSAPP OTP VERIFICATION*\n` +
+                `• *OTP Code:* FARX-${otpCode}\n` +
+                `• *Sender Name:* ${senderName}\n` +
+                `• *Sender Mobile:* +91 ${phone}\n` +
+                `• *Service:* ${isLocal ? 'Local Kozhikode Delivery' : 'Outstation Courier'}\n\n` +
+                `*(Please send this message to verify your WhatsApp number)*`
+            );
+
+            window.open(`https://wa.me/919207476242?text=${waMessage}`, '_blank');
+
+            if (isLocal) {
+                localGeneratedOtp = otpCode;
+                document.getElementById('localWaCodeDisplay').innerText = `OTP Code: FARX-${otpCode} (Send this on WhatsApp, then click button →)`;
+                document.getElementById('localWaConfirmRow').classList.remove('hidden');
+                document.getElementById('localWaOtpBtn').innerText = 'Re-Open WhatsApp';
+            } else {
+                outstationGeneratedOtp = otpCode;
+                document.getElementById('outWaCodeDisplay').innerText = `OTP Code: FARX-${otpCode} (Send this on WhatsApp, then click button →)`;
+                document.getElementById('outWaConfirmRow').classList.remove('hidden');
+                document.getElementById('outWaOtpBtn').innerText = 'Re-Open WhatsApp';
+            }
+        }
+
+        function confirmWhatsAppOtpSent(flowType) {
+            if (flowType === 'local') {
+                const phone = cleanPhone(document.getElementById('bk-phone').value);
+                if (!localGeneratedOtp || !isValidIndianPhone(phone)) return;
+                isLocalWhatsAppVerified = true;
+                verifiedLocalPhone = phone;
+                document.getElementById('localWaConfirmRow').classList.add('hidden');
+                document.getElementById('localWaVerifiedBadge').classList.remove('hidden');
+                hideValidationError();
+            } else {
+                const phone = cleanPhone(document.getElementById('enqPhone').value);
+                if (!outstationGeneratedOtp || !isValidIndianPhone(phone)) return;
+                isOutstationWhatsAppVerified = true;
+                verifiedOutstationPhone = phone;
+                document.getElementById('outWaConfirmRow').classList.add('hidden');
+                document.getElementById('outWaVerifiedBadge').classList.remove('hidden');
+                document.getElementById('enquiryInfo').textContent = '';
+            }
         }
 
         function handlePaymentModeChange(){
             const mode = document.querySelector('input[name="paymentMode"]:checked').value;
-            const codBox = document.getElementById('codOtpVerificationBox');
             const btn = document.getElementById('payBtn');
             const amount = lastFare.total || 50;
 
             if (mode === 'cod') {
-                codBox.classList.remove('hidden');
                 btn.innerHTML = `<span>Confirm Booking (COD: ₹${amount}) &rarr;</span>`;
             } else {
-                codBox.classList.add('hidden');
                 btn.innerHTML = `<span>Pay ₹${amount} &amp; Confirm &rarr;</span>`;
-            }
-        }
-
-        async function requestCodSmsOtp() {
-            hideValidationError();
-            const phone = cleanPhone(document.getElementById('bk-phone').value);
-            const msgEl = document.getElementById('codOtpStatusMsg');
-            if (!isValidIndianPhone(phone)) {
-                showValidationError('Please enter a valid 10-digit Sender Mobile Number (starting with 6–9) first.');
-                document.getElementById('bk-phone').focus();
-                return;
-            }
-            const btn = document.getElementById('sendCodOtpBtn');
-            btn.disabled = true;
-            btn.innerText = 'Sending SMS...';
-            msgEl.textContent = '';
-
-            try {
-                const res = await fetch('/api/send-otp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone })
-                });
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.error || 'Could not send OTP');
-
-                currentCodOtpToken = data.otpToken;
-                document.getElementById('codOtpInputRow').classList.remove('hidden');
-                msgEl.className = 'text-[11px] font-bold text-emerald-600';
-                msgEl.textContent = `✓ 4-digit OTP sent to +91 ${phone}`;
-                btn.innerText = 'Resend OTP';
-                btn.disabled = false;
-            } catch (err) {
-                msgEl.className = 'text-[11px] font-bold text-red-600';
-                msgEl.textContent = err.message || 'SMS gateway error. Please select Pay Online (Prepaid) to book immediately.';
-                btn.innerText = 'Send SMS OTP';
-                btn.disabled = false;
-            }
-        }
-
-        async function confirmCodSmsOtp() {
-            hideValidationError();
-            const phone = cleanPhone(document.getElementById('bk-phone').value);
-            const otp = document.getElementById('codEnteredOtp').value.trim();
-            const msgEl = document.getElementById('codOtpStatusMsg');
-            if (otp.length !== 4) {
-                msgEl.className = 'text-[11px] font-bold text-red-600';
-                msgEl.textContent = 'Please enter the 4-digit OTP sent to your mobile.';
-                return;
-            }
-            try {
-                const res = await fetch('/api/verify-otp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone, otp, otpToken: currentCodOtpToken })
-                });
-                const data = await res.json();
-                if (!res.ok || !data.verified) throw new Error(data.error || 'Incorrect OTP');
-
-                isCodPhoneVerified = true;
-                verifiedCodPhone = phone;
-                document.getElementById('codOtpInputRow').classList.add('hidden');
-                document.getElementById('sendCodOtpBtn').classList.add('hidden');
-                msgEl.textContent = '';
-                document.getElementById('codOtpVerifiedBadge').classList.remove('hidden');
-            } catch (err) {
-                msgEl.className = 'text-[11px] font-bold text-red-600';
-                msgEl.textContent = err.message || 'Incorrect 4-digit OTP code.';
-            }
-        }
-
-        async function requestOutstationSmsOtp() {
-            const phone = cleanPhone(document.getElementById('enqPhone').value);
-            const info = document.getElementById('enquiryInfo');
-            if (!isValidIndianPhone(phone)) {
-                info.textContent = 'Please enter a valid 10-digit Sender Mobile Number (starting with 6–9) first.';
-                document.getElementById('enqPhone').focus();
-                return;
-            }
-            const btn = document.getElementById('sendOutOtpBtn');
-            btn.disabled = true;
-            btn.innerText = 'Sending SMS...';
-
-            try {
-                const res = await fetch('/api/send-otp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone })
-                });
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.error || 'Could not send OTP');
-
-                currentOutOtpToken = data.otpToken;
-                document.getElementById('outOtpInputRow').classList.remove('hidden');
-                btn.innerText = 'Resend OTP';
-                btn.disabled = false;
-                info.textContent = `✓ 4-digit OTP sent to +91 ${phone}`;
-            } catch (err) {
-                info.textContent = err.message || 'Could not send SMS OTP.';
-                btn.innerText = 'Send SMS OTP';
-                btn.disabled = false;
-            }
-        }
-
-        async function confirmOutstationSmsOtp() {
-            const phone = cleanPhone(document.getElementById('enqPhone').value);
-            const otp = document.getElementById('outEnteredOtp').value.trim();
-            const info = document.getElementById('enquiryInfo');
-            if (otp.length !== 4) {
-                info.textContent = 'Please enter the 4-digit OTP sent to your mobile.';
-                return;
-            }
-            try {
-                const res = await fetch('/api/verify-otp', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ phone, otp, otpToken: currentOutOtpToken })
-                });
-                const data = await res.json();
-                if (!res.ok || !data.verified) throw new Error(data.error || 'Incorrect OTP');
-
-                isOutstationPhoneVerified = true;
-                verifiedOutPhone = phone;
-                document.getElementById('outOtpInputRow').classList.add('hidden');
-                document.getElementById('sendOutOtpBtn').classList.add('hidden');
-                document.getElementById('outOtpVerifiedBadge').classList.remove('hidden');
-                info.textContent = '';
-            } catch (err) {
-                info.textContent = err.message || 'Incorrect 4-digit OTP code.';
             }
         }
 
@@ -1140,62 +1059,25 @@
             const btnOut = document.getElementById('tabBtnOutstation');
 
             if (tab === 'local') {
-                localForm.classList.remove('hidden');
-                outForm.classList.add('hidden');
+                localForm.classList.remove('hidden'); outForm.classList.add('hidden');
                 btnLocal.className = 'py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 bg-navy text-white shadow-md';
                 btnOut.className = 'py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 text-slate-600 hover:text-navy bg-transparent';
             } else {
-                localForm.classList.add('hidden');
-                outForm.classList.remove('hidden');
+                localForm.classList.add('hidden'); outForm.classList.remove('hidden');
                 btnOut.className = 'py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 bg-orange text-white shadow-md';
                 btnLocal.className = 'py-3.5 px-4 rounded-2xl font-display font-black text-xs sm:text-sm uppercase tracking-wider transition flex items-center justify-center gap-2 text-slate-600 hover:text-navy bg-transparent';
             }
         }
 
-        function openTermsModal() {
-            const m = document.getElementById('termsModal');
-            m.classList.remove('hidden'); m.classList.add('flex');
-        }
-        function closeTermsModal() {
-            const m = document.getElementById('termsModal');
-            m.classList.add('hidden'); m.classList.remove('flex');
-        }
+        function openTermsModal() { document.getElementById('termsModal').classList.remove('hidden'); document.getElementById('termsModal').classList.add('flex'); }
+        function closeTermsModal() { document.getElementById('termsModal').classList.add('hidden'); document.getElementById('termsModal').classList.remove('flex'); }
         function toggleMobileMenu() {
             document.getElementById('mobileMenuDrawer').classList.toggle('hidden');
             document.getElementById('menuIconOpen').classList.toggle('hidden');
             document.getElementById('menuIconClose').classList.toggle('hidden');
         }
 
-        // 6. Google Places Autocomplete + Live Pin-Drop Map Modal
-        function initFarxAutocomplete() {
-            if (!window.google || !google.maps || !google.maps.places) return;
-            const options = {
-                componentRestrictions: { country: "in" },
-                fields: ["formatted_address", "geometry", "name"]
-            };
-            ['pickupAddr', 'dropAddr', 'enqPickup', 'enqDrop'].forEach(id => {
-                const input = document.getElementById(id);
-                if (!input) return;
-                const autocomplete = new google.maps.places.Autocomplete(input, options);
-                autocomplete.addListener('place_changed', () => {
-                    const place = autocomplete.getPlace();
-                    if (place && place.geometry && place.geometry.location) {
-                        farxPlaceSelections[id] = {
-                            text: input.value,
-                            lat: place.geometry.location.lat(),
-                            lon: place.geometry.location.lng(),
-                            display: place.formatted_address || place.name || input.value
-                        };
-                        if (id === 'pickupAddr' || id === 'dropAddr') {
-                            scheduleAutoRouteCalc();
-                        }
-                    } else {
-                        delete farxPlaceSelections[id];
-                    }
-                });
-            });
-        }
-
+        // 6. Live Pin-Drop Map Modal & Google Autocomplete
         let activeMapTarget = 'pickup';
         let leafletMap = null;
         let reverseGeoTimeout = null;
@@ -1203,9 +1085,8 @@
 
         function openLocationPicker(mode) {
             activeMapTarget = mode;
-            const modal = document.getElementById('locationModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.getElementById('locationModal').classList.remove('hidden');
+            document.getElementById('locationModal').classList.add('flex');
 
             const isDrop = (mode === 'drop');
             document.getElementById('mapPinTooltipText').innerHTML = (isDrop ? 'Your goods will be delivered here' : 'Your goods will be picked from here') + '<div class="w-2.5 h-2.5 bg-slate-900 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>';
@@ -1238,18 +1119,16 @@
         }
 
         function closeLocationPicker() {
-            const modal = document.getElementById('locationModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            document.getElementById('locationModal').classList.add('hidden');
+            document.getElementById('locationModal').classList.remove('flex');
         }
 
         function locateUserGPS() {
             if (!navigator.geolocation) return;
             document.getElementById('liveReverseGeoTitle').innerText = 'Fetching your live GPS location...';
             navigator.geolocation.getCurrentPosition(pos => {
-                const { latitude, longitude } = pos.coords;
-                if (leafletMap) leafletMap.setView([latitude, longitude], 17);
-                reverseGeocodePin(latitude, longitude);
+                if (leafletMap) leafletMap.setView([pos.coords.latitude, pos.coords.longitude], 17);
+                reverseGeocodePin(pos.coords.latitude, pos.coords.longitude);
             });
         }
 
@@ -1280,67 +1159,78 @@
             const inputEl = document.getElementById(fieldId);
             if (inputEl) {
                 inputEl.value = currentPin.display;
-                farxPlaceSelections[fieldId] = {
-                    text: currentPin.display,
-                    lat: currentPin.lat,
-                    lon: currentPin.lon,
-                    display: currentPin.display
-                };
+                farxPlaceSelections[fieldId] = { text: currentPin.display, lat: currentPin.lat, lon: currentPin.lon, display: currentPin.display };
             }
             closeLocationPicker();
-            if (fieldId === 'pickupAddr' || fieldId === 'dropAddr') {
-                scheduleAutoRouteCalc();
-            }
+            if (fieldId === 'pickupAddr' || fieldId === 'dropAddr') scheduleAutoRouteCalc();
         }
 
-        // 7. Geocoding & Road Distance Calculation
+        function initFarxAutocomplete() {
+            if (!window.google || !google.maps || !google.maps.places) return;
+            ['pickupAddr', 'dropAddr', 'enqPickup', 'enqDrop'].forEach(id => {
+                const input = document.getElementById(id);
+                if (!input) return;
+                const ac = new google.maps.places.Autocomplete(input, {
+                    componentRestrictions: { country: "in" },
+                    fields: ["formatted_address", "geometry", "name"]
+                });
+                ac.addListener('place_changed', () => {
+                    const p = ac.getPlace();
+                    if (p && p.geometry && p.geometry.location) {
+                        farxPlaceSelections[id] = {
+                            text: input.value,
+                            lat: p.geometry.location.lat(),
+                            lon: p.geometry.location.lng(),
+                            display: p.formatted_address || p.name || input.value
+                        };
+                        if (id === 'pickupAddr' || id === 'dropAddr') scheduleAutoRouteCalc();
+                    } else {
+                        delete farxPlaceSelections[id];
+                    }
+                });
+            });
+        }
+
+        // 7. Geocoding & Road Route Calculation
         function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
         function haversineKm(a, b){
-            const R = 6371;
-            const toRad = d => d * Math.PI / 180;
-            const dLat = toRad(b.lat - a.lat);
-            const dLon = toRad(b.lon - a.lon);
-            const lat1 = toRad(a.lat), lat2 = toRad(b.lat);
-            const h = Math.sin(dLat/2)**2 + Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
+            const R = 6371, toRad = d => d * Math.PI / 180;
+            const dLat = toRad(b.lat - a.lat), dLon = toRad(b.lon - a.lon);
+            const h = Math.sin(dLat/2)**2 + Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLon/2)**2;
             return 2 * R * Math.asin(Math.sqrt(h));
         }
 
-        async function geocodeAddress(address){
-            let queryText = address.trim();
-            if (!queryText.toLowerCase().includes('kozhikode') && !queryText.toLowerCase().includes('calicut')) {
-                queryText += ', Kozhikode, Kerala';
-            }
-            const url = `https://nominatim.openstreetmap.org/search?format=json&limit=5&countrycodes=in&q=${encodeURIComponent(queryText)}`;
-            const res = await fetch(url, { headers: { 'Accept': 'application/json', 'Accept-Language': 'en' } });
+        async function geocodeAddress(addr) {
+            let q = addr.trim();
+            if (!q.toLowerCase().includes('kozhikode') && !q.toLowerCase().includes('calicut')) q += ', Kozhikode, Kerala';
+            const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=5&countrycodes=in&q=${encodeURIComponent(q)}`, {
+                headers: { 'Accept': 'application/json', 'Accept-Language': 'en' }
+            });
             if (!res.ok) throw new Error('Geocoding unavailable');
             const data = await res.json();
             if (!data.length) {
-                const fbRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=in&q=${encodeURIComponent(address)}`);
+                const fbRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=in&q=${encodeURIComponent(addr)}`);
                 const fbData = await fbRes.json();
-                if (!fbData.length) throw new Error('Address not found');
+                if (!fbData.length) throw new Error('Not found');
                 return { lat: parseFloat(fbData[0].lat), lon: parseFloat(fbData[0].lon), display: fbData[0].display_name };
             }
             return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), display: data[0].display_name };
         }
 
-        async function getRoadDistanceKm(a, b){
-            try{
-                const url = `https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=false`;
-                const res = await fetch(url);
-                if (!res.ok) throw new Error('Routing status ' + res.status);
+        async function getRoadDistanceKm(a, b) {
+            try {
+                const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${a.lon},${a.lat};${b.lon},${b.lat}?overview=false`);
+                if (!res.ok) throw new Error('OSRM status ' + res.status);
                 const data = await res.json();
                 if (!data.routes || !data.routes.length) throw new Error('No route');
                 return { km: data.routes[0].distance / 1000, approx: false };
-            } catch(err){
+            } catch(e) {
                 return { km: haversineKm(a, b) * 1.3, approx: true };
             }
         }
 
-        function setWeightSlab(val) {
-            document.getElementById('kg').value = val;
-            updateExistingFareWeight();
-        }
+        function setWeightSlab(val) { document.getElementById('kg').value = val; updateExistingFareWeight(); }
 
         function updateExistingFareWeight() {
             let kg = parseFloat(document.getElementById('kg').value);
@@ -1348,17 +1238,16 @@
             if (kg > 20) { kg = 20; document.getElementById('kg').value = 20; }
             if (lastFare.km > 0) {
                 const r = calculateRate(lastFare.km, kg);
-                lastFare.kg = kg;
-                lastFare.total = r.total;
+                lastFare.kg = kg; lastFare.total = r.total;
                 renderFareBreakdown(r, lastFare.km, false);
             }
         }
 
-        function renderFareBreakdown(r, km, isApprox) {
+        function renderFareBreakdown(r, km, approx) {
             document.getElementById('fareOut').textContent = '₹' + r.total;
             document.getElementById('fareSubLabel').textContent = `(${km.toFixed(1)} km • ${lastFare.kg} kg)`;
             document.getElementById('breakdownOut').innerHTML = `
-                <div class="flex justify-between"><span>Road distance${isApprox ? ' (approx.)' : ''}</span><strong class="text-navy">${km.toFixed(1)} km</strong></div>
+                <div class="flex justify-between"><span>Road distance${approx ? ' (approx.)' : ''}</span><strong class="text-navy">${km.toFixed(1)} km</strong></div>
                 <div class="flex justify-between"><span>Base fare (up to 3 km, 5 kg)</span><span>₹${r.base}</span></div>
                 <div class="flex justify-between"><span>${escapeHtml(r.distanceLabel)}</span><span>₹${r.distanceCharge}</span></div>
                 <div class="flex justify-between"><span>Weight — ${escapeHtml(r.weightLabel)}</span><span>₹${r.weightCharge}</span></div>
@@ -1367,12 +1256,10 @@
         }
 
         function scheduleAutoRouteCalc() {
-            const p = document.getElementById('pickupAddr').value.trim();
-            const d = document.getElementById('dropAddr').value.trim();
-            if (p && d) calcFare();
+            if (document.getElementById('pickupAddr').value.trim() && document.getElementById('dropAddr').value.trim()) calcFare();
         }
 
-        async function calcFare(){
+        async function calcFare() {
             hideValidationError();
             const btn = document.getElementById('calcBtn');
             const routeInfo = document.getElementById('routeInfo');
@@ -1383,7 +1270,7 @@
             if (isNaN(kg) || kg <= 0) kg = 0.5;
             if (kg > 20) { kg = 20; document.getElementById('kg').value = 20; }
 
-            if (!pickup || !drop){
+            if (!pickup || !drop) {
                 routeInfo.className = 'text-xs font-bold text-orange';
                 routeInfo.textContent = 'Please enter or pin both pickup and drop locations.';
                 return false;
@@ -1394,84 +1281,61 @@
             routeInfo.className = 'text-xs font-bold text-slate-600';
             routeInfo.textContent = 'Locating pickup & drop coordinates...';
 
-            try{
+            try {
                 const pickupPick = farxPlaceSelections['pickupAddr'];
                 const pickupFromMap = pickupPick && pickupPick.text === pickup;
-                const pickupGeo = pickupFromMap
-                    ? { lat: pickupPick.lat, lon: pickupPick.lon, display: pickupPick.display }
-                    : await geocodeAddress(pickup);
+                const pGeo = pickupFromMap ? pickupPick : await geocodeAddress(pickup);
 
                 const dropPick = farxPlaceSelections['dropAddr'];
                 const dropFromMap = dropPick && dropPick.text === drop;
                 if (!pickupFromMap && !dropFromMap) await sleep(900);
 
-                const dropGeo = dropFromMap
-                    ? { lat: dropPick.lat, lon: dropPick.lon, display: dropPick.display }
-                    : await geocodeAddress(drop);
+                const dGeo = dropFromMap ? dropPick : await geocodeAddress(drop);
 
-                if (Math.abs(pickupGeo.lat - dropGeo.lat) < 0.0003 && Math.abs(pickupGeo.lon - dropGeo.lon) < 0.0003) {
+                if (Math.abs(pGeo.lat - dGeo.lat) < 0.0003 && Math.abs(pGeo.lon - dGeo.lon) < 0.0003) {
                     routeInfo.className = 'text-xs font-bold text-red-600';
                     routeInfo.textContent = 'Pickup and Drop cannot be the exact same location.';
                     return false;
                 }
 
-                const dist = await getRoadDistanceKm(pickupGeo, dropGeo);
-                const km = dist.km;
-
-                if (km > MAX_INTRA_KM) {
+                const dist = await getRoadDistanceKm(pGeo, dGeo);
+                if (dist.km > MAX_INTRA_KM) {
                     document.getElementById('fareOut').textContent = 'Outstation';
                     routeInfo.className = 'text-xs font-bold text-orange';
-                    routeInfo.textContent = `This route (${km.toFixed(1)} km) exceeds our ${MAX_INTRA_KM} km local bike limit. Please switch to the Outstation tab above.`;
+                    routeInfo.textContent = `This route (${dist.km.toFixed(1)} km) exceeds our ${MAX_INTRA_KM} km local limit. Switch to the Outstation tab above.`;
                     return false;
                 }
 
-                const r = calculateRate(km, kg);
-                lastFare = {
-                    total: r.total,
-                    km,
-                    kg,
-                    pickup: pickupGeo.display,
-                    drop: dropGeo.display,
-                    pickupLat: pickupGeo.lat,
-                    pickupLon: pickupGeo.lon,
-                    dropLat: dropGeo.lat,
-                    dropLon: dropGeo.lon
-                };
-
-                renderFareBreakdown(r, km, dist.approx);
+                const r = calculateRate(dist.km, kg);
+                lastFare = { total: r.total, km: dist.km, kg, pickup: pGeo.display, drop: dGeo.display, pickupLat: pGeo.lat, pickupLon: pGeo.lon, dropLat: dGeo.lat, dropLon: dGeo.lon };
+                renderFareBreakdown(r, dist.km, dist.approx);
                 routeInfo.className = 'text-xs font-bold text-emerald-600';
-                routeInfo.textContent = '✓ Route matched: ' + pickupGeo.display.split(',').slice(0,2).join(',') + ' → ' + dropGeo.display.split(',').slice(0,2).join(',');
+                routeInfo.textContent = '✓ Route matched: ' + pGeo.display.split(',').slice(0,2).join(',') + ' → ' + dGeo.display.split(',').slice(0,2).join(',');
                 bookingFormOpenedAt = Date.now() - 5000;
                 return true;
-            } catch(err){
+            } catch(e) {
                 routeInfo.className = 'text-xs font-bold text-orange';
-                routeInfo.textContent = "Couldn't locate one of those addresses. Please click 'Select on map' to drop a pin.";
+                routeInfo.textContent = "Couldn't locate one of those addresses. Please click 'Select on map'.";
                 return false;
             } finally {
                 btn.disabled = false;
-                btn.textContent = 'Calculate Exact Road Fare';
+                btn.textContent = 'Calculate Road Fare';
             }
         }
 
-        // Guarantees `ts` is always inside your backend's anti-bot timing window
         function getSafeTimestamp() {
-            const now = Date.now();
-            const elapsed = now - bookingFormOpenedAt;
-            if (!bookingFormOpenedAt || elapsed < 4000 || elapsed > 10 * 60 * 1000) {
-                return now - 6000;
-            }
+            const now = Date.now(), elapsed = now - bookingFormOpenedAt;
+            if (!bookingFormOpenedAt || elapsed < 4000 || elapsed > 10 * 60 * 1000) return now - 6000;
             return bookingFormOpenedAt;
         }
 
-        // 8. Submit Intra-District Local Booking (Exact Backend Payload Structure)
-        async function submitLocalBooking(e){
+        // 8. Submit Local Booking (Enforces WhatsApp OTP Verification for BOTH Prepaid & COD)
+        async function submitLocalBooking(e) {
             e.preventDefault();
             hideValidationError();
             const statusEl = document.getElementById('bookingStatus');
             statusEl.classList.add('hidden');
-            const payBtn = document.getElementById('payBtn');
             const paymentMode = document.querySelector('input[name="paymentMode"]:checked').value;
-
             const senderPhone = cleanPhone(document.getElementById('bk-phone').value);
             const receiverPhone = cleanPhone(document.getElementById('bk-receiver-phone').value);
 
@@ -1480,10 +1344,10 @@
                 return;
             }
 
-            // Enforce OTP ONLY if COD is selected
-            if (paymentMode === 'cod' && (!isCodPhoneVerified || verifiedCodPhone !== senderPhone)) {
-                showValidationError('For Pay on Delivery (COD), please click "Send SMS OTP" and verify your mobile number first.');
-                document.getElementById('sendCodOtpBtn').focus();
+            // Mandatory WhatsApp OTP check for ALL customers (Prepaid & COD)
+            if (!isLocalWhatsAppVerified || verifiedLocalPhone !== senderPhone) {
+                showValidationError('Please click "1. Send OTP on WhatsApp" and verify your Sender WhatsApp Number before booking.');
+                document.getElementById('localWaOtpBtn').focus();
                 return;
             }
 
@@ -1495,10 +1359,10 @@
             const booking = {
                 serviceType: 'intra',
                 senderName: document.getElementById('bk-name').value.trim(),
-                senderPhone: senderPhone,
+                senderPhone,
                 senderEmail: document.getElementById('bk-email').value.trim(),
                 receiverName: document.getElementById('bk-receiver-name').value.trim(),
-                receiverPhone: receiverPhone,
+                receiverPhone,
                 pickupAddress: lastFare.pickup,
                 dropAddress: lastFare.drop,
                 pickupLat: lastFare.pickupLat,
@@ -1510,40 +1374,33 @@
             };
 
             const safeTs = getSafeTimestamp();
+            const payBtn = document.getElementById('payBtn');
             payBtn.disabled = true;
 
-            // FLOW A: FREIGHT CASH ON DELIVERY (COD)
-            if (paymentMode === 'cod'){
+            // FLOW A: COD
+            if (paymentMode === 'cod') {
                 statusEl.classList.remove('hidden');
                 statusEl.textContent = 'Verifying route and submitting order to dispatch...';
-
                 try {
-                    const bookRes = await fetch('/api/book', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            hp: document.getElementById('bk-website').value,
-                            ts: safeTs,
-                            booking
-                        })
+                    const res = await fetch('/api/book', {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ hp: document.getElementById('bk-website').value, ts: safeTs, booking })
                     });
-
-                    const bookData = await bookRes.json();
-
-                    if (bookRes.ok && bookData.success) {
-                        const verifiedFare = bookData.verifiedFare;
-                        const orderNumber = bookData.orderNumber;
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        const verifiedFare = data.verifiedFare;
+                        const orderNumber = data.orderNumber;
                         const waMsg = encodeURIComponent(
-                            `📦 *New Booking (COD)*\nOrder: ${orderNumber}\nSender: ${booking.senderName} (${booking.senderPhone})\nRecipient: ${booking.receiverName} (${booking.receiverPhone})\nVerified Freight: ₹${verifiedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
+                            `📦 *New Booking (COD — OTP FARX-${localGeneratedOtp})*\nOrder: ${orderNumber}\nSender: ${booking.senderName} (${booking.senderPhone})\nRecipient: ${booking.receiverName} (${booking.receiverPhone})\nVerified Freight: ₹${verifiedFare}\nPickup: ${booking.pickupAddress.split(',')[0]}\nDrop: ${booking.dropAddress.split(',')[0]}`
                         );
-                        statusEl.innerHTML = `✅ <strong>Shipment confirmed!</strong> Order ID: <strong>${escapeHtml(orderNumber)}</strong>. Verified Freight ₹${escapeHtml(verifiedFare)} will be collected upon drop-off (COD). <br><a href="https://wa.me/919207476242?text=${waMsg}" target="_blank" rel="noopener noreferrer" class="inline-block mt-2 text-orange underline font-extrabold">Notify Dispatch Desk on WhatsApp &rarr;</a>`;
+                        statusEl.innerHTML = `✅ <strong>Shipment confirmed!</strong> Order ID: <strong>${escapeHtml(orderNumber)}</strong>. Verified Freight ₹${escapeHtml(verifiedFare)} will be collected upon drop-off (COD). <br><a href="https://wa.me/919207476242?text=${waMsg}" target="_blank" rel="noopener noreferrer" class="inline-block mt-2 text-orange underline font-extrabold">Send Order Receipt on WhatsApp &rarr;</a>`;
                     } else {
                         statusEl.classList.add('hidden');
-                        showValidationError(`Could not register order: ${bookData.error || 'Verification error'}. Please WhatsApp us at +91 92074 76242.`);
+                        showValidationError(`Could not register order: ${data.error || 'Verification error'}. Please WhatsApp +91 92074 76242.`);
                     }
-                } catch (err) {
+                } catch(err) {
                     statusEl.classList.add('hidden');
-                    showValidationError('Could not reach the dispatch system. Please WhatsApp us at +91 92074 76242.');
+                    showValidationError('Could not reach dispatch system. Please WhatsApp +91 92074 76242.');
                 } finally {
                     payBtn.disabled = false;
                     handlePaymentModeChange();
@@ -1551,31 +1408,26 @@
                 return;
             }
 
-            // FLOW B: ONLINE PREPAID PAYMENT (RAZORPAY -> SHIPDAY)
+            // FLOW B: ONLINE PREPAID (RAZORPAY)
             statusEl.classList.remove('hidden');
             statusEl.textContent = 'Verifying route fare and preparing secure payment...';
 
-            try{
-                const createRes = await fetch('/api/create-payment', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        hp: document.getElementById('bk-website').value,
-                        ts: safeTs,
-                        booking
-                    })
+            try {
+                const res = await fetch('/api/create-payment', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ hp: document.getElementById('bk-website').value, ts: safeTs, booking })
                 });
-                const orderData = await createRes.json();
-                if (!createRes.ok){
+                const data = await res.json();
+                if (!res.ok) {
                     statusEl.classList.add('hidden');
-                    showValidationError(`Could not start payment (${orderData.error || 'Error'}). Please try again or WhatsApp +91 92074 76242.`);
+                    showValidationError(`Could not start payment (${data.error || 'Error'}). Please try again or WhatsApp +91 92074 76242.`);
                     payBtn.disabled = false;
                     handlePaymentModeChange();
                     return;
                 }
 
-                const razorpayKeyId = orderData.keyId || orderData.key;
-                if (!razorpayKeyId){
+                const razorpayKeyId = data.keyId || data.key;
+                if (!razorpayKeyId) {
                     statusEl.classList.add('hidden');
                     showValidationError('Payment could not be initialized. Please WhatsApp +91 92074 76242.');
                     payBtn.disabled = false;
@@ -1586,53 +1438,48 @@
                 statusEl.classList.add('hidden');
                 const rzp = new Razorpay({
                     key: razorpayKeyId,
-                    amount: orderData.amount,
-                    currency: orderData.currency || 'INR',
-                    order_id: orderData.orderId || orderData.id,
+                    amount: data.amount,
+                    currency: data.currency || 'INR',
+                    order_id: data.orderId || data.id,
                     name: 'FARX Logistics',
                     description: 'Doorstep Freight: ' + lastFare.pickup.split(',')[0] + ' → ' + lastFare.drop.split(',')[0],
-                    prefill: {
-                        name: booking.senderName,
-                        contact: booking.senderPhone,
-                        email: booking.senderEmail || ''
-                    },
+                    prefill: { name: booking.senderName, contact: booking.senderPhone, email: booking.senderEmail || '' },
                     theme: { color: '#F37021' },
-                    handler: async function(response){
+                    handler: async function(resp) {
                         statusEl.classList.remove('hidden');
                         statusEl.textContent = 'Verifying payment signature & assigning dispatch...';
-                        try{
-                            const verifyRes = await fetch('/api/verify-payment', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
+                        try {
+                            const vRes = await fetch('/api/verify-payment', {
+                                method: 'POST', headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
-                                    razorpay_order_id: response.razorpay_order_id,
-                                    razorpay_payment_id: response.razorpay_payment_id,
-                                    razorpay_signature: response.razorpay_signature,
+                                    razorpay_order_id: resp.razorpay_order_id,
+                                    razorpay_payment_id: resp.razorpay_payment_id,
+                                    razorpay_signature: resp.razorpay_signature,
                                     booking
                                 })
                             });
-                            const verifyData = await verifyRes.json();
-                            if (verifyRes.ok && verifyData.success){
-                                statusEl.innerHTML = '✅ <strong>Payment successful!</strong> Booking <strong>' + escapeHtml(verifyData.orderNumber) + '</strong> confirmed (₹' + escapeHtml(verifyData.verifiedFare) + ') — rider dispatch assigned.';
+                            const vData = await vRes.json();
+                            if (vRes.ok && vData.success) {
+                                statusEl.innerHTML = `✅ <strong>Payment Successful!</strong> Booking <strong>${escapeHtml(vData.orderNumber)}</strong> confirmed (₹${escapeHtml(vData.verifiedFare)}) — rider dispatch assigned.`;
                             } else {
-                                statusEl.innerHTML = 'Payment received, but confirmation had an issue (' + escapeHtml(verifyData.error || '') + '). Please <a href="https://wa.me/919207476242?text=' + encodeURIComponent('Payment ID: ' + response.razorpay_payment_id) + '" target="_blank" class="text-orange underline font-bold">WhatsApp +91 92074 76242</a> with Payment ID: ' + escapeHtml(response.razorpay_payment_id);
+                                statusEl.innerHTML = `Payment received! Please <a href="https://wa.me/919207476242?text=${encodeURIComponent('Payment ID: ' + resp.razorpay_payment_id)}" target="_blank" class="text-orange underline font-bold">WhatsApp +91 92074 76242</a> with ID: ${escapeHtml(resp.razorpay_payment_id)}`;
                             }
-                        } catch(err){
-                            statusEl.innerHTML = 'Payment received! Please <a href="https://wa.me/919207476242?text=' + encodeURIComponent('Payment ID: ' + response.razorpay_payment_id) + '" target="_blank" class="text-orange underline font-bold">WhatsApp +91 92074 76242</a> with Payment ID: ' + escapeHtml(response.razorpay_payment_id);
+                        } catch(err) {
+                            statusEl.innerHTML = `Payment received! Please <a href="https://wa.me/919207476242?text=${encodeURIComponent('Payment ID: ' + resp.razorpay_payment_id)}" target="_blank" class="text-orange underline font-bold">WhatsApp +91 92074 76242</a> with ID: ${escapeHtml(resp.razorpay_payment_id)}`;
                         } finally {
                             payBtn.disabled = false;
                             handlePaymentModeChange();
                         }
                     },
                     modal: {
-                        ondismiss: function(){
+                        ondismiss: function() {
                             payBtn.disabled = false;
                             handlePaymentModeChange();
                         }
                     }
                 });
                 rzp.open();
-            } catch(err){
+            } catch(e) {
                 statusEl.classList.add('hidden');
                 showValidationError('Could not reach our booking system. Please check your connection or WhatsApp +91 92074 76242.');
                 payBtn.disabled = false;
@@ -1640,60 +1487,55 @@
             }
         }
 
-        // 9. Outstation Route Quote / Booking (Requires OTP Verification First)
-        function sendEnquiry(e){
-            if (e) e.preventDefault();
+        // 9. Submit Outstation Enquiry (Enforces WhatsApp OTP Verification)
+        function sendEnquiry(e) {
+            e.preventDefault();
             const info = document.getElementById('enquiryInfo');
-            const pickup = document.getElementById('enqPickup').value.trim();
-            const drop = document.getElementById('enqDrop').value.trim();
-            const senderName = document.getElementById('enqSenderName').value.trim();
-            const phone = cleanPhone(document.getElementById('enqPhone').value);
-            const receiverName = document.getElementById('enqReceiverName').value.trim();
-            const receiverPhone = cleanPhone(document.getElementById('enqReceiverPhone').value);
+            const p = document.getElementById('enqPickup').value.trim();
+            const d = document.getElementById('enqDrop').value.trim();
+            const sName = document.getElementById('enqSenderName').value.trim();
+            const sPhone = cleanPhone(document.getElementById('enqPhone').value);
+            const rName = document.getElementById('enqReceiverName').value.trim();
+            const rPhone = cleanPhone(document.getElementById('enqReceiverPhone').value);
             const kg = document.getElementById('enqKg').value.trim();
             const type = document.getElementById('enq-b2b').checked ? 'B2B' : 'D2C';
 
-            if (!pickup || !drop || !isValidIndianPhone(phone) || !isValidIndianPhone(receiverPhone)){
-                info.textContent = 'Please provide pickup, destination, and valid 10-digit mobile numbers for both Sender and Receiver.';
+            if (!p || !d || !isValidIndianPhone(sPhone) || !isValidIndianPhone(rPhone)) {
+                info.textContent = 'Please enter valid 10-digit mobile numbers for both Sender and Receiver.';
                 return;
             }
 
-            if (!isOutstationPhoneVerified || verifiedOutPhone !== phone) {
-                info.textContent = 'Please click "Send SMS OTP" and verify your Sender Mobile Number first.';
-                document.getElementById('sendOutOtpBtn').focus();
+            if (!isOutstationWhatsAppVerified || verifiedOutstationPhone !== sPhone) {
+                info.textContent = 'Please click "1. Send OTP on WhatsApp" and verify your Sender WhatsApp number first.';
+                document.getElementById('outWaOtpBtn').focus();
                 return;
             }
 
-            const waMsg = encodeURIComponent(
-                `📦 *Inter-District Rate Enquiry (${type})*\n` +
-                `Sender: ${senderName} (+91 ${phone} - OTP Verified ✓)\n` +
-                `Pickup: ${pickup}\n` +
-                `Receiver: ${receiverName} (+91 ${receiverPhone})\n` +
-                `Destination: ${drop}\n` +
-                `Approx Weight: ${kg || '1'} kg`
+            const msg = encodeURIComponent(
+                `📦 *Outstation Booking (${type} — OTP FARX-${outstationGeneratedOtp})*\n` +
+                `Sender: ${sName} (+91 ${sPhone})\n` +
+                `Pickup: ${p}\n` +
+                `Receiver: ${rName} (+91 ${rPhone})\n` +
+                `Destination: ${d}\n` +
+                `Approx Weight: ${kg} kg`
             );
-            info.textContent = 'Opening WhatsApp dispatch desk...';
-            window.open('https://wa.me/919207476242?text=' + waMsg, '_blank', 'noopener,noreferrer');
+            window.open(`https://wa.me/919207476242?text=${msg}`, '_blank');
         }
 
-        // 10. Live Consignment Tracking (/api/track?orderNumber=...)
+        // 10. Live Consignment Tracking
         async function trackOrder() {
             const input = document.getElementById('trackInput').value.trim().toUpperCase();
-            const resultEl = document.getElementById('trackResult');
-
+            const resEl = document.getElementById('trackResult');
             if (!input) {
-                resultEl.innerHTML = '<span class="text-orange font-bold">Please enter an order or consignment number.</span>';
+                resEl.innerHTML = '<span class="text-orange font-bold">Please enter an order or consignment number.</span>';
                 return;
             }
-
-            resultEl.innerHTML = '<span class="text-slate-600 font-semibold">Locating consignment...</span>';
-
+            resEl.innerHTML = '<span class="text-slate-600 font-semibold">Locating consignment...</span>';
             try {
                 const res = await fetch(`/api/track?orderNumber=${encodeURIComponent(input)}`);
                 const data = await res.json();
-
                 if (res.ok && data.trackingLink) {
-                    resultEl.innerHTML = `
+                    resEl.innerHTML = `
                         <div class="p-5 rounded-2xl bg-blue-50 border border-blue-200">
                             <div class="text-xs font-extrabold text-blue-600 uppercase">Consignment Found</div>
                             <div class="text-base font-extrabold text-navy mt-1">Status: ${escapeHtml(data.orderState || 'In Transit')}</div>
@@ -1706,7 +1548,7 @@
                     `;
                 } else {
                     const waMsg = encodeURIComponent(`Hi, checking status for consignment: ${input}`);
-                    resultEl.innerHTML = `
+                    resEl.innerHTML = `
                         <div class="p-4 rounded-2xl bg-orange-light border border-orange/20">
                             <div class="text-navy font-semibold">Order <strong>${escapeHtml(input)}</strong> registered. Live GPS link is syncing with rider.</div>
                             <div class="mt-2">
@@ -1717,9 +1559,9 @@
                         </div>
                     `;
                 }
-            } catch (err) {
+            } catch(e) {
                 const waMsg = encodeURIComponent(`Hi, checking status for consignment: ${input}`);
-                resultEl.innerHTML = `
+                resEl.innerHTML = `
                     <div class="p-4 rounded-2xl bg-orange-light border border-orange/20">
                         <div class="text-navy font-semibold">Consignment: <strong>${escapeHtml(input)}</strong></div>
                         <div class="mt-2">
